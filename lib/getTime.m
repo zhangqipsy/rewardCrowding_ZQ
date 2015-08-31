@@ -1,51 +1,25 @@
-function MyTime = getTime(type)
+function MyTime = getTime(type, ratio, isDebug)
 
+if nargin < 2
+    ratio = 1;
+end
+if nargin < 3
 isDebug = 0; % shortens time
+end
 
 switch type
-    case {'DummyScan'}
-        % dummy MyTime , also for cover story
-        MyTime = 12;
-    case {'Init_fix'}
-        % time between cover story and block instructions
-        MyTime = 8;
+    case {'flpi'}
+MyTime               =  .02;         % each frame is set to 20ms (the monitor's flip interval is 16.7ms)
     case {'Instruction'}
-        % instruction for each conditions
-        MyTime = 3;
-    case {'CrossBeforeEvents'}
-        % time between instructions and events
-        MyTime = 1;
+        % for cover Instruction
+        MyTime = 10;
+    %case {'fixTrial'}
+        % fixation time before Trial stimuli
+        % NOTE: this is NOT used; it is controlled by condition
+        %MyTime = 1;
     case {'TrialDuration'}
         % Trials: altruism, zili,ziti all lasts for 4s.
-        MyTime = 4;
-    case {'CrossBetweenEvents'}
-        % time between two events(altruism, liji, ziti, altruism and liji)
-        MyTime = myRand(1,3);
-    case {'CrossLinkEventsShock'}
-        % time between 4 events and 4 shocks
-        MyTime = 6;
-    case {'ShockDuration'}
-        % time for shock
-        MyTime = 3;
-    case {'PainRatingWait'}
-        MyTime = 5;
-    case {'CrossBetweenShockAndRating'}
-        % time between shock and painRating
-        MyTime = myRand(1,3);
-    case {'CrossBetweenShockTrials'}
-        % time between two shock trials
-        MyTime = myRand(4,8);
-    case {'CrossBetweenBlocks'}
-        % time between two blocks
-        MyTime = myRand(4,8);
-    case {'CrossBeforePredictedAl'}
-        % time between the main part and the predicted altruism part
-        MyTime = 6;
-    case {'CrossBetweenPredictedAI'}
-        % jitter between two predicted altruism items
-        MyTime = myRand(2,6);
-    case {'goodbye'}
-        MyTime = 6;
+        MyTime = .6;
     case {'RestBetweenBlocks'}
         MyTime = 20;
     case {'CountdownAfterRest'}
