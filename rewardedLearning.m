@@ -129,29 +129,29 @@ try
     if exist('./data', 'dir') ~= 7
         mkdir('data');
     end
-    
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% Hardware/Software Check
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
+
     mode.recordImage = 0;
-    
+
     % make sure the software version is new enouch for running the program
     checkVersion();
-    
+
     % unified key definitions
     render.kb = keyDefinition();
-    
+
     % psychoaudio hardware setting.
     if mode.audio_on
         conf.freq = 48000;
         pahandle = loadAutio(freq);
     end
-    
+
     % Get Subject information
     if ~exist('Subinfo','var');data.Subinfo = getSubInfo();end
-    
-    
+
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% initialization
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -165,63 +165,63 @@ try
     end
     Screen('Preference', 'ConserveVRAM', 8);
     InitializeMatlabOpenGL;
-    
+
     render.screens=Screen('screens');
     render.screenNumber=max(render.screens);
-    
+
     if mode.debug_on
         [w,render.wsize]=Screen('OpenWindow',render.screenNumber,0,[1,1,801,601],[]);
     else
         [w,render.wsize]=Screen('OpenWindow',render.screenNumber,0,[],32);
     end
     Screen('BlendFunction', w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
-    
-    
+
+
+
     render.ifi=Screen('GetFlipInterval', w);
     if render.ifi > conf.flpi + 0.0005 % allow 0.5ms error
         error('HardwareError:MonitorFlushRate',...
             'Monitor Flip Interval is too large. Please adjust monitor flush rate \n from system preferences, or adjust conf.flpi fron *Task.m file.');
     end
     Priority(MaxPriority(w));
-    
+
     HideCursor;
-    
+
     Screen(wptr,'TextStyle',0);
     Screen('Preference', 'TextRenderer', 1);
     Screen('Preference', 'TextAntiAliasing', 1);
     Screen('TextFont', wptr, 'Microsoft Simsun'); % or `Microsoft Simsun`?
     Screen('TextSize', wptr, 20); % ziti size
-    
+
     render.cx = render.wsize(3)/2; %center x
     render.cy = render.wsize(4)/2; %center y
-    
-    
+
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% data generatoin
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     data = genData(conf, render);
-    
-    
+
+
     flow.nresp    = 1;  % the total number of response recorded
     flow.restcount= 0;  % the number of trials from last rest
-    
-    
+
+
     %% Instructions
     DrawFormattedText(w, instrDB(render.task, mode.english_on), 'center', 'center', [255 255 255 255]);
     Screen('Flip', w);
     if mode.recordImage; recordImage(1,1,[render.task '_instr'],w,render.wsize);end
     %if ~mode.debug_on;Speak(sprintf(instrDB(render.task, mode.english_on)));end
     pedalWait(mode.tactile_on, inf, render.kb);
-    
-    
+
+
     %% Here begins our trial
     for k = 1:length(flow.Trialsequence)
         %      tic;
         flow.prestate = 0;  % the last reponse until now
         flow.response = 0;  % the current current response, just after the last response
-        
-        
+
+
         flow.Trial = k;
         % rest every couple trials once
         if flow.Trial > 1
@@ -229,30 +229,30 @@ try
             showLeftTrial(flow.Trialsequence, flow.Trial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.tactile_on);
             if mode.recordImage; recordImage(1,1,[render.task '_remaining'],w,render.wsize);end
         end
-        
+
         flow.restcount = restBetweenTrial(flow.restcount, conf.resttime, conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.tactile_on);
         conf.waitBetweenTrials  =  .8+rand*0.2; % wait black screen between Trials, random
-        
-        
+
+
         WaitSecs(conf.waitBetweenTrials);  % wait black screen between Trials, random
-        
-        
+
+
         if mode.recordImage; recordImage(1,1,[render.task '_mirror'],w,render.wsize); end
-        
-        
+
+
         Screen('FillRect',w, conf.backgroundColor);
         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
-        
+
         %% PLW that you can see on the screen
         flow.isquit = 0;     % to capture ESCAPE for quitting
         flow.isresponse = 0;
         render.iniTimer=GetSecs;
-        
+
         data.iniTactile = data.tTrack(find(data.tTrack>0,1));%initial type of tactile stimuli
         if isempty(data.iniTactile);
             data.iniTactile = 0;  %baseline is 0
         end
-        
+
         for i=data.Track  %loop leghth
             flow.Flip = i;
             if mode.mirror_on
@@ -262,18 +262,18 @@ try
                 %addNoise(w, 256, render.wsize);%Do not use this, since buffer tex is used
                 Screen('DrawTexture', w, tex(render.noiseloop(flow.Flip)), [], render.dstRect, [], 0);
             end
-            
-            
+
+
             Screen('DrawingFinished', w); % no further drawing commands will follow before Screen('Flip')
-            
+
             %Here comes the sound
             if mode.audio_on
                 playSound(pahandle, freq, data.paceRate, data.moveDirection(flow.Trial, 1));
             end
-            
-            
+
+
             % get the response
-            
+
             % Flip the visual stimuli on the screen, along with timing
             % old = render.vlb;
             render.vlb = Screen('Flip', w, render.vlb + (1-0.5)*conf.flpi);%use the center of the interval
@@ -281,20 +281,20 @@ try
             %        toc;
             %        tic;
         end
-        
+
         % end of per trial
         Screen('Flip', w);
-        
-        
-        
+
+
+
         % do exactly once_on times
         mode.once_on = mode.once_on-1;
         if ~mode.once_on; error('Preparation Finished! (No worries. This is no bug, buddy.)'); end
     end;
-    
+
     % End of experiment
-    
-    
+
+
     Display(char('','','data/latest.mat saved successfully, use for debugging!',''));
     render.matFileName = ['data/',dataPrefix, Subinfo{1} , dataSuffix, date, '.mat'];
     save(render.matFileName,'Trials','conf', 'Subinfo','flow','mode','data');
@@ -307,7 +307,7 @@ try
         % not end yet
         % do the following test here
     end
-    
+
 catch
     % always save the buggy data for debugging
     save data/buggy.mat;

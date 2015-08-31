@@ -1,3 +1,3 @@
-addpath('./data','./data/InOut/','./data/Direction','./data/Simple','./data/Group/','./data/Group/Whole','./lib', './resources');
+addpath('./data','./data/Demo/','./data/RawardTask','./lib', './resources');
 format bank;
 set(0,'DefaultFigurePaperPositionMode','auto')
