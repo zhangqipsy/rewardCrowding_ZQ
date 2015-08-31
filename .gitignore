@@ -3,7 +3,7 @@
 *.7z
 *.tar.gz
 *~
-data/
+data/*
 data/*buggy*.mat
 data/default*.mat
 /*.mat
