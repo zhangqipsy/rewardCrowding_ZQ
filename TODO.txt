@@ -1,1 +1,2 @@
-Let's begin!
+the table is ready (conf, mode, Trialsequence)
+let's do everything else

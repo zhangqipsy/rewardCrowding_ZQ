@@ -1,9 +1,9 @@
-function [conf, mode] = loadDefaultConfs(argin)
+function [conf, mode] = loadDefaultConfs()
 %LOADDEFAULTCONFS loads all the default values for the experiment, which would normally be overwritten by the shell wrapper.
 %
-% SYNOPSIS: [cond, mode] = loadDefaultConfs(argin)
+% SYNOPSIS: [cond, mode] = loadDefaultConfs()
 %
-% INPUT argin
+% INPUT
 %			No arguments should be given!
 %
 % OUTPUT [cond
@@ -38,27 +38,42 @@ function [conf, mode] = loadDefaultConfs(argin)
 
 
 % experiment configuration vatiables
-conf.repetitions        =  5;           % repetition time of a condition
-conf.restpertrial       =  1;           % every x trial a rest
-conf.nStims              =  8;           % how many PLWs to draw on screen in a circle
-conf.clockR             =  .75;         % clock, with the center of the screen as (0,0), in pr coordination system
-conf.scale1             =  20;          % PLW's visual scale, more the bigger
-conf.backgroundColor = [128 128 128];
+conf.repetitions        =  26;           % repetition time of a condition
+conf.totalTrials        = 1008;     % respects this if repititions is zero
+conf.restpertrial       =  100;           % every x trial a rest
+conf.nStims              =  6;          % number of stimuli (target+distractors) present in each trial/throughout the experiment
+conf.nTargets           = 1;            % number of targets present in each trial/throughout the experiment
 conf.audioFreq = 1000;
+conf.fixLevels          = [.4 .5 .6];
+conf.idxHighRewardColor = 1;        
+conf.highRewardLevel    = .8;
+
+% NOTE: check this values out!
+conf.viewDist       = 50;
+conf.cmPerPix   = .1;
+
 
 % NOTE: these color values folow the original code by Li Ya from Sheng Li lab at PKU; as for the reason for the chosen values, it remains to be investigated; or in short, as her why she chose these colors.
 
+% targets
 color.red = [106 0 0];
 color.green = [0 60 0];
+color.targets = {color.red, color.green};
+
+% distractors
 color.blue = [0 0 95];
 color.cyan = [0 255 255]; % NOTE: this color could be too strong/light!
 color.pink = [106   12    59];%[230 55 125 ]; %¸ÄÎªgreen
 color.orange = [115  54  3];
 color.yellow = [96   101  0];%[130 131 50];  % 110    45     0 [   101    22     0];
 color.white = [255 255 255]; % NOTE: this color could be too strong/light!
+color.distractors = {color.blue ,color.cyan ,color.pink ,color.orange ,color.yellow ,color.white};
+
+
+% other colors
 color.lightpurple = [74 47 157];%;[ 0    26  11];[150 118 115] %NOTE: this color was not present in the original paper
 color.gray = [74 92 82];%[123 79 255]; [196 5 230]%NOTE: this color was not present in the original paper
-color.bkcolor = 0;% background color=black
+color.backgroundColor = [128 128 128];% background color=black
 color.barcolor = 180;
 color.textcolor = [90 90 90];
 color.textcolor2 = [40 40 40];
@@ -67,21 +82,24 @@ conf.color = color;
 
 
 % Parameter in degree
-metric.range_r     = 4.8;   % radius of imaginary circle(deg)
-metric.bar_r       = 1.5;  % length (diameter) of the bar(deg)
-metric.bar_r2     = 0.08;  % width (diameter) of the bar(deg)
-metric.cir_r       = 2.5/2;  % deg of circle (deg)
-metric.fix_r       = 0.25; % long arm radius of fixation cross (deg)
-metric.fix_r2    = 0.03; % short arm radius of fixation cross (deg)
+range_r     = 4.8;   % radius of imaginary circle(deg)
+bar_r       = 1.5;  % length (diameter) of the bar(deg)
+bar_r       = 1.5;  % length (diameter) of the bar(deg)
+bar_r2     = 0.08;  % width (diameter) of the bar(deg)
+bar_r2     = 0.08;  % width (diameter) of the bar(deg)
+cir_r       = 2.5/2;  % deg of circle (deg)
+fix_r       = 0.25; % long arm radius of fixation cross (deg)
+fix_r2    = 0.03; % short arm radius of fixation cross (deg)
 
 
 % Parameter in pix
-metric.range_r     = round(DegreesToRetinalMM(range_r,viewDist)/cmPerPix);   % radius of imaginary circle(pix)
-metric.bar_r       = round(DegreesToRetinalMM(bar_r,viewDist)/cmPerPix);  % longitude (diameter) of the bar(pix)
-metric.bar_r2       = round(DegreesToRetinalMM(bar_r2,viewDist)/cmPerPix);  % width (diameter) of the bar(pix)
-metric.cir_r       = round(DegreesToRetinalMM(cir_r,viewDist)/cmPerPix);  % deg of circle (pix)
-metric.fix_r       = round(DegreesToRetinalMM(fix_r,viewDist)/cmPerPix); % long arm radius of fixation cross (pix)
-metric.fix_r2    = round(DegreesToRetinalMM(fix_r2,viewDist)/cmPerPix); % short arm radius of fixation cross (pix)
+metric.range_r     = round(DegreesToRetinalMM(range_r,conf.viewDist)/conf.cmPerPix);   % radius of imaginary circle(pix)
+metric.bar_r       = round(DegreesToRetinalMM(bar_r,conf.viewDist)/conf.cmPerPix);  % longitude (diameter) of the bar(pix)
+metric.bar_r2       = round(DegreesToRetinalMM(bar_r2,conf.viewDist)/conf.cmPerPix);  % width (diameter) of the bar(pix)
+metric.cir_r       = round(DegreesToRetinalMM(cir_r,conf.viewDist)/conf.cmPerPix);  % deg of circle (pix)
+metric.fix_r       = round(DegreesToRetinalMM(fix_r,conf.viewDist)/conf.cmPerPix); % long arm radius of fixation cross (pix)
+metric.fix_r2    = round(DegreesToRetinalMM(fix_r2,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix)
+metric.scale1             =  20;          % linear magnifier
 
 conf.metric = metric;
 

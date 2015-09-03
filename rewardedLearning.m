@@ -14,7 +14,7 @@ function wrkspc = rewardedLearning(conf, mode, Subinfo)
 %
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
-% on Microsoft Windows 8.1 企业�?Version 6.3 (Build 9600)
+% on Microsoft Windows 8.1 Professional Version 6.3 (Build 9600)
 %
 % Author: Hormet, 2015-08-31
 % UPDATED: 2015-08-31 14:23:42
@@ -49,52 +49,25 @@ if nargin > 0
     render.mode=mode;
 end
 
-% conf and mode variables listed here for using calling from a WRAP FUNCTION
-% so do not directly change any value here!
-
-% time setting vatiables
-conf.flpi               =  .02;         % each frame is set to 20ms (the monitor's flip interval is 16.7ms)
-conf.trialdur           =  70;          % duration time for every trial
-conf.repetitions        =  5;           % repetition time of a condition
-conf.resttime           =  30;          % rest for 30s
-conf.waitBetweenTrials  =  .8+rand*0.2; % wait black screen between Trials, random
-conf.waitFixationScreen =  .8+rand*0.2; % '+' time randomized
-conf.restpertrial       =  1;           % every x trial a rest
-conf.nStims              =  8;           % how many PLWs to draw on screen in a circle
-conf.clockR             =  .75;         % clock, with the center of the screen as (0,0), in pr coordination system
-conf.scale1             =  20;          % PLW's visual scale, more the bigger
-conf.backgroundColor = [128 128 128];
-conf.freq = 48000;
-
-% evaluate the input arguments of this function
-% state control variables
-mode.demo_on        = 0;  % baseline trial, without visual stimuli
-mode.colorbalance_on = 1; % balance the colors by oneself
-mode.english_on         = 1;  % use English for Instructions etc., 0 for Chinese(not supported for now!)
-% DO NOT CHANGE UNLESS YOU KNOW EXCACTLY WHAT YOU ARE DOING
-mode.regenerate_on      = 1;  % mode.regenerate_on data for experiment, rather than using the saved one
-mode.RT_on              = 0;  % Reaction time mode, this is not to be changed!
-mode.usekb_on           = 0;  % force use keyboard for input (also suppress output from digitalIO)
-mode.debug_on           = 1;  % default is 0; 1 is not to use full screen, and skip the synch test
-mode.recordImage        = 0;  % make screen capture and save as images; used for post-hoc demo
-
+[conf, mode] = loadDefaultConfs();
 % evaluate the input arguments of this function
 if nargin > 0
     conf = updateStruct(render.conf, conf);
     mode = updateStruct(render.mode, mode);
 end
 
+try
 
 
 render.dataPrefix=[];
 render.dataSuffix=[];
 if mode.demo_on
     render.dataPrefix = ['Demo/'];
-    render.dataSuffix = [dataSuffix '_RawardDemo_'];
+    render.dataSuffix = [render.dataSuffix '_RawardDemo_'];
     render.task = 'RawardDemo';
 else
     render.dataPrefix = ['RewardTask/'];
-    render.dataSuffix = [dataSuffix '_RawardTask_'];
+    render.dataSuffix = [render.dataSuffix '_RawardTask_'];
     render.task = 'RawardTask';
 end
 
@@ -103,13 +76,13 @@ switch mode.colorbalance_on
         % auto-balance the color
         if round(rand)
             flipud(conf.colors);
-            dataSuffix = [dataSuffix '_greenTarget_'];
+            render.dataSuffix = [render.dataSuffix '_greenTarget_'];
             data.isRedHigh = 1;
         else
-            dataSuffix = [dataSuffix '_redTarget_'];
+            render.dataSuffix = [render.dataSuffix '_redTarget_'];
             data.isRedHigh = 1;
         end
-        dataSuffix = [dataSuffix '_ColorBalance_'];
+        render.dataSuffix = [render.dataSuffix '_ColorBalance_'];
 end
 
 if mode.RT_on
@@ -125,7 +98,6 @@ Display('Please make sure that this design is correct. Insert `dbcont` to contin
 keyboard;
 
 
-try
     if exist('./data', 'dir') ~= 7
         mkdir('data');
     end
@@ -134,7 +106,6 @@ try
     %% Hardware/Software Check
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    mode.recordImage = 0;
 
     % make sure the software version is new enouch for running the program
     checkVersion();
@@ -187,11 +158,11 @@ try
 
     HideCursor;
 
-    Screen(wptr,'TextStyle',0);
+    Screen(w,'TextStyle',0);
     Screen('Preference', 'TextRenderer', 1);
     Screen('Preference', 'TextAntiAliasing', 1);
-    Screen('TextFont', wptr, 'Microsoft Simsun'); % or `Microsoft Simsun`?
-    Screen('TextSize', wptr, 20); % ziti size
+    Screen('TextFont', w, 'Microsoft Simsun'); % or `Microsoft Simsun`?
+    Screen('TextSize', w, 20); % ziti size
 
     render.cx = render.wsize(3)/2; %center x
     render.cy = render.wsize(4)/2; %center y
@@ -296,7 +267,7 @@ try
 
 
     Display(char('','','data/latest.mat saved successfully, use for debugging!',''));
-    render.matFileName = ['data/',dataPrefix, Subinfo{1} , dataSuffix, date, '.mat'];
+    render.matFileName = ['data/',render.dataPrefix, Subinfo{1} , render.dataSuffix, date, '.mat'];
     save(render.matFileName,'Trials','conf', 'Subinfo','flow','mode','data');
     wrkspc = load(render.matFileName);
     Display(render.matFileName);
@@ -312,8 +283,8 @@ catch
     % always save the buggy data for debugging
     save data/buggy.mat;
     Display(char('','','data/buggy.mat saved successfully, use for debugging!',''));
-    save(['data/', dataPrefix, Subinfo{1}, dataSuffix, date, 'buggy.mat']);
-    wrkspc = load(['data/', dataPrefix, Subinfo{1}, dataSuffix, date, 'buggy.mat']);
+    save(['data/', render.dataPrefix, Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
+    wrkspc = load(['data/', render.dataPrefix, Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
     %     disp(['';'';'data/buggy saved successfully, use for debugging!']);
     Screen('CloseAll');
     if mode.audio_on; PsychPortAudio('Close'); end

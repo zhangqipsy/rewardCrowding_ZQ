@@ -7,6 +7,6 @@ function [Trialsequence, Trials] = genTrial(repetitions, columns, conditions)
   trialno = repmat(rhythmtype,1, repetitions);
   % Trialsequence=trialno(randperm(length(trialno))', :); % condition
   Trialsequence=trialno(:, randperm(length(trialno)))'; % condition
-  Trials =zeros(length(Trialsequence*3), columns);% for recording results
+  Trials =NaN(length(Trialsequence*3), columns);% for recording results
 
 end
