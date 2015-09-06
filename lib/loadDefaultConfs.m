@@ -62,12 +62,17 @@ conf.audioFreq = 1000;
 conf.fixLevels          = [.4 .5 .6];
 conf.idxHighRewardColor = 1;        
 conf.highRewardLevel    = .8;
-conf.targetOrientations = [0 90];
-conf.distractorOrientations = [45 135];
+conf.targetOrientations = [0 pi/2];
+conf.distractorOrientations = [pi/4 -pi/4];
 
 % NOTE: check this values out!
-conf.viewDist       = 50;
-conf.cmPerPix   = .1;
+conf.monWidth   = 38.5;
+conf.viewDist       = 75;
+conf.cmPerPix = conf.monWidth/1024;
+
+%BlkNum_Learn = 7; TrlNumPerBlk_Learn = 120;TrlNumPerBlk_LearnPrac = 48;Split = 4.8;
+%ColorPatchTime_Learn = 0.6; waitTimeForResp_Learn = 1; ValH = 'b';ValL ='r';ValCon ='g';%0.6
+%monWidth = 38.5; viewDist = 75;cmPerPix = monWidth/1024;makeSti;Split = round(DegreesToRetinalMM(Split,viewDist)/cmPerPix); %120 trl
 
 
 % NOTE: these color values folow the original code by Li Ya from Sheng Li lab at PKU; as for the reason for the chosen values, it remains to be investigated; or in short, as her why she chose these colors.
@@ -119,8 +124,11 @@ metric.bar_r2       = round(DegreesToRetinalMM(bar_r2,conf.viewDist)/conf.cmPerP
 metric.cir_r       = round(DegreesToRetinalMM(cir_r,conf.viewDist)/conf.cmPerPix);  % deg of circle (pix)
 metric.fix_r       = round(DegreesToRetinalMM(fix_r,conf.viewDist)/conf.cmPerPix); % long arm radius of fixation cross (pix)
 metric.fix_r2    = round(DegreesToRetinalMM(fix_r2,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix)
-metric.scale1             =  20;          % linear magnifier
 metric.circle_width = 3.35;
+scale             =  1;          % linear magnifier
+
+metric = structfun(@(x) scale*x, metric, 'UniformOutput', false);
+metric.scale = scale;
 
 conf.metric = metric;
 

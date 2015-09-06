@@ -112,11 +112,11 @@ Trials(:, 9) = ((rand(size(Trials,1),1)>conf.highRewardLevel) & (Trials(:, 6) ==
 
 %	Column 16~22
 %	    idxDistractorColor
-Trials(:, 16:16+numel(conf.color.distractors)-1) = Shuffle(repmat(1:numel(conf.color.distractors), size(Trials, 1), 1)')';
+Trials(:, 16:16+conf.nStims-1) = Shuffle(repmat(1:conf.nStims, size(Trials, 1), 1)')';
 
 %	Column 23~27
 %	    idxDistractorBar
-Trials(:, 23:23+numel(conf.color.distractors)-1) = Shuffle(repmat(1:numel(conf.distractorOrientations), size(Trials, 1), 1)')';
+Trials(:, 23:23+conf.nStims-1) = Randi(numel(conf.distractorOrientations), [size(Trials,1), conf.nStims]);
 
 data.Trials = Trials;
 

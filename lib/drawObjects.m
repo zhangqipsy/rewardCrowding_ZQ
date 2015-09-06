@@ -1,3 +1,4 @@
+function draw = drawObjects(w, render, draw)
 %drawObjects draws objects in a draw struct object.
 %
 % SYNOPSIS: data = drawObjects(w, render, draw)
@@ -11,6 +12,8 @@
 %   another object. For example, to draw six circles, you need
 %   draw.circle.coor to be 6x2 matrix, the two columns for the 
 %   x and y coordinates.
+%
+%   Also implement for Oval, Poly, Rect, Text
 %
 %
 % OUTPUT data
@@ -42,85 +45,114 @@
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% do some sanity checks
+% drawObjects could be excecuted only giving the draw objects
+isDemo = 0;
+if isempty(w) && isempty(render)
+    % get into the isDemo mode
+    isDemo = 1;
+end
 
+if isDemo
+    % initialize within this function
+    AssertOpenGL;
+    screens=Screen('Screens');
+    screenNumber=max(screens);
+    %[w, rect] = Screen('OpenWindow', screenNumber, 0,[], 32, 2);
+    [w, rect] = Screen('OpenWindow', screenNumber, 0*[1 1 1]);
+    Screen('BlendFunction', w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+end
+
+
+% do some sanity checks
 % draw circles
-if exist('draw', 'variable') == 1 && isfield(draw, 'circle')
+if exist('draw', 'var') == 1 && isfield(draw, 'circle')
     if ~isempty(draw.circle.coor)
 
-% draw seperately?
-if all(draw.circle.isFill == draw.circle.isFill(1))
-    % all of the same type; draw together
-    if draw.circle.isFill(1) == 1
-        drawCmd = 'FillOval';
-    else
-        drawCmd = 'FrameOval';
-    end
-        drawCircle(w, draw.circle, drawCmd);
+        % draw seperately?
+        if all(draw.circle.isFill == draw.circle.isFill(1))
+            % all of the same type; draw together
+            if draw.circle.isFill(1) == 1
+                drawCmd = 'FillOval';
+            else
+                drawCmd = 'FrameOval';
+            end
+            drawCircle(w, draw.circle, drawCmd);
 
-else
-    % seperately draw
-    warning('drawObjects:circlsIsFill', 'Filled and Framed circles are found!');
-    for іCircle = 1:size(draw.circle.coor, 1)
-        if draw.circle.isFill(iCircle ) == 1
-            drawCmd = 'FillOval';
         else
-            drawCmd = 'FrameOval';
+            % seperately draw
+            warning('drawObjects:circlsIsFill', 'Filled and Framed circles are found!');
+            for iCircle = 1:size(draw.circle.coor, 1)
+                if draw.circle.isFill(iCircle ) == 1
+                    drawCmd = 'FillOval';
+                else
+                    drawCmd = 'FrameOval';
+                end
+                drawCircle(w, render, draw.circle(iCircle, :));
+            end
         end
-        drawCircle(w, render, draw.circle(iCircle, :));
     end
-end
 end
 
 
 
 % draw lines
-if exist('draw', 'variable') == 1 && isfield(draw, 'line')
-    if ~isempty(draw.circle.coor)
-        drawLine(w, render, draw.line);
+if exist('draw', 'var') == 1 && isfield(draw, 'line')
+    if ~isempty(draw.line.coor)
+        draw.line.XY = drawLine(w, render, draw.line);
     end
 end
 
 
 % draw fixation
-if exist('draw', 'variable') == 1 && isfield(draw, 'line')
-    if ~isempty(draw.circle.coor)
-       if strcmp(draw.fix.type, '+')
-           % transorm into line object
-           draw.fix.coor = repmat(draw.fix.coor, 2, 1);
-           draw.fix.orientation = [0 90]';
-           draw.fix.len = repmat(draw.fix.r, 2, 1);
-           draw.fix.width = repmat(draw.fix.width, 2, 1);
-           draw.fix.color = repmat(draw.fix.color, 2, 1);
+if exist('draw', 'var') == 1 && isfield(draw, 'fix')
+    if ~isempty(draw.fix.coor)
+        if strcmp(draw.fix.type, '+')
+            % transorm into line object
+            draw.fix.coor = repmat(draw.fix.coor, 2, 1);
+            draw.fix.orientation = [0 pi/2]';
+            draw.fix.len = repmat(draw.fix.r, 2, 1);
+            draw.fix.width = repmat(draw.fix.width, 2, 1);
+            draw.fix.color = repmat(draw.fix.color, 2, 1);
 
-           % draw as a line object
-           drawLine(w, render, draw.line);
-       else
-           % call the fixation function
-           % this function has no support for width, coor yet
-           fixation(w, draw.fix.type, draw.fix.color, render.backgroundColor);
+            % draw as a line object
+            draw.fix.XY = drawLine(w, render, draw.fix);
+        else
+            % call the fixation function
+            % this function has no support for width, coor yet
+            fixation(w, draw.fix.type, draw.fix.color, render.backgroundColor);
+        end
     end
 end
 
+
+
+% now present the demo and leave
+if isDemo
+    disp('Drawing finished...');
+    Screen('Flip', w);
+    KbWait;
+    Screen('CloseAll');
 end
+
+end %drawObjects
 
 
 
 % helper functions
 function drawCircle(w, circle, cmd)
-OvalRect = CenterRectOnPoint([zeros(size(circle.r,1), 2) circle.r], circle.coor(:,1), circle.coor(:,2));
-Screen(cmd, w, circle.color', OvalRect', circle.width');
+    OvalRect = CenterRectOnPoint([zeros(size(circle.r,1), 2) repmat(circle.r, 1, 2)] , circle.coor(:,1), circle.coor(:,2));
+    Screen(cmd, w, circle.color', OvalRect', circle.width');
+    disp('Drawing ovals...');
 end
 
 
 
 
-function drawLine(w, render, line, cmd)
-
+function XY = drawLine(w, render, line, cmd)
     % transform lines
     XY = [];
     for iLine=1:size(line.coor,1)
-        xy = [0 line.len(iLine); 0 line.len(iLine)];
+        xy = [0 -line.len(iLine); 0 line.len(iLine)]/2;
         theta = line.orientation(iLine);
         shiftX = line.coor(iLine, 1);
         shiftY = line.coor(iLine, 2);
@@ -129,12 +161,14 @@ function drawLine(w, render, line, cmd)
         % now first rotate, then shift
         xy = shift * [[xy*rot]'; ones(1, size(xy, 1))];
         xy(3,:) = [];
-        XY(:, iLine) = xy;
+        XY = [XY xy];
     end
 
     % each line has two columns, first is the starting point of the lineColors
     % the second is the ending point of the line 
     % For each of the two points, we need to specify the color 
     lineColors = reshape(repmat(line.color, 1, 2)', 3, []);
+
+    disp('Drawing lines...');
     Screen('DrawLines', w, XY, line.width', lineColors,[], 2);
 end
