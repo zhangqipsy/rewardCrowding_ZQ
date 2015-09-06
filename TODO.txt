@@ -1,2 +1,4 @@
 the table is ready (conf, mode, Trialsequence)
 let's do everything else
+        done! getData for data.draw
+        drawObjects for data.draw (circles, bars etc.)

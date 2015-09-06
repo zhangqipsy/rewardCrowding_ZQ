@@ -25,34 +25,33 @@ function data = genSequence(conf, mode)
 %	Column 6
 %	    idxTargetColor
 %	Column 7
-%	    idxHighRewardColor
+%	    idxTargetBar
 %	Column 8
-%	    isHighReward
+%	    idxHighRewardColor
 %	Column 9
+%	    isHighReward
+%	Column 10
 %	    respType
 %	    To be recorded.
-%	Column 10
+%	Column 11
 %	    respRT
 %	    To be recorded.
-%	Column 11
+%	Column 12
 %	    respTime
 %	    To be recorded.
-%	Column 12
+%	Column 13
 %	    isCorrect
 %	    To be recorded.
-%	Column 13
+%	Column 14
 %	    counterTillCorrect
 %	    To be recorded.
-%	Column 14
+%	Column 15
 %	    rewardAmount
 %	    To be recorded.
-%	Column 15~19
+%	Column 16~22
 %	    idxDistractorColor
-%	Column 16
-%	Column 17
-%	Column 18
-%	Column 19
-%	Column 20
+%	Column 23~28
+%	    idxDistractorBar
 %
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
@@ -82,15 +81,16 @@ function data = genSequence(conf, mode)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if conf.repetitions == 0
-    [Trials(:,4) Trials(:,5) Trials(:,6)] = BalanceTrials(conf.totalTrials, 1, conf.fixLevels, conf.nStims, conf.nTargets);
+    Trials = NaN(conf.totalTrials, 27);
+    [Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(conf.totalTrials, 1, conf.fixLevels, conf.nStims, conf.nTargets, conf.targetOrientations);
 if mode.demo_on
-    [Trials(:,4) Trials(:,5) Trials(:,6)] = BalanceTrials(36, 1, conf.fixLevels, conf.nStims, conf.nTargets);
+    [Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(72, 1, conf.fixLevels, conf.nStims, conf.nTargets, conf.targetOrientations);
 end
 
 else
-[Trialsequence, Trials] = genTrial(conf.repetitions, 18, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets)]);
+[Trialsequence, Trials] = genTrial(conf.repetitions, 27, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.targetOrientations)]);
 if mode.demo_on
-    [Trialsequence, Trials] = genTrial(1, 18, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets)]);
+    [Trialsequence, Trials] = genTrial(1, 27, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.targetOrientations)]);
 end
 %	Column 4
 %	    fixDuration
@@ -98,21 +98,25 @@ end
 %	    idxTargetPosition
 %	Column 6
 %	    idxTargetColor
-Trials(:, [4 5 6]) = Trialsequence;
+Trials(:, [4 5 6 7]) = Trialsequence;
 Trials(:, 4) = Replace(Trials(:,4), 1:numel(conf.fixLevels), conf.fixLevels);
 end
 
 
-%	Column 7
-%	    idxHighRewardColor
 %	Column 8
+%	    idxHighRewardColor
+%	Column 9
 %	    isHighReward
-Trials(:, 7) = conf.idxHighRewardColor; % see conf.color.targets for idx used
-Trials(:, 8) = ((rand(size(Trials,1),1)>conf.highRewardLevel) & (Trials(:, 6) == Trials(:, 7))) + ((rand(size(Trials,1),1)<(1-conf.highRewardLevel)) & (Trials(:, 6) ~= Trials(:, 7)));
+Trials(:, 8) = conf.idxHighRewardColor; % see conf.color.targets for idx used
+Trials(:, 9) = ((rand(size(Trials,1),1)>conf.highRewardLevel) & (Trials(:, 6) == Trials(:, 8))) + ((rand(size(Trials,1),1)<(1-conf.highRewardLevel)) & (Trials(:, 6) ~= Trials(:, 8)));
 
-%	Column 14~18
+%	Column 16~22
 %	    idxDistractorColor
-Trials(:, 14:14+numel(conf.color.distractors)-1) = Shuffle(repmat(1:numel(conf.color.distractors), size(Trials, 1), 1)')';
+Trials(:, 16:16+numel(conf.color.distractors)-1) = Shuffle(repmat(1:numel(conf.color.distractors), size(Trials, 1), 1)')';
+
+%	Column 23~27
+%	    idxDistractorBar
+Trials(:, 23:23+numel(conf.color.distractors)-1) = Shuffle(repmat(1:numel(conf.distractorOrientations), size(Trials, 1), 1)')';
 
 data.Trials = Trials;
 

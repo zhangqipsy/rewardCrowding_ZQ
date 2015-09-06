@@ -71,27 +71,35 @@ else
     render.task = 'RawardTask';
 end
 
-switch mode.colorbalance_on
-    case 1
+switch mode.colorBalance_on
+    case 0
         % auto-balance the color
         if round(rand)
-            flipud(conf.colors);
-            render.dataSuffix = [render.dataSuffix '_greenTarget_'];
-            data.isRedHigh = 1;
-        else
+            conf.idxHighRewardColor = 1;        
             render.dataSuffix = [render.dataSuffix '_redTarget_'];
-            data.isRedHigh = 1;
+        else
+            conf.idxHighRewardColor = 2;        
+            render.dataSuffix = [render.dataSuffix '_greenTarget_'];
         end
-        render.dataSuffix = [render.dataSuffix '_ColorBalance_'];
+        render.dataSuffix = [render.dataSuffix '_autoColorBalance_'];
+    case 1
+        conf.idxHighRewardColor = mode.colorBalance_on;
+        render.dataSuffix = [render.dataSuffix '_redTarget_'];
+        render.dataSuffix = [render.dataSuffix '_manualColorBalance_'];
+    case 2
+        conf.idxHighRewardColor = mode.colorBalance_on;
+        render.dataSuffix = [render.dataSuffix '_greenTarget_'];
+        render.dataSuffix = [render.dataSuffix '_manualColorBalance_'];
+    otherwise
+        error('rewardCrowding:modeColorBalance', 'Undefined mode.colorBalance_on: %d', mode.colorBalance_on');
+        manualAbort();
 end
 
 if mode.RT_on
     conf.restpertrial       =  inf;           % every x trial a rest
 end
 
-seqChoice = genTrialConditions(8, 100, 6);  % for predicted altruism
-[flow.Trialsequence, Trials] = genTrial(conf.repetitions, 9, [1, 4]);
-Display(designChoice);
+data.Trials = seqChoice = genSequence(conf, mode);  % for predicted altruism
 Display('Please make sure that this design is correct. Insert `dbcont` to continue, or `dbquit` to abort');
 
 %% exp begins
@@ -115,8 +123,7 @@ keyboard;
 
     % psychoaudio hardware setting.
     if mode.audio_on
-        conf.freq = 48000;
-        pahandle = loadAutio(freq);
+        pahandle = loadAutio(conf.audioFreq);
     end
 
     % Get Subject information
@@ -168,26 +175,27 @@ keyboard;
     render.cy = render.wsize(4)/2; %center y
 
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %% data generatoin
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    data = genData(conf, render);
-
 
     flow.nresp    = 1;  % the total number of response recorded
     flow.restcount= 0;  % the number of trials from last rest
-
 
     %% Instructions
     DrawFormattedText(w, instrDB(render.task, mode.english_on), 'center', 'center', [255 255 255 255]);
     Screen('Flip', w);
     if mode.recordImage; recordImage(1,1,[render.task '_instr'],w,render.wsize);end
     %if ~mode.debug_on;Speak(sprintf(instrDB(render.task, mode.english_on)));end
-    pedalWait(mode.tactile_on, inf, render.kb);
+    KbWait;
+    
 
 
     %% Here begins our trial
     for k = 1:length(flow.Trialsequence)
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %% data generatoin
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    data = genData(conf, render);
+
         %      tic;
         flow.prestate = 0;  % the last reponse until now
         flow.response = 0;  % the current current response, just after the last response

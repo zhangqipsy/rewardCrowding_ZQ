@@ -3,7 +3,14 @@ function [clockarm, prCoor, angls]= octalCoor(wsize, r, n)
 % r relate to the hvec of the screen; center:0 highest edge:1
 
 angl=2*pi/n;
+if r>1
+    % r is in pixels
+    R = 1; % no scaling factor
+else
+    % r is in relative
 R=wsize(4)/2;
+end
+
 angls = angl*[1:n];
 if n==8;
     adjst = pi/15;

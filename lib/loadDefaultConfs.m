@@ -36,9 +36,24 @@ function [conf, mode] = loadDefaultConfs()
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% evaluate the input arguments of this function
+% state control variables
+mode.demo_on        = 0;  % baseline trial, without visual stimuli
+mode.colorBalance_on = 0; % 0 for auto balance (rand); 1, 2 for idxHighRewardColor
+mode.audio_on       = 1;
+mode.speak_on       = 1;
+mode.english_on         = 1;  % use English for Instructions etc., 0 for Chinese(not supported for now!)
+% DO NOT CHANGE UNLESS YOU KNOW EXCACTLY WHAT YOU ARE DOING
+mode.regenerate_on      = 1;  % mode.regenerate_on data for experiment, rather than using the saved one
+mode.tillResponse_on    = 1;  % flip after catching response
+mode.usekb_on           = 0;  % force use keyboard for input (also suppress output from digitalIO)
+mode.debug_on           = 1;  % default is 0; 1 is not to use full screen, and skip the synch test
+mode.recordImage        = 0;  % make screen capture and save as images; used for post-hoc demo
+
+
 
 % experiment configuration vatiables
-conf.repetitions        =  26;           % repetition time of a condition
+conf.repetitions        =  13;           % repetition time of a condition
 conf.totalTrials        = 1008;     % respects this if repititions is zero
 conf.restpertrial       =  100;           % every x trial a rest
 conf.nStims              =  6;          % number of stimuli (target+distractors) present in each trial/throughout the experiment
@@ -47,6 +62,8 @@ conf.audioFreq = 1000;
 conf.fixLevels          = [.4 .5 .6];
 conf.idxHighRewardColor = 1;        
 conf.highRewardLevel    = .8;
+conf.targetOrientations = [0 90];
+conf.distractorOrientations = [45 135];
 
 % NOTE: check this values out!
 conf.viewDist       = 50;
@@ -100,20 +117,10 @@ metric.cir_r       = round(DegreesToRetinalMM(cir_r,conf.viewDist)/conf.cmPerPix
 metric.fix_r       = round(DegreesToRetinalMM(fix_r,conf.viewDist)/conf.cmPerPix); % long arm radius of fixation cross (pix)
 metric.fix_r2    = round(DegreesToRetinalMM(fix_r2,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix)
 metric.scale1             =  20;          % linear magnifier
+metric.circle_width = 3.35;
 
 conf.metric = metric;
 
 
-% evaluate the input arguments of this function
-% state control variables
-mode.demo_on        = 0;  % baseline trial, without visual stimuli
-mode.colorbalance_on = 1; % balance the colors by oneself
-mode.english_on         = 1;  % use English for Instructions etc., 0 for Chinese(not supported for now!)
-% DO NOT CHANGE UNLESS YOU KNOW EXCACTLY WHAT YOU ARE DOING
-mode.regenerate_on      = 1;  % mode.regenerate_on data for experiment, rather than using the saved one
-mode.tillResponse_on    = 1;  % flip after catching response
-mode.usekb_on           = 0;  % force use keyboard for input (also suppress output from digitalIO)
-mode.debug_on           = 1;  % default is 0; 1 is not to use full screen, and skip the synch test
-mode.recordImage        = 0;  % make screen capture and save as images; used for post-hoc demo
 
 end
