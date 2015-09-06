@@ -95,6 +95,9 @@ color.barcolor = 180;
 color.textcolor = [90 90 90];
 color.textcolor2 = [40 40 40];
 
+color.bar = color.white;
+color.fix = color.white;
+
 conf.color = color;
 
 

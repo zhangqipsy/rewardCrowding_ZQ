@@ -1,7 +1,7 @@
 function data = genSequence(conf, mode)
 %GENTRIALCONDITIONS generates stimulus data and experiment settings based on `conf` struct
 %
-% SYNOPSIS: data = genTrialConditions(nBlocks, nTrials, nStims)
+% SYNOPSIS: data = genSequence(nBlocks, nTrials, nStims)
 %
 % INPUT
 %

@@ -39,23 +39,25 @@ function [data] = genRewardData(thisTrial, render, conf, mode)
 draw.circle.coor = octalCoor(render.wsize, conf.metric.range_r, conf.nStims);
 draw.circle.color = reshape(cell2mat(conf.color.distractors(thisTrial(:, 16:16+numel(conf.color.distractors)-1))), 3, [])';
 draw.circle.r = repmat(conf.metric.cir_r, conf.nStims, 1);
-draw.circle.isFill = zeros(conf.nStims, 1);
 draw.circle.width = repmat(conf.metric.circle_width, conf.nStims, 1);
+draw.circle.isFill = zeros(conf.nStims, 1);
 
-draw.bar.coor = draw.circle.coor;
-draw.bar.orientation = reshape(cell2mat(conf.distractorOrientations(thisTrial(:, 23:23+numel(conf.color.distractors)-1))), 1, [])';
-draw.bar.len = repmat(conf.metric.bar_r, conf.nStims, 1);
-draw.bar.width = repmat(conf.metric.bar_r2, conf.nStims, 1);
+draw.line.coor = draw.circle.coor;
+draw.line.orientation = reshape(cell2mat(conf.distractorOrientations(thisTrial(:, 23:23+numel(conf.color.distractors)-1))), 1, [])';
+draw.line.len = repmat(conf.metric.line_r, conf.nStims, 1);
+draw.line.width = repmat(conf.metric.line_r2, conf.nStims, 1);
+draw.line.color = repmat(conf.color.bar, conf.nStims, 1);
 
 draw.fix.coor = repmat([render.cx render.cy], conf.nStims, 1);
 draw.fix.type = repmat('+', conf.nStims, 1);
 draw.fix.r = repmat(conf.metric.fix_r, conf.nStims,1);
 draw.fix.width = repmat(conf.metric.fix_r2, conf.nStims,1);
+draw.fix.color = conf.color.fix
 
 
 % replace one distractor with target
 draw.circle.color(thisTrial(5)) = conf.color.targets{thisTrial(6)};
-draw.bar.orientation(thisTrial(5)) = conf.targetOrientations(thisTrial(7));
+draw.line.orientation(thisTrial(5)) = conf.targetOrientations(thisTrial(7));
 
 
 % output data

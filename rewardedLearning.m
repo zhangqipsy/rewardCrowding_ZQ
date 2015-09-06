@@ -173,6 +173,7 @@ keyboard;
 
     render.cx = render.wsize(3)/2; %center x
     render.cy = render.wsize(4)/2; %center y
+    render.backgroundColor = conf.backgroundColor;
 
 
 
