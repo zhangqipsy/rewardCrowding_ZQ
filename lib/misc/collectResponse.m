@@ -1,4 +1,4 @@
-function [rt, response] = collectResponse(responseSet, deadline, t0)
+function [rt, response, respTime] = collectResponse(responseSet, deadline, t0)
 %FUNCTION [rt, response] = collectResponse(responseSet,  deadline, t0)
 % collect keyboard response: 
 % wait for key in response set, return response time relative to t0 and symbolic name of key
@@ -20,7 +20,11 @@ function [rt, response] = collectResponse(responseSet, deadline, t0)
 
 persistent keyIsDown t00 secs keyCode deltaSecs
 
+if isnumeric(responseSet)
+responseSetCodes = responseSet;
+else
 responseSetCodes = KbName(responseSet);
+end
 
 keyIsDown = true;
 while keyIsDown
@@ -40,4 +44,6 @@ while ~done
         response = 'DEADLINE';
         done = true;
     end
+
+    respTime = GetSecs();
 end

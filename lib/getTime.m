@@ -26,8 +26,10 @@ MyTime               =  .02;         % each frame is set to 20ms (the monitor's 
         MyTime = 20; % wait black screen between Trials, random
     case {'CountdownAfterRest'}
         MyTime = 10;
-    case {'autioTone}
-        MyTime = 0.5; % 500 ms
+    case {'BlankAfterTrial'}
+        MyTime = 1;
+    case {'audioTone'}
+        MyTime = 0.05; % 50 ms
     otherwise
         MyTime = 1;
         error('exp:Mytime', 'No time found!');

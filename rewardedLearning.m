@@ -119,11 +119,15 @@ keyboard;
     checkVersion();
 
     % unified key definitions
-    render.kb = keyDefinition();
+    %render.kb = keyDefinition();
 
     % psychoaudio hardware setting.
     if mode.audio_on
-        pahandle = loadAutio(conf.audioFreq);
+        %render.pahandle = loadAudio(conf.audioFreq);
+        data.audio.tone1(1,:) = MakeBeep(conf.audioTone1Hz, getTime('audioTone'), conf.audioFreq); % target
+        data.audio.tone1(2,:) = tone1(1,:);
+        data.audio.tone2(1,:) = MakeBeep(conf.audioTone2Hz, getTime('audioTone'), conf.audioFreq);
+        data.audio.tone2(2,:) = tone2(1,:); % tone2 is the last tone that indicate the end of the sound sequence.
     end
 
     % Get Subject information
@@ -195,7 +199,7 @@ keyboard;
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% data generatoin
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    data = genData(conf, render);
+    data.draw = genRewardData(conf, render);
 
         %      tic;
         flow.prestate = 0;  % the last reponse until now
@@ -205,16 +209,15 @@ keyboard;
         flow.Trial = k;
         % rest every couple trials once
         if flow.Trial > 1
-            WaitSecs(0.001);
+            WaitSecs(eps);
             showLeftTrial(flow.Trialsequence, flow.Trial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.tactile_on);
             if mode.recordImage; recordImage(1,1,[render.task '_remaining'],w,render.wsize);end
         end
 
         flow.restcount = restBetweenTrial(flow.restcount, conf.resttime, conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.tactile_on);
-        conf.waitBetweenTrials  =  .8+rand*0.2; % wait black screen between Trials, random
 
-
-        WaitSecs(conf.waitBetweenTrials);  % wait black screen between Trials, random
+        % NOTE: do we need wait black screen between Trials, random?
+        WaitSecs(getTime('WaitBetweenTrials'));  % wait black screen between Trials, random
 
 
         if mode.recordImage; recordImage(1,1,[render.task '_mirror'],w,render.wsize); end
@@ -223,46 +226,53 @@ keyboard;
         Screen('FillRect',w, conf.backgroundColor);
         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
 
-        %% PLW that you can see on the screen
+        %% Stim that you can see on the screen
         flow.isquit = 0;     % to capture ESCAPE for quitting
         flow.isresponse = 0;
         render.iniTimer=GetSecs;
 
-        data.iniTactile = data.tTrack(find(data.tTrack>0,1));%initial type of tactile stimuli
-        if isempty(data.iniTactile);
-            data.iniTactile = 0;  %baseline is 0
+        % present stimuli
+        data.drawed = drawObjects(w, render, data.draw);
+        render.vlb = Screen('Flip', w, render.vlb + (1-0.5)*conf.flpi);%use the center of the interval
+        % Flip the visual stimuli on the screen, along with timing
+        % old = render.vlb;
+        if mode.recordImage; recordImage(flow.Flip,10,render.task ,w,render.wsize);end
+
+
+        % get the response
+        [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration'), GetSecs); % first one is space
+        switch flow.response
+            case {'escape'}
+                manualAbort();
+            case conf.validKeys(3:end) % all stimuli (first two are space and escape)
+                flow.idxResponse = find(strcmpi(conf.validKeys, flow.response));
+
+                % NOTE: record response
+
+                % give feedback
+
+            case {'DEADLINE'}
+                % deadline is reached!
+                % Here comes the sound
+                if mode.audio_on; 
+                %playSound(pahandle, conf.audioFreq, data.paceRate, data.moveDirection(flow.Trial, 1));
+                Snd('Play',tone2, conf.audioFreq,16);
+                end
+
+                % NOTE: remember this trial for later
+
+            otherwise
+                error('rewardedLearning:collectResponse', 'keys other than validKeys are collected');
         end
 
-        for i=data.Track  %loop leghth
-            flow.Flip = i;
-            if mode.mirror_on
-                % we do not need noise for mask here!
-            else
-                % here comes the noise background
-                %addNoise(w, 256, render.wsize);%Do not use this, since buffer tex is used
-                Screen('DrawTexture', w, tex(render.noiseloop(flow.Flip)), [], render.dstRect, [], 0);
-            end
 
 
-            Screen('DrawingFinished', w); % no further drawing commands will follow before Screen('Flip')
 
-            %Here comes the sound
-            if mode.audio_on
-                playSound(pahandle, freq, data.paceRate, data.moveDirection(flow.Trial, 1));
-            end
-
-
-            % get the response
-
-            % Flip the visual stimuli on the screen, along with timing
-            % old = render.vlb;
-            render.vlb = Screen('Flip', w, render.vlb + (1-0.5)*conf.flpi);%use the center of the interval
-            if mode.recordImage; recordImage(flow.Flip,10,render.task ,w,render.wsize);end
-            %        toc;
-            %        tic;
         end
 
         % end of per trial
+        Screen('FillRect',w, conf.backgroundColor);
+        WaitSecs(getTime('BlankAfterTrial'));
         Screen('Flip', w);
 
 

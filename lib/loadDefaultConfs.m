@@ -64,6 +64,9 @@ conf.idxHighRewardColor = 1;
 conf.highRewardLevel    = .8;
 conf.targetOrientations = [0 pi/2];
 conf.distractorOrientations = [pi/4 -pi/4];
+conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
+conf.audioTone1Hz   = 1000;
+conf.audioTone2Hz   = 500;
 
 % NOTE: check this values out!
 conf.monWidth   = 38.5;
