@@ -101,7 +101,7 @@ try
     Display('Please make sure that this design is correct. Insert `dbcont` to continue, or `dbquit` to abort');
 
     %% exp begins
-    %keyboard;
+    keyboard;
 
 
     if exist('./data', 'dir') ~= 7
@@ -122,9 +122,9 @@ try
     % psychoaudio hardware setting.
     if mode.audio_on
         %render.pahandle = loadAudio(conf.audioFreq);
-        data.audio.tone1(1,:) = MakeBeep(conf.audioTone1Hz, getTime('audioTone'), conf.audioFreq); % target
+        data.audio.tone1(1,:) = MakeBeep(conf.audioTone1Hz, getTime('audioTone', mode.debug_on), conf.audioFreq); % target
         data.audio.tone1(2,:) = data.audio.tone1(1,:);
-        data.audio.tone2(1,:) = MakeBeep(conf.audioTone2Hz, getTime('audioTone'), conf.audioFreq);
+        data.audio.tone2(1,:) = MakeBeep(conf.audioTone2Hz, getTime('audioTone', mode.debug_on), conf.audioFreq);
         data.audio.tone2(2,:) = data.audio.tone2(1,:); % tone2 is the last tone that indicate the end of the sound sequence.
     end
 
@@ -221,10 +221,10 @@ try
             if mode.recordImage; recordImage(1,1,[render.task '_remaining'],w,render.wsize);end
         end
 
-        flow.restcount = restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks'), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on);
+        flow.restcount = restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks', mode.debug_on), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on);
 
         % NOTE: do we need wait black screen between Trials, random?
-        WaitSecs(getTime('WaitBetweenTrials'));  % wait black screen between Trials, random
+        WaitSecs(getTime('WaitBetweenTrials', mode.debug_on));  % wait black screen between Trials, random
 
         if mode.recordImage; recordImage(1,1,[render.task '_mirror'],w,render.wsize); end
 
@@ -249,14 +249,15 @@ try
 
 
         % get the response
-        [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration'), GetSecs); % first one is space
+        [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration', mode.debug_on), GetSecs); % first one is space
 
         Screen('FillRect',w, conf.color.backgroundColor);
         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
-        WaitSecs(getTime('BlankAfterResp'));
+        WaitSecs(getTime('BlankAfterResp', mode.debug_on));
 
+        Display(flow.response);
         switch flow.response
-            case {'escape'}
+            case {'Escape', 'escape'}
                 flow.isquit = 1;
                 manualAbort();
             case conf.validKeys(3:end) % all stimuli (first two are space and escape)
@@ -270,7 +271,7 @@ try
                 if flow.isCorrect
                     DrawFormattedText(w, sprintf(instrDB('rewardFeedback', mode.english_on), data.Trials(flow.nresp, 15), sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
                     render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
-                    WaitSecs(getTime('ShowFeedback'));
+                    WaitSecs(getTime('ShowFeedback', mode.debug_on));
                 end
 
             case {'DEADLINE'}
@@ -289,7 +290,7 @@ try
 
                 %Screen('FillRect',w, conf.color.backgroundColor);
                 %render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
-                %WaitSecs(getTime(''));
+                %WaitSecs(getTime('', mode.debug_on));
 
             otherwise
                 error('rewardedLearning:collectResponse', 'keys other than validKeys are collected');
@@ -298,7 +299,7 @@ try
         % end of per trial
         flow.nresp    = flow.nresp + 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
         Screen('FillRect',w, conf.color.backgroundColor);
-        WaitSecs(getTime('BlankAfterTrial'));
+        WaitSecs(getTime('BlankAfterTrial', mode.debug_on));
         Screen('Flip', w);
 
 

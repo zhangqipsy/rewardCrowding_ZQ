@@ -75,12 +75,12 @@ Screen('TextStyle', w, 1);
 
 % golden_ratio = (sqrt(5)-1)/2;
 lenghth = 32;
-[~, ~, bbox] = DrawFormattedText(w, mytext, 0, 0, 0, lenghth);
+[~, ~, bbox] = DrawFormattedText(w, mytext, 0, 0, [0 0 0 0], lenghth);
 textbox = (wsize - bbox)/2;
 DrawFormattedText(w, mytext, textbox(3), textbox(4), [255 255 255], lenghth);
 
 % Show computed text bounding box:
-Screen('FrameRect', w, 0, bbox);
+Screen('FrameRect', w, [0 0 0 0], bbox);
 Screen('Flip',w);
 
 keyCode = pedalWait(tactile_on, time, kb);

@@ -1,6 +1,6 @@
-the table is ready (conf, mode, Trialsequence)
 let's do everything else
-        done! getData for data.draw
         done! drawObjects for data.draw (circles, bars etc.)
                 also support poly, rect
                 fixation coor and width
+
+BUG: collectResponse waits until key release

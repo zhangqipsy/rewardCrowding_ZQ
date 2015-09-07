@@ -1,11 +1,10 @@
-function MyTime = getTime(type, ratio, isDebug)
+function MyTime = getTime(type, isDebug)
 
+ratio = 1;
 if nargin < 2
-    ratio = 1;
+    isDebug = 0; % shortens time
 end
-if nargin < 3
-isDebug = 0; % shortens time
-end
+if isDebug; ratio = 1;end
 
 switch type
     case {'flpi'}
@@ -41,7 +40,7 @@ MyTime               =  .02;         % each frame is set to 20ms (the monitor's 
 end
 
 if isDebug
-    MyTime = 0.01* MyTime;
+    MyTime = ratio* MyTime;
 end
 
 end

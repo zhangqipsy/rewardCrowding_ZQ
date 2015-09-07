@@ -11,7 +11,9 @@ function status = test(testWhat)
             data.draw1 = drawObjects([], [], data.draw);
             keyboard
         case {'reward'}
-            rewardedLearning()
+            mode.demo_on = 1;
+            conf.repetitions = 1;
+            rewardedLearning(conf, mode)
         otherwise
             disp('No test specified!')
     end
