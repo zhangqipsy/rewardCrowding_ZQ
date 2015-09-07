@@ -114,14 +114,14 @@ data.Trials(flow.nresp, 2) = floor(flow.nresp/conf.restpertrial);
 %	Column 3
 %	    trialID
 %	    To be recorded.
-if data.trials(flow.nresp, 3) == 0 || isnan(data.trials(flow.nresp, 3))
+if data.Trials(flow.nresp, 3) == 0 || isnan(data.Trials(flow.nresp, 3))
     flow.isRecollect = 0;
     data.Trials(flow.nresp, 3) = flow.trialID; % represents the trials (condition); the same for re-collected ones
     flow.trialID = flow.trialID + 1;
-elseif data.trials(flow.nresp, 3) > 0 
+elseif data.Trials(flow.nresp, 3) > 0 
     % recollecting data, do not change the trialID
     flow.isRecollect = 1;
-elseif data.trials(flow.nresp, 3) < 0 
+elseif data.Trials(flow.nresp, 3) < 0 
     % negative trialID -- end of experiment
     flow.isRecollect = 0;
     flow.isquit = 1;
@@ -165,7 +165,6 @@ else
     data.Trials = [data.Trials; data.Trials(flow.nresp, :)];
 end
 
-flow.nresp    = flow.nresp + 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
 if flow.nresp > size(data.Trials, 1)
     % all the trials as well as scheduled trials finished collecting correct responses
     % end the experiment

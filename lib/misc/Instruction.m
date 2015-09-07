@@ -47,8 +47,8 @@ else
     fclose(fd);
 end
 mytext = [mytext char(10)];
-mytext = native2unicode(mytext, 'Shift_JIS');
-% mytext = double(mytext);
+%mytext = native2unicode(mytext, 'Shift_JIS');
+mytext = double(mytext);
 % disp(mytext);
 
 if ~isSkip

@@ -142,7 +142,7 @@ end %drawObjects
 function drawCircle(w, circle, cmd)
     OvalRect = CenterRectOnPoint([zeros(size(circle.r,1), 2) repmat(circle.r, 1, 2)] , circle.coor(:,1), circle.coor(:,2));
     Screen(cmd, w, circle.color', OvalRect', circle.width');
-    disp('Drawing ovals...');
+    %disp('Drawing ovals...');
 end
 
 
@@ -169,6 +169,6 @@ function XY = drawLine(w, render, line, cmd)
     % For each of the two points, we need to specify the color 
     lineColors = reshape(repmat(line.color, 1, 2)', 3, []);
 
-    disp('Drawing lines...');
+    %disp('Drawing lines...');
     Screen('DrawLines', w, XY, line.width', lineColors,[], 2);
 end

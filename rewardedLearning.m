@@ -39,6 +39,7 @@ function wrkspc = rewardedLearning(conf, mode, Subinfo)
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+flow.iniTimer = GetSecs;
 addpath('./data', './lib', './lib/misc', './resources');
 data=struct();
 
@@ -64,11 +65,11 @@ try
     if mode.demo_on
         render.dataPrefix = ['Demo/'];
         render.dataSuffix = [render.dataSuffix '_RawardDemo_'];
-        render.task = 'RawardDemo';
+        render.task = 'RewardDemo';
     else
         render.dataPrefix = ['RewardTask/'];
         render.dataSuffix = [render.dataSuffix '_RawardTask_'];
-        render.task = 'RawardTask';
+        render.task = 'RewardTask';
     end
 
     switch mode.colorBalance_on
@@ -96,11 +97,11 @@ try
     end
 
 
-    data.Trials = seqChoice = genSequence(conf, mode);  % for predicted altruism
+    data.Trials = genSequence(conf, mode);  % for predicted altruism
     Display('Please make sure that this design is correct. Insert `dbcont` to continue, or `dbquit` to abort');
 
     %% exp begins
-    keyboard;
+    %keyboard;
 
 
     if exist('./data', 'dir') ~= 7
@@ -122,13 +123,13 @@ try
     if mode.audio_on
         %render.pahandle = loadAudio(conf.audioFreq);
         data.audio.tone1(1,:) = MakeBeep(conf.audioTone1Hz, getTime('audioTone'), conf.audioFreq); % target
-        data.audio.tone1(2,:) = tone1(1,:);
+        data.audio.tone1(2,:) = data.audio.tone1(1,:);
         data.audio.tone2(1,:) = MakeBeep(conf.audioTone2Hz, getTime('audioTone'), conf.audioFreq);
-        data.audio.tone2(2,:) = tone2(1,:); % tone2 is the last tone that indicate the end of the sound sequence.
+        data.audio.tone2(2,:) = data.audio.tone2(1,:); % tone2 is the last tone that indicate the end of the sound sequence.
     end
 
     % Get Subject information
-    if ~exist('Subinfo','var');data.Subinfo = getSubInfo();end
+    if exist('Subinfo','var');data.Subinfo = Subinfo; else data.Subinfo = getSubInfo();end
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -149,9 +150,9 @@ try
     render.screenNumber=max(render.screens);
 
     if mode.debug_on
-        [w,render.wsize]=Screen('OpenWindow',render.screenNumber,0,[1,1,801,601],[]);
+        [w,render.wsize]=Screen('OpenWindow',render.screenNumber,conf.color.backgroundColor,[1,1,801,601],[]);
     else
-        [w,render.wsize]=Screen('OpenWindow',render.screenNumber,0,[],32);
+        [w,render.wsize]=Screen('OpenWindow',render.screenNumber,conf.color.backgroundColor,[],32);
     end
     Screen('BlendFunction', w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -174,11 +175,13 @@ try
 
     render.cx = render.wsize(3)/2; %center x
     render.cy = render.wsize(4)/2; %center y
-    render.backgroundColor = conf.backgroundColor;
+    
+    % NOT used by now; could be convenient when none of the conf are needed
+    render.backgroundColor = conf.color.backgroundColor; 
 
 
     %% Instructions
-    DrawFormattedText(w, instrDB(render.task, mode.english_on), 'center', 'center', [255 255 255 255]);
+    DrawFormattedText(w, instrDB(render.task, mode.english_on), 'center', 'center', conf.color.textcolor);
     Screen('Flip', w);
     if mode.recordImage; recordImage(1,1,[render.task '_instr'],w,render.wsize);end
     %if ~mode.debug_on;Speak(sprintf(instrDB(render.task, mode.english_on)));end
@@ -186,7 +189,8 @@ try
 
 
 
-    flow.nresp    = 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
+    flow.nresp    = 1;  % the total number of response recorded 
+    flow.restcount= 0;  % the number of trials from last rest
     flow.trialID = 1;
     %% Here begins our trial
     while true
@@ -196,7 +200,7 @@ try
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %% data generatoin
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        data.draw = genRewardData(conf, render);
+        data.draw = genRewardData(data.Trials(flow.nresp, :), render, conf, mode);
 
         % per trial initialization
         flow.response = 0;  % the current current response, just after the last response
@@ -210,7 +214,10 @@ try
         % rest every couple trials once
         if flow.nresp > 1
             WaitSecs(eps);
-            showLeftTrial(data.Trials, flow.nresp, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on);
+
+            if mod(flow.nresp, conf.showLeftTrialsEvery) == 0
+                showLeftTrial(data.Trials, flow.nresp, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on);
+            end
             if mode.recordImage; recordImage(1,1,[render.task '_remaining'],w,render.wsize);end
         end
 
@@ -222,7 +229,7 @@ try
         if mode.recordImage; recordImage(1,1,[render.task '_mirror'],w,render.wsize); end
 
 
-        Screen('FillRect',w, conf.backgroundColor);
+        Screen('FillRect',w, conf.color.backgroundColor);
         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
 
 
@@ -244,7 +251,7 @@ try
         % get the response
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration'), GetSecs); % first one is space
 
-        Screen('FillRect',w, conf.backgroundColor);
+        Screen('FillRect',w, conf.color.backgroundColor);
         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
         WaitSecs(getTime('BlankAfterResp'));
 
@@ -261,7 +268,7 @@ try
 
                 % give feedback
                 if flow.isCorrect
-                    DrawFormattedText(w, sprintf(instrDB('rewardFeedback', mode.english_on), data.Trials(flow.nresp, 15), sum(data.Trials(flow.nresp, :))), 'center', 'center', [256 255 255 255]);
+                    DrawFormattedText(w, sprintf(instrDB('rewardFeedback', mode.english_on), data.Trials(flow.nresp, 15), sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
                     render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
                     WaitSecs(getTime('ShowFeedback'));
                 end
@@ -276,11 +283,11 @@ try
                 % Here comes the sound
                 if mode.audio_on; 
                     %playSound(pahandle, conf.audioFreq, data.paceRate, data.moveDirection(flow.nresp, 1));
-                    Snd('Play',tone2, conf.audioFreq,16);
+                    Snd('Play',data.audio.tone2, conf.audioFreq,16);
                 end
 
 
-                %Screen('FillRect',w, conf.backgroundColor);
+                %Screen('FillRect',w, conf.color.backgroundColor);
                 %render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
                 %WaitSecs(getTime(''));
 
@@ -289,7 +296,8 @@ try
         end
 
         % end of per trial
-        Screen('FillRect',w, conf.backgroundColor);
+        flow.nresp    = flow.nresp + 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
+        Screen('FillRect',w, conf.color.backgroundColor);
         WaitSecs(getTime('BlankAfterTrial'));
         Screen('Flip', w);
 
@@ -311,8 +319,8 @@ try
 
 
     Display(char('','','data/latest.mat saved successfully, use for debugging!',''));
-    render.matFileName = ['data/',render.dataPrefix, Subinfo{1} , render.dataSuffix, date, '.mat'];
-    save(render.matFileName,'Trials','conf', 'Subinfo','flow','mode','data');
+    render.matFileName = ['data/',render.dataPrefix, data.Subinfo{1} , render.dataSuffix, date, '.mat'];
+    save(render.matFileName,'Trials','conf','flow','mode','data');
     wrkspc = load(render.matFileName);
     Display(render.matFileName);
 
@@ -330,8 +338,8 @@ catch
     % always save the buggy data for debugging
     save data/buggy.mat;
     Display(char('','','data/buggy.mat saved successfully, use for debugging!',''));
-    save(['data/', render.dataPrefix, Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
-    wrkspc = load(['data/', render.dataPrefix, Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
+    save(['data/', render.dataPrefix, data.Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
+    wrkspc = load(['data/', render.dataPrefix, data.Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
     %     disp(['';'';'data/buggy saved successfully, use for debugging!']);
     Screen('CloseAll');
     if mode.audio_on; PsychPortAudio('Close'); end
@@ -354,7 +362,7 @@ save data/latest.mat;
 Display(char('','','data/latest.mat saved successfully, use for testing!',''));
 figure;
 %boxplot(Trials(:,3),Trials(:,2));
-%title([Subinfo{1} ':' render.task]);
+%title([data.Subinfo{1} ':' render.task]);
 %format short;
 Display('Experiment was successful!');
 

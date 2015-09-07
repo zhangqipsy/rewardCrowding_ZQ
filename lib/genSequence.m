@@ -1,4 +1,4 @@
-function data = genSequence(conf, mode)
+function Trials = genSequence(conf, mode)
 %GENTRIALCONDITIONS generates stimulus data and experiment settings based on `conf` struct
 %
 % SYNOPSIS: data = genSequence(nBlocks, nTrials, nStims)
@@ -114,8 +114,13 @@ Trials(:, 9) = ((rand(size(Trials,1),1)>conf.highRewardLevel) & (Trials(:, 6) ==
 %	Column 14
 %	    counterTillCorrect
 %	    To be recorded.
+%	Column 15
+%	    rewardAmount
+%	    To be recorded.
+%
 %	    initialize here
 Trials(:, 14) = zeros(size(Trials,1), 1);
+Trials(:, 15) = zeros(size(Trials,1), 1);
 
 %	Column 16~22
 %	    idxDistractorColor
@@ -124,7 +129,5 @@ Trials(:, 16:16+conf.nStims-1) = Shuffle(repmat(1:conf.nStims, size(Trials, 1), 
 %	Column 23~27
 %	    idxDistractorBar
 Trials(:, 23:23+conf.nStims-1) = Randi(numel(conf.distractorOrientations), [size(Trials,1), conf.nStims]);
-
-data.Trials = Trials;
 
 end

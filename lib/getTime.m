@@ -27,10 +27,14 @@ MyTime               =  .02;         % each frame is set to 20ms (the monitor's 
         MyTime = 10;
     case {'BlankAfterResp'}
         MyTime = 1;
+    case {'BlankAfterTrial'} % NOTE: do we need this? blank background of 1 sec at end of per trial
+        MyTime = 1;
     case {'audioTone'}
         MyTime = 0.5; % 500 ms
     case {'ShowFeedback'}
         MyTime = 1.5;
+    case {'ShowLeftTrial'}
+        MyTime = 0.5;
     otherwise
         MyTime = 1;
         error('exp:Mytime', 'No time found!');

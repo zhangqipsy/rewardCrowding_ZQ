@@ -49,6 +49,8 @@ mode.tillResponse_on    = 1;  % flip after catching response
 mode.usekb_on           = 0;  % force use keyboard for input (also suppress output from digitalIO)
 mode.debug_on           = 1;  % default is 0; 1 is not to use full screen, and skip the synch test
 mode.recordImage        = 0;  % make screen capture and save as images; used for post-hoc demo
+mode.serialInput_on     = 0;  % serial input devices
+mode.once_on            = 0;  % end of experiment after these many trials
 
 
 
@@ -57,9 +59,10 @@ mode.recordImage        = 0;  % make screen capture and save as images; used for
 conf.repetitions        =  13;           % repetition time of a condition
 conf.totalTrials        = 1008;     % respects this if repititions is zero
 conf.restpertrial       =  100;           % every x trial a rest
+conf.showLeftTrialsEvery     = 5;
 conf.nStims              =  6;          % number of stimuli (target+distractors) present in each trial/throughout the experiment
 conf.nTargets           = 1;            % number of targets present in each trial/throughout the experiment
-conf.audioFreq = 1000;
+conf.audioFreq = 44100;                 
 conf.fixLevels          = [.4 .5 .6];
 conf.idxHighRewardColor = 1;        
 conf.highRewardLevel    = .8;
@@ -69,6 +72,7 @@ conf.distractorOrientations = [pi/4 -pi/4];
 conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
 conf.audioTone1Hz   = 1000;
 conf.audioTone2Hz   = 500;
+conf.flpi               = .02;          % NOT used
 
 % NOTE: check this values out!
 conf.monWidth   = 38.5;
@@ -102,8 +106,8 @@ color.lightpurple = [74 47 157];%;[ 0    26  11];[150 118 115] %NOTE: this color
 color.gray = [74 92 82];%[123 79 255]; [196 5 230]%NOTE: this color was not present in the original paper
 color.backgroundColor = [128 128 128];% background color=black
 color.barcolor = 180;
-color.textcolor = [90 90 90];
-color.textcolor2 = [40 40 40];
+color.textcolor = 256*[1 1 1]; % used for instruction
+color.textcolor2 = [40 40 40]; % used for feedback
 
 color.bar = color.white;
 color.fix = color.white;

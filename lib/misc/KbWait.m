@@ -116,7 +116,7 @@ function [secs, keyCode, deltaSecs] = KbWait(deviceNumber, forWhat, untilTime)
   end
 
   % Wait for keystroke?
-  if (forWhat == 2) | (forWhat == 3) %#ok<OR2>
+  if (forWhat == 2) || (forWhat == 3) %#ok<OR2>
     % Wait for keystroke, ie., first make sure all keys are released, then
     % wait for a keypress:
 
@@ -141,7 +141,7 @@ function [secs, keyCode, deltaSecs] = KbWait(deviceNumber, forWhat, untilTime)
   ini = GetSecs;
   while secs - ini < untilTime
     [isDown, secs, keyCode, deltaSecs] = KbCheck(deviceNumber);
-    if (isDown == ~forWhat) | (secs - ini >= untilTime) %#ok<OR2>
+    if (isDown == ~forWhat) || (secs - ini >= untilTime) %#ok<OR2>
       return;
     end
 

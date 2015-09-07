@@ -67,7 +67,7 @@ if min(m,n) ~= 1
    error('stats:fullfact:VectorRequired','Requires a vector input.');
 end
 
-if any((floor(levels) - levels) ~= 0)  | any(levels <= 1)
+if any((floor(levels) - levels) ~= 0)  || any(levels <= 1)
    error('stats:fullfact:IntegersRequired',...
          'The input values must be integers greater than one.');
 end
