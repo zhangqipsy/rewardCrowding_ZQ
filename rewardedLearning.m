@@ -256,10 +256,15 @@ try
                 % NOTE: here assuming that conf.validKeys have space, escape as the first two
                 flow.idxResponse = find(strcmpi(conf.validKeys, flow.response))-2;
 
+                % record response
+                [data, flow] = recordResponse(flow, data, conf);
+
                 % give feedback
-                DrawFormattedText(w, sprintf(instrDB('rewardFeedback', mode.english_on), data.Trials(flow.nresp, 15), sum(data.Trials(flow.nresp, :))), 'center', 'center', [256 255 255 255]);
-                render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
-                WaitSecs(getTime('ShowFeedback'));
+                if flow.isCorrect
+                    DrawFormattedText(w, sprintf(instrDB('rewardFeedback', mode.english_on), data.Trials(flow.nresp, 15), sum(data.Trials(flow.nresp, :))), 'center', 'center', [256 255 255 255]);
+                    render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
+                    WaitSecs(getTime('ShowFeedback'));
+                end
 
             case {'DEADLINE'}
                 % deadline is reached!
@@ -282,8 +287,6 @@ try
             otherwise
                 error('rewardedLearning:collectResponse', 'keys other than validKeys are collected');
         end
-        % record response
-        [data, flow] = recordResponse(flow, data, conf);
 
         % end of per trial
         Screen('FillRect',w, conf.backgroundColor);
