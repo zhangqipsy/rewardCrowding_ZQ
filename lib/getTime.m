@@ -18,7 +18,6 @@ MyTime               =  .02;         % each frame is set to 20ms (the monitor's 
         % NOTE: this is NOT used; it is controlled by condition
         %MyTime = 1;
     case {'TrialDuration'}
-        % Trials: altruism, zili,ziti all lasts for 4s.
         MyTime = .6;
     case {'WaitBetweenTrials'}
         MyTime = 0.8+rand*0.2;
@@ -26,10 +25,12 @@ MyTime               =  .02;         % each frame is set to 20ms (the monitor's 
         MyTime = 20; % wait black screen between Trials, random
     case {'CountdownAfterRest'}
         MyTime = 10;
-    case {'BlankAfterTrial'}
+    case {'BlankAfterResp'}
         MyTime = 1;
     case {'audioTone'}
-        MyTime = 0.05; % 50 ms
+        MyTime = 0.5; % 500 ms
+    case {'ShowFeedback'}
+        MyTime = 1.5;
     otherwise
         MyTime = 1;
         error('exp:Mytime', 'No time found!');

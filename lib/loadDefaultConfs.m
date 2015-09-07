@@ -52,6 +52,7 @@ mode.recordImage        = 0;  % make screen capture and save as images; used for
 
 
 
+
 % experiment configuration vatiables
 conf.repetitions        =  13;           % repetition time of a condition
 conf.totalTrials        = 1008;     % respects this if repititions is zero
@@ -62,6 +63,7 @@ conf.audioFreq = 1000;
 conf.fixLevels          = [.4 .5 .6];
 conf.idxHighRewardColor = 1;        
 conf.highRewardLevel    = .8;
+conf.rewardAmounts      = [0.1 0.5];
 conf.targetOrientations = [0 pi/2];
 conf.distractorOrientations = [pi/4 -pi/4];
 conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!

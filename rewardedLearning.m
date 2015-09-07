@@ -39,7 +39,7 @@ function wrkspc = rewardedLearning(conf, mode, Subinfo)
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-addpath('./data', './lib', './resources');
+addpath('./data', './lib', './lib/misc', './resources');
 data=struct();
 
 % input variables, use them via updateStruct() to update the defined variables below
@@ -59,51 +59,48 @@ end
 try
 
 
-render.dataPrefix=[];
-render.dataSuffix=[];
-if mode.demo_on
-    render.dataPrefix = ['Demo/'];
-    render.dataSuffix = [render.dataSuffix '_RawardDemo_'];
-    render.task = 'RawardDemo';
-else
-    render.dataPrefix = ['RewardTask/'];
-    render.dataSuffix = [render.dataSuffix '_RawardTask_'];
-    render.task = 'RawardTask';
-end
+    render.dataPrefix=[];
+    render.dataSuffix=[];
+    if mode.demo_on
+        render.dataPrefix = ['Demo/'];
+        render.dataSuffix = [render.dataSuffix '_RawardDemo_'];
+        render.task = 'RawardDemo';
+    else
+        render.dataPrefix = ['RewardTask/'];
+        render.dataSuffix = [render.dataSuffix '_RawardTask_'];
+        render.task = 'RawardTask';
+    end
 
-switch mode.colorBalance_on
-    case 0
-        % auto-balance the color
-        if round(rand)
-            conf.idxHighRewardColor = 1;        
+    switch mode.colorBalance_on
+        case 0
+            % auto-balance the color
+            if round(rand)
+                conf.idxHighRewardColor = 1;        
+                render.dataSuffix = [render.dataSuffix '_redTarget_'];
+            else
+                conf.idxHighRewardColor = 2;        
+                render.dataSuffix = [render.dataSuffix '_greenTarget_'];
+            end
+            render.dataSuffix = [render.dataSuffix '_autoColorBalance_'];
+        case 1
+            conf.idxHighRewardColor = mode.colorBalance_on;
             render.dataSuffix = [render.dataSuffix '_redTarget_'];
-        else
-            conf.idxHighRewardColor = 2;        
+            render.dataSuffix = [render.dataSuffix '_manualColorBalance_'];
+        case 2
+            conf.idxHighRewardColor = mode.colorBalance_on;
             render.dataSuffix = [render.dataSuffix '_greenTarget_'];
-        end
-        render.dataSuffix = [render.dataSuffix '_autoColorBalance_'];
-    case 1
-        conf.idxHighRewardColor = mode.colorBalance_on;
-        render.dataSuffix = [render.dataSuffix '_redTarget_'];
-        render.dataSuffix = [render.dataSuffix '_manualColorBalance_'];
-    case 2
-        conf.idxHighRewardColor = mode.colorBalance_on;
-        render.dataSuffix = [render.dataSuffix '_greenTarget_'];
-        render.dataSuffix = [render.dataSuffix '_manualColorBalance_'];
-    otherwise
-        error('rewardCrowding:modeColorBalance', 'Undefined mode.colorBalance_on: %d', mode.colorBalance_on');
-        manualAbort();
-end
+            render.dataSuffix = [render.dataSuffix '_manualColorBalance_'];
+        otherwise
+            error('rewardCrowding:modeColorBalance', 'Undefined mode.colorBalance_on: %d', mode.colorBalance_on');
+            manualAbort();
+    end
 
-if mode.RT_on
-    conf.restpertrial       =  inf;           % every x trial a rest
-end
 
-data.Trials = seqChoice = genSequence(conf, mode);  % for predicted altruism
-Display('Please make sure that this design is correct. Insert `dbcont` to continue, or `dbquit` to abort');
+    data.Trials = seqChoice = genSequence(conf, mode);  % for predicted altruism
+    Display('Please make sure that this design is correct. Insert `dbcont` to continue, or `dbquit` to abort');
 
-%% exp begins
-keyboard;
+    %% exp begins
+    keyboard;
 
 
     if exist('./data', 'dir') ~= 7
@@ -119,7 +116,7 @@ keyboard;
     checkVersion();
 
     % unified key definitions
-    %render.kb = keyDefinition();
+    render.kb = keyDefinition();
 
     % psychoaudio hardware setting.
     if mode.audio_on
@@ -180,45 +177,47 @@ keyboard;
     render.backgroundColor = conf.backgroundColor;
 
 
-
-    flow.nresp    = 1;  % the total number of response recorded
-    flow.restcount= 0;  % the number of trials from last rest
-
     %% Instructions
     DrawFormattedText(w, instrDB(render.task, mode.english_on), 'center', 'center', [255 255 255 255]);
     Screen('Flip', w);
     if mode.recordImage; recordImage(1,1,[render.task '_instr'],w,render.wsize);end
     %if ~mode.debug_on;Speak(sprintf(instrDB(render.task, mode.english_on)));end
     KbWait;
-    
 
 
+
+    flow.nresp    = 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
+    flow.trialID = 1;
     %% Here begins our trial
-    for k = 1:length(flow.Trialsequence)
+    while true
+        % only ends when ALL trials have collected correct response
+        % see recordResponse()
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %% data generatoin
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    data.draw = genRewardData(conf, render);
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %% data generatoin
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        data.draw = genRewardData(conf, render);
+
+        % per trial initialization
+        flow.response = 0;  % the current current response, just after the last response
+        flow.isquit = 0;     % to capture ESCAPE for quitting
+        flow.iniTimer=[flow.iniTimer GetSecs];
+
 
         %      tic;
-        flow.prestate = 0;  % the last reponse until now
-        flow.response = 0;  % the current current response, just after the last response
 
 
-        flow.Trial = k;
         % rest every couple trials once
-        if flow.Trial > 1
+        if flow.nresp > 1
             WaitSecs(eps);
-            showLeftTrial(flow.Trialsequence, flow.Trial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.tactile_on);
+            showLeftTrial(data.Trials, flow.nresp, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on);
             if mode.recordImage; recordImage(1,1,[render.task '_remaining'],w,render.wsize);end
         end
 
-        flow.restcount = restBetweenTrial(flow.restcount, conf.resttime, conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.tactile_on);
+        flow.restcount = restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks'), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on);
 
         % NOTE: do we need wait black screen between Trials, random?
         WaitSecs(getTime('WaitBetweenTrials'));  % wait black screen between Trials, random
-
 
         if mode.recordImage; recordImage(1,1,[render.task '_mirror'],w,render.wsize); end
 
@@ -226,10 +225,13 @@ keyboard;
         Screen('FillRect',w, conf.backgroundColor);
         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
 
-        %% Stim that you can see on the screen
-        flow.isquit = 0;     % to capture ESCAPE for quitting
-        flow.isresponse = 0;
-        render.iniTimer=GetSecs;
+
+
+        %% now prsent Stim that you can see on the screen
+        % show fixation
+        fixation(w, '+', conf.color.fix, conf.color.backgroundColor);
+        render.vlb = Screen('Flip', w);
+        WaitSecs(data.Trials(flow.nresp, 4));
 
         % present stimuli
         data.drawed = drawObjects(w, render, data.draw);
@@ -241,34 +243,47 @@ keyboard;
 
         % get the response
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration'), GetSecs); % first one is space
+
+        Screen('FillRect',w, conf.backgroundColor);
+        render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
+        WaitSecs(getTime('BlankAfterResp'));
+
         switch flow.response
             case {'escape'}
+                flow.isquit = 1;
                 manualAbort();
             case conf.validKeys(3:end) % all stimuli (first two are space and escape)
-                flow.idxResponse = find(strcmpi(conf.validKeys, flow.response));
-
-                % NOTE: record response
+                % NOTE: here assuming that conf.validKeys have space, escape as the first two
+                flow.idxResponse = find(strcmpi(conf.validKeys, flow.response))-2;
 
                 % give feedback
+                DrawFormattedText(w, sprintf(instrDB('rewardFeedback', mode.english_on), data.Trials(flow.nresp, 15), sum(data.Trials(flow.nresp, :))), 'center', 'center', [256 255 255 255]);
+                render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
+                WaitSecs(getTime('ShowFeedback'));
 
             case {'DEADLINE'}
                 % deadline is reached!
+                % record this as -1
+                % NOTE: encoding as -1 treats the reponse as INCORRECT, which in turn
+                % remembers this trial for later data recollection 
+                flow.idxResponse = -1;
+
                 % Here comes the sound
                 if mode.audio_on; 
-                %playSound(pahandle, conf.audioFreq, data.paceRate, data.moveDirection(flow.Trial, 1));
-                Snd('Play',tone2, conf.audioFreq,16);
+                    %playSound(pahandle, conf.audioFreq, data.paceRate, data.moveDirection(flow.nresp, 1));
+                    Snd('Play',tone2, conf.audioFreq,16);
                 end
 
-                % NOTE: remember this trial for later
+
+                %Screen('FillRect',w, conf.backgroundColor);
+                %render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
+                %WaitSecs(getTime(''));
 
             otherwise
                 error('rewardedLearning:collectResponse', 'keys other than validKeys are collected');
         end
-
-
-
-
-        end
+        % record response
+        [data, flow] = recordResponse(flow, data, conf);
 
         % end of per trial
         Screen('FillRect',w, conf.backgroundColor);
@@ -280,9 +295,16 @@ keyboard;
         % do exactly once_on times
         mode.once_on = mode.once_on-1;
         if ~mode.once_on; error('Preparation Finished! (No worries. This is no bug, buddy.)'); end
-    end;
 
-    % End of experiment
+
+        if flow.isquit
+            % End of experiment
+            break
+        end;
+
+    end % while true
+
+
 
 
     Display(char('','','data/latest.mat saved successfully, use for debugging!',''));
@@ -290,8 +312,11 @@ keyboard;
     save(render.matFileName,'Trials','conf', 'Subinfo','flow','mode','data');
     wrkspc = load(render.matFileName);
     Display(render.matFileName);
+
+
     % Display 'Thanks' Screen
     if true
+        % this is the correct ending of the experiment
         RL_Regards(w, mode.english_on);
     else
         % not end yet
@@ -323,6 +348,7 @@ ListenChar(0);
 
 % always save the latest data for the last experiment
 save data/latest.mat;
+Display(char('','','data/latest.mat saved successfully, use for testing!',''));
 figure;
 %boxplot(Trials(:,3),Trials(:,2));
 %title([Subinfo{1} ':' render.task]);

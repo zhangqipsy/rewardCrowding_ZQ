@@ -110,6 +110,13 @@ end
 Trials(:, 8) = conf.idxHighRewardColor; % see conf.color.targets for idx used
 Trials(:, 9) = ((rand(size(Trials,1),1)>conf.highRewardLevel) & (Trials(:, 6) == Trials(:, 8))) + ((rand(size(Trials,1),1)<(1-conf.highRewardLevel)) & (Trials(:, 6) ~= Trials(:, 8)));
 
+
+%	Column 14
+%	    counterTillCorrect
+%	    To be recorded.
+%	    initialize here
+Trials(:, 14) = zeros(size(Trials,1), 1);
+
 %	Column 16~22
 %	    idxDistractorColor
 Trials(:, 16:16+conf.nStims-1) = Shuffle(repmat(1:conf.nStims, size(Trials, 1), 1)')';
