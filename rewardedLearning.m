@@ -347,7 +347,7 @@ catch
     wrkspc = load(['data/', render.dataPrefix, data.Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
     %     disp(['';'';'data/buggy saved successfully, use for debugging!']);
     Screen('CloseAll');
-    if mode.audio_on; PsychPortAudio('Close'); end
+    %if mode.audio_on; PsychPortAudio('Close'); end
     Priority(0);
     ShowCursor;
     ListenChar(0);
@@ -357,7 +357,7 @@ end
 
 %% exp ends
 Screen('CloseAll');
-if mode.audio_on; PsychPortAudio('Close'); end
+%if mode.audio_on; PsychPortAudio('Close'); end
 Priority(0);
 ShowCursor;
 ListenChar(0);
