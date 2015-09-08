@@ -84,7 +84,7 @@ if conf.repetitions == 0
     Trials = NaN(conf.totalTrials, nColumns);
     [Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(conf.totalTrials, 1, conf.fixLevels, conf.nStims, numel(conf.color.targets), conf.targetOrientations);
 if mode.demo_on
- minTrials = prod([numel(conf.fixLevels), conf.nStims, conf.nTargets, numel(conf.targetOrientations]));
+ minTrials = prod([numel(conf.fixLevels), conf.nStims, conf.nTargets, numel(conf.targetOrientations)]);
     [Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(minTrials, 1, conf.fixLevels, conf.nStims, numel(conf.color.targets), conf.targetOrientations);
 end
 
