@@ -12,6 +12,7 @@ function status = test(testWhat)
             keyboard
         case {'reward'}
             mode.demo_on = 1;
+            mode.once_on = 6;
             conf.repetitions = 1;
             rewardedLearning(conf, mode)
         otherwise

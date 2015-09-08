@@ -165,6 +165,7 @@ else
     data.Trials = [data.Trials; data.Trials(flow.nresp, :)];
 end
 
+flow.nresp    = flow.nresp + 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
 if flow.nresp > size(data.Trials, 1)
     % all the trials as well as scheduled trials finished collecting correct responses
     % end the experiment

@@ -4,7 +4,7 @@ ratio = 1;
 if nargin < 2
     isDebug = 0; % shortens time
 end
-if isDebug; ratio = 1;end
+if isDebug; ratio = .5;end
 
 switch type
     case {'flpi'}

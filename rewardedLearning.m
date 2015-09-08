@@ -101,8 +101,7 @@ try
     Display('Please make sure that this design is correct. Insert `dbcont` to continue, or `dbquit` to abort');
 
     %% exp begins
-    keyboard;
-
+    %keyboard;
 
     if exist('./data', 'dir') ~= 7
         mkdir('data');
@@ -297,7 +296,6 @@ try
         end
 
         % end of per trial
-        flow.nresp    = flow.nresp + 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
         Screen('FillRect',w, conf.color.backgroundColor);
         WaitSecs(getTime('BlankAfterTrial', mode.debug_on));
         Screen('Flip', w);
@@ -306,7 +304,7 @@ try
 
         % do exactly once_on times
         mode.once_on = mode.once_on-1;
-        if ~mode.once_on; error('Preparation Finished! (No worries. This is no bug, buddy.)'); end
+        if ~mode.once_on; flow.isquit = 1;warning('Preparation Finished! (No worries. This is no bug, buddy.)'); end
 
 
         if flow.isquit
