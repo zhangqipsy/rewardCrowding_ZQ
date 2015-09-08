@@ -110,7 +110,7 @@ data.Trials(flow.nresp, 1) = flow.nresp; % this keeps rising after every trial
 %	Column 2
 %	    blockID
 %	    To be recorded.
-data.Trials(flow.nresp, 2) = floor(flow.nresp/conf.restpertrial);
+data.Trials(flow.nresp, 2) = floor(flow.nresp/conf.restpertrial)+1;
 %	Column 3
 %	    trialID
 %	    To be recorded.
@@ -156,8 +156,7 @@ data.Trials(flow.nresp, 14) = data.Trials(flow.nresp, 14) + 1;
 data.Trials(flow.nresp, 15) = conf.rewardAmounts(1+double(data.Trials(flow.nresp, 9)));
 
 
-if flow.isCorrect
-else
+if ~flow.isCorrect
     data.Trials(flow.trialID, 14) = data.Trials(flow.trialID, 14) + 1;
     data.Trials(flow.nresp, 15) = 0;
 
@@ -166,6 +165,7 @@ else
 end
 
 flow.nresp    = flow.nresp + 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
+Display([flow.nresp size(data.Trials, 1)])
 if flow.nresp > size(data.Trials, 1)
     % all the trials as well as scheduled trials finished collecting correct responses
     % end the experiment

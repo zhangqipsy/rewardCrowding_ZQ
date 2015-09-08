@@ -130,4 +130,7 @@ Trials(:, 16:16+conf.nStims-1) = Shuffle(repmat(1:conf.nStims, size(Trials, 1), 
 %	    idxDistractorBar
 Trials(:, 23:23+conf.nStims-1) = Randi(numel(conf.distractorOrientations), [size(Trials,1), conf.nStims]);
 
+if mode.once_on > 0
+    Trials = Trials(1:mode.once_on, :);
+end
 end

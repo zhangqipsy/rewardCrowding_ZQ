@@ -259,6 +259,7 @@ try
             case {'Escape', 'escape'}
                 flow.isquit = 1;
                 manualAbort();
+
             case conf.validKeys(3:end) % all stimuli (first two are space and escape)
                 % NOTE: here assuming that conf.validKeys have space, escape as the first two
                 flow.idxResponse = find(strcmpi(conf.validKeys, flow.response))-2;
@@ -268,7 +269,7 @@ try
 
                 % give feedback
                 if flow.isCorrect
-                    DrawFormattedText(w, sprintf(instrDB('rewardFeedback', mode.english_on), data.Trials(flow.nresp, 15), sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
+                    DrawFormattedText(w, sprintf(instrDB('rewardFeedback', mode.english_on), data.Trials(flow.nresp-1, 15), sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
                     render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
                     WaitSecs(getTime('ShowFeedback', mode.debug_on));
                 end
@@ -279,6 +280,7 @@ try
                 % NOTE: encoding as -1 treats the reponse as INCORRECT, which in turn
                 % remembers this trial for later data recollection 
                 flow.idxResponse = -1;
+                [data, flow] = recordResponse(flow, data, conf);
 
                 % Here comes the sound
                 if mode.audio_on; 
@@ -303,10 +305,11 @@ try
 
 
         % do exactly once_on times
-        mode.once_on = mode.once_on-1;
-        if ~mode.once_on; flow.isquit = 1;warning('Preparation Finished! (No worries. This is no bug, buddy.)'); end
+        %mode.once_on = mode.once_on-1;
+        %if ~mode.once_on; flow.isquit = 1;warning('Preparation Finished! (No worries. This is no bug, buddy.)'); end
 
 
+        Display(flow.isquit)
         if flow.isquit
             % End of experiment
             break
