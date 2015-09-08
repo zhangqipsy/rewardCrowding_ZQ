@@ -19,3 +19,5 @@ generate random numbers.
 ### genRewardData uses the sequence to construct data which could then be directly plotted/flipped on the screen, namely data.draw
 
 ### drawObjects draws all the objects defined in data.draw on the screen automatically
+
+### Test file is where everything starts
