@@ -4,5 +4,4 @@ let's do everything else
                 fixation coor and width
 
 BUG: collectResponse waits until key release
-BUG: why there are some NaN rows in the Trials (nresp is skipping
 through them)
