@@ -267,12 +267,15 @@ try
                 % record response
                 [data, flow] = recordResponse(flow, data, conf);
 
+                if ~mode.demo_on
+                    % demo_on calcels feedback
                 % give feedback
                 if flow.isCorrect
                     DrawFormattedText(w, sprintf(instrDB('rewardFeedback', mode.english_on), data.Trials(flow.nresp-1, 15), sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
                     render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
                     WaitSecs(getTime('ShowFeedback', mode.debug_on));
                 end
+            end
 
             case {'DEADLINE'}
                 % deadline is reached!

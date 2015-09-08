@@ -11,9 +11,11 @@ function status = test(testWhat)
             data.draw1 = drawObjects([], [], data.draw);
             keyboard
         case {'reward'}
-            mode.demo_on = 1;
-            mode.once_on = 6;
-            conf.repetitions = 1;
+            mode.debug_on = 1;      % smaller screen
+            conf.repetitions = 1;    % repetition of each condition (if set to 0, uses totalTrials below instead)
+            conf.totalTrials = 1008; % respects this if repititions is zero
+            mode.demo_on = 1;        % sets totalTrials to the lowest mimimum if repetitions is 0 (also no feedback)
+            mode.once_on = 6; % overrises all trial numbers; number of total trials (0 to cancel this effect)
             rewardedLearning(conf, mode)
         otherwise
             disp('No test specified!')

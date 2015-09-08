@@ -79,18 +79,19 @@ function Trials = genSequence(conf, mode)
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+nColumns = 27;
 if conf.repetitions == 0
-    Trials = NaN(conf.totalTrials, 27);
-    [Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(conf.totalTrials, 1, conf.fixLevels, conf.nStims, conf.nTargets, conf.targetOrientations);
+    Trials = NaN(conf.totalTrials, nColumns);
+    [Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(conf.totalTrials, 1, conf.fixLevels, conf.nStims, numel(conf.color.targets), conf.targetOrientations);
 if mode.demo_on
-    [Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(72, 1, conf.fixLevels, conf.nStims, conf.nTargets, conf.targetOrientations);
+ minTrials = prod([numel(conf.fixLevels), conf.nStims, conf.nTargets, numel(conf.targetOrientations]));
+    [Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(minTrials, 1, conf.fixLevels, conf.nStims, numel(conf.color.targets), conf.targetOrientations);
 end
 
 else
-[Trialsequence, Trials] = genTrial(conf.repetitions, 27, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.targetOrientations)]);
+[Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.targetOrientations)]);
 if mode.demo_on
-    [Trialsequence, Trials] = genTrial(1, 27, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.targetOrientations)]);
+    [Trialsequence, Trials] = genTrial(1, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.targetOrientations)]);
 end
 %	Column 4
 %	    fixDuration
