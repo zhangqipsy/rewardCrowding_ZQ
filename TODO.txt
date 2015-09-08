@@ -3,5 +3,5 @@ let's do everything else
                 also support poly, rect
                 fixation coor and width
 
-BUG: collectResponse waits until key release
-through them)
+BUG: collectResponse waits until key release through them)
+
