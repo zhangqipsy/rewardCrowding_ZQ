@@ -5,3 +5,14 @@ let's do everything else
 
 BUG: collectResponse waits until key release through them)
 
+./a.txt:1:./lib/getTime.m:17:        % NOTE: this is NOT used; it is controlled by condition
+./a.txt:2:./lib/getTime.m:29:    case {'BlankAfterTrial'} % NOTE: do we need this? blank background of 1 sec at end of per trial
+./a.txt:4:./rewardedLearning.m:225:        % NOTE: do we need wait black screen between Trials, random?
+./a.txt:5:./rewardedLearning.m:264:                % NOTE: here assuming that conf.validKeys have space, escape as the first two
+./a.txt:6:./rewardedLearning.m:283:                % NOTE: encoding as -1 treats the reponse as INCORRECT, which in turn
+./lib/getTime.m:17:        % NOTE: this is NOT used; it is controlled by condition
+./lib/getTime.m:29:    case {'BlankAfterTrial'} % NOTE: do we need this? blank background of 1 sec at end of per trial
+Binary file ./lib/loadDefaultConfs.m matches
+./rewardedLearning.m:225:        % NOTE: do we need wait black screen between Trials, random?
+./rewardedLearning.m:264:                % NOTE: here assuming that conf.validKeys have space, escape as the first two
+./rewardedLearning.m:283:                % NOTE: encoding as -1 treats the reponse as INCORRECT, which in turn
