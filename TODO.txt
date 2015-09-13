@@ -5,14 +5,130 @@ let's do everything else
 
 BUG: collectResponse waits until key release through them)
 
-./a.txt:1:./lib/getTime.m:17:        % NOTE: this is NOT used; it is controlled by condition
-./a.txt:2:./lib/getTime.m:29:    case {'BlankAfterTrial'} % NOTE: do we need this? blank background of 1 sec at end of per trial
-./a.txt:4:./rewardedLearning.m:225:        % NOTE: do we need wait black screen between Trials, random?
-./a.txt:5:./rewardedLearning.m:264:                % NOTE: here assuming that conf.validKeys have space, escape as the first two
-./a.txt:6:./rewardedLearning.m:283:                % NOTE: encoding as -1 treats the reponse as INCORRECT, which in turn
-./lib/getTime.m:17:        % NOTE: this is NOT used; it is controlled by condition
-./lib/getTime.m:29:    case {'BlankAfterTrial'} % NOTE: do we need this? blank background of 1 sec at end of per trial
-Binary file ./lib/loadDefaultConfs.m matches
-./rewardedLearning.m:225:        % NOTE: do we need wait black screen between Trials, random?
-./rewardedLearning.m:264:                % NOTE: here assuming that conf.validKeys have space, escape as the first two
-./rewardedLearning.m:283:                % NOTE: encoding as -1 treats the reponse as INCORRECT, which in turn
+见下。
+
+Best,
+Hörmet
+========================
+He who is worthy to receive his days and nights is worthy to receive all
+else from you (and me).
+                                                 -- The Prophet, Gibran Kahlil
+
+
+2015-09-11 2:44 GMT-04:00 张琪 <zhangqipsy@qq.com>:
+
+    目前的问题
+
+    （1）十字要提前出现
+
+好。我来确认一下——记得是那样写的，但是好像有问题。
+ 
+
+    （2）记录按键时间最长1.6s
+
+这个我需要改。
+ 
+
+    （3）第三列与第一列相同
+
+这个不该是一样的——第一列永远是每呈现一个刺激序列就增加一个，也就是按行增加；第三列是根据实验条件——如果有个条件做错了或者没有记录，那么挪到最后，而其第三列对应的数字是跟原来的那个数字是一样的。我来测试一下——给我个数据吧。这样我能更快的找到问题所在的地方——现在完全没有头绪。
+​
+
+    （4）try end 用法
+
+强烈建议你看看
+​Psychtoolbox/PsychDemos/ErrorCatchDemo.m​. 可以看这个链接，也可以看你电脑里的版本。​
+
+
+​（5）skipsynctest始终设置为0
+这个在debug的时候会有意义，但是实验中坚决不能用。强烈建议看看help SyncTrouble（或至少至少里面
+HOW TO OVERRIDE THE SYNC TESTS: 部分）
+简言之，如果用了skipsynctest，那么实验的时间记录就完全没有保障了。所以如果想debug非时间有关的问题，那无所谓了。但是如果想测试时间，那么当然也要用0。
+
+    （6）记录的时间
+
+记录的时间有两个：respRT和 respTime——其中respTime是自从实验开始的时间开始记录的，而对单个试次而言没有多少意义——​如果你之后要做脑电之类，那么可以用来对应不同信号的时间序列。respRT是从onset开始记录的反应时。
+​
+
+    （7）显示distracotrcolor应该为5个，为什么是6个
+
+呈现的distractor是​5个，但是原来的文献和你的师姐都是从6个distractor 颜色中随即选择5个出来，加上一个target来呈现的。我首先把6个的顺序随机化，然后把target根据生成的target的位置来替换掉其中一个distractor。这是平衡的——就是条件中那个6。
+​
+
+    （8）没看懂每个trial的开始结束，也就是这个循环是怎么实现的
+
+这个就是while​ true：
+while true是死循环。只能用break来合理推出，或者用error来暴力退出（报错了！）。manualAbort是一个暴力退出的函数。程序有多出使用manualAbort都是直接终止整个实验。而整个实验的合理结束是flow.isquit来控制的——当且仅当nresp>Trials的行数，也就是所有的刺激条件和做错了的都做对了。
+
+至于每个试次，并没有退出，而是每次while 循环的结束处更新了nresp的值，而nresp是控制该次循环中用Trials的第几行（nresp行）来呈现刺激之类。所以，nresp就相当于正常情况下的for i=1：10中的i。
+
+为什么不用for？你想想（我在最下面回答了，但是你先想想再看）
+​
+
+    （9）colorbalance_on 1,2,0, 分别代表什么
+
+与其回答你这个问题，我打算教你怎么看代码：（因为我也是这么看才想起来这是什么的）
+
+    ​打开Git Bash
+    cd到代码目录
+    grep 'colorBalance' -inr --color .
+    ​
+    查看哪些文件的哪些行用到了colorBalance
+    看看其间的逻辑关系
+
+你先自己试一下。最下面有答案。
+
+    （10）while true end 用法
+
+见​8
+​
+
+    （11）有2个声音，第二个是干嘛用的
+
+第二个是备用。目前没有用到。
+ 
+
+    （12）是否有做gamma correction 并且这个是干嘛的你知道吗
+
+我程序里没有写gamma​ correction对吧？你是看到了还是问一下？ 我没有写。 这个基本上就是用来严格调整RGB颜色值和contrast之间的关系的，因为这个跟monitor，实验环境亮度有关。需要亮度机来测量gamma table才能做。我0。8确定我说的是对的。你确认一下。​
+
+
+    （13）render.ifi = 那个地方容忍0.005s不太懂
+
+
+是​0.0005!​​ 这可是半毫秒！ 你那个是5毫秒。一个对心理学没有用，一个对心理学有用。psychtoolbox测量刷屏率Hz和刷屏周期（conf.flpi, render.ifi: s)不是绝对精确。所以为了保证莫名其妙的因为浮点运算的报错，容忍个半毫秒是可以的——我做了这样的实验三年，一直没有问题。如果删掉了那个半毫秒，5%左右的情况下程序会莫名其妙无法开始实验（再试一下就可以了，不过需要重新输入被时信息。不要紧。如果是在做一系列实验呢？）所以加上挺好。
+
+ 
+
+    （14）我发给你一个train_a_1.m的程序，是我之前说的跟控制时间有关的程序，只需要看291-320行的代码，主要是之前呈现运动点的话需要没刷屏一次都走一段距离，所以并且实时输出眼动的话，需要没刷一次屏就记录一次，所以是这样写的，len=90 ，90次刷屏，1.5秒，类似于这样，我不知道这个是否容易实现，因为我要记录眼动，如果这个程序中不好实现的话，也可以不弄，但是最好crowding的程序是可以实时记录的。
+
+对于目前，的确没有必要循环来循环去——不过你要是说想Eye​link,那就需要了。我加上循环吧。当然可以实现。
+​
+
+     
+
+
+
+不用for，是以为我们并不知道循环的总数量——如果被试一直在做错，那就只能是死循环。而循环总数是被试作对次数的函数。MATLAB里也不支持在循环内更新循环条件，也就是你不能这样：
+​for i=1:10
+i=5;
+disp(i);
+end
+这样不会只有5个循环，而照样是十个循环。建议你跑一下。​跑之前，想想结果可能是什么。猜到了么？
+
+
+colorBalance：
+可以发现只有rewardedLearning和loadDefaultConf这两个文件用到了。从主函数开始（当然——不然怎么知道逻辑）。rewardedLearning里是这么用的：
+
+/rewardedLearning.m:75:    switch mode.colorBalance_on
+./rewardedLearning.m:85:            render.dataSuffix = [render.dataSuffix '_autoColorBalance_'];
+./rewardedLearning.m:87:            conf.idxHighRewardColor = mode.colorBalance_on;
+./rewardedLearning.m:89:            render.dataSuffix = [render.dataSuffix '_manualColorBalance_'];
+./rewardedLearning.m:91:            conf.idxHighRewardColor = mode.colorBalance_on;
+./rewardedLearning.m:93:            render.dataSuffix = [render.dataSuffix '_manualColorBalance_'];
+./rewardedLearning.m:95:            error('rewardCrowding:modeColorBalance', 'Undefined mode.colorBalan
+ce_on: %d', mode.colorBalance_on');
+
+
+也就是conf.idxHighRewardColor和render​.dataSuffix跟这个colorBalance有关。render是无关紧要的变量，先看看这是什么。dataSuffix只在主函数​
+最后是用来生成mat文件名的。好。这个对程序逻辑没有什么影响，只是记录。那么conf当然会对实验有影响。你看看这个conf​.idxHighRewardColor是什么？mode.colorBalance是否能够覆盖默认值，是否能够覆盖你从外面rewardedLearning(conf)进去的输入值？
