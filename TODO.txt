@@ -15,7 +15,8 @@ offscreen for flip
     （2）记录按键时间最长1.6s
 这个我需要改。
 
-    （6）记录的时间
+    （6）记录的时间 —— nothing wrong with the data provided: -99.99 is
+no resp; look only at that column
 记录的时间有两个：respRT和 respTime——其中respTime是自从实验开始的时间开始记录的，而对单个试次而言没有多少意义——​如果你之后要做脑电之类，那么可以用来对应不同信号的时间序列。respRT是从onset开始记录的反应时。
 
     （12）是否有做gamma correction 并且这个是干嘛的你知道吗
