@@ -162,6 +162,7 @@ if ~flow.isCorrect
 
     % move this trial to the end
     data.Trials = [data.Trials; data.Trials(flow.nresp, :)];
+    data.Trials(end, 1) = NaN; % nresp should have no value; it will be overwritted when recorded
 end
 
 flow.nresp    = flow.nresp + 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest

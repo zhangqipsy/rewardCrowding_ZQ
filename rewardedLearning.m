@@ -138,7 +138,7 @@ try
     HideCursor;
     ListenChar(2);
     if mode.debug_on
-        Screen('Preference','SkipSyncTests', 0);
+        Screen('Preference','SkipSyncTests', 1);
     else
         Screen('Preference','SkipSyncTests', 0);
     end
