@@ -247,13 +247,20 @@ try
 
 
         % get the response
-        [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration', mode.debug_on), GetSecs); % first one is space
+        flow.onset = GetSecs();
+        [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration', mode.debug_on), flow.onset); % first one is space
 
+        % also record here if the subject have not responded yet
+
+        if strcmpi(flow.response, 'DEADLINE')
+            Display('Please respond! We are still collecting data!');
         Screen('FillRect',w, conf.color.backgroundColor);
         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
-        WaitSecs(getTime('BlankAfterResp', mode.debug_on));
+        [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('BlankAfterResp', mode.debug_on), flow.onset); % first one is space
+        %WaitSecs(getTime('BlankAfterResp', mode.debug_on));
+    end
 
-        Display(flow.response);
+        % Display(flow.response);
         switch flow.response
             case {'Escape', 'escape'}
                 flow.isquit = 1;
