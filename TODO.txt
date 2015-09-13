@@ -8,8 +8,9 @@ BUG: collectResponse waits until key release through them)
 
 
     目前的问题
-    （1）十字要提前出现
-好。我来确认一下——记得是那样写的，但是好像有问题。
+    （1）十字要提前出现: DONE!
+好。我来确认一下——记得是那样写的，但是好像有问题。—— fixation() uses
+offscreen for flip
 
     （2）记录按键时间最长1.6s
 这个我需要改。

@@ -235,9 +235,8 @@ try
 
         %% now prsent Stim that you can see on the screen
         % show fixation
-        fixation(w, '+', conf.color.fix, conf.color.backgroundColor);
-        render.vlb = Screen('Flip', w);
-        WaitSecs(data.Trials(flow.nresp, 4));
+        render.fix = fixation(w, '+', conf.color.fix, conf.color.backgroundColor);
+        showFix(w, render.wsize, render.fix, data.Trials(flow.nresp, 4));
 
         % present stimuli
         data.drawed = drawObjects(w, render, data.draw);
