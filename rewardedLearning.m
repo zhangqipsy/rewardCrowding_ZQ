@@ -76,6 +76,18 @@ try
         render.task = 'RewardTask';
     end
 
+    switch render.Task
+        case {'reward', 'demo'}
+            genSequence = @genRewardSequence;
+            genData = @genRewardData;
+        case {'reward', 'demo'}
+            genSequence = @genCrowdingSequence;
+            genData = @genCrowdingdData;
+        otherwise
+            error('Unknown task!');
+    end
+
+
     switch mode.colorBalance_on
         case 0
             % auto-balance the color
@@ -101,7 +113,7 @@ try
     end
 
 
-    data.Trials = genRewardSequence(conf, mode);  % for predicted altruism
+    data.Trials = genSequence(conf, mode);  % for predicted altruism
     Display('Please make sure that this design is correct. Insert `dbcont` to continue, or `dbquit` to abort');
 
     %% exp begins
@@ -207,7 +219,7 @@ try
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %% data generatoin
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        data.draw = genRewardData(data.Trials(flow.nresp, :), render, conf, mode);
+        data.draw = gendData(data.Trials(flow.nresp, :), render, conf, mode);
 
         % per trial initialization
         flow.response = 0;  % the current current response, just after the last response
