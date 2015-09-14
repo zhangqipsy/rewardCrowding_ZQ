@@ -66,6 +66,10 @@ try
         render.dataPrefix = ['Demo/'];
         render.dataSuffix = [render.dataSuffix '_RawardDemo_'];
         render.task = 'RewardDemo';
+    elseif mode.linearStim_on
+        render.dataPrefix = ['CrowdingTask/'];
+        render.dataSuffix = [render.dataSuffix '_CrowdingTask_'];
+        render.task = 'CrowdingTask';
     else
         render.dataPrefix = ['RewardTask/'];
         render.dataSuffix = [render.dataSuffix '_RawardTask_'];
@@ -97,7 +101,7 @@ try
     end
 
 
-    data.Trials = genSequence(conf, mode);  % for predicted altruism
+    data.Trials = genRewardSequence(conf, mode);  % for predicted altruism
     Display('Please make sure that this design is correct. Insert `dbcont` to continue, or `dbquit` to abort');
 
     %% exp begins
@@ -106,6 +110,10 @@ try
     if exist('./data', 'dir') ~= 7
         mkdir('data');
     end
+    if exist(['data/' data.Prefix], 'dir') ~= 7
+        mkdir(['data/' data.Prefix]);
+    end
+
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% Hardware/Software Check

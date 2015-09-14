@@ -1,4 +1,4 @@
-function Trials = genSequence(conf, mode)
+function Trials = genRewardSequence(conf, mode)
 %GENTRIALCONDITIONS generates stimulus data and experiment settings based on `conf` struct
 %
 % SYNOPSIS: data = genSequence(nBlocks, nTrials, nStims)

@@ -17,6 +17,9 @@ function status = test(testWhat)
             mode.demo_on = 1;        % sets totalTrials to the lowest mimimum if repetitions is 0 (also no feedback)
             mode.once_on = 6; % overrises all trial numbers; number of total trials (0 to cancel this effect)
             rewardedLearning(conf, mode)
+        case {'crowding'}
+          mode.linearStim_on = 1;
+
         otherwise
             disp('No test specified!')
     end

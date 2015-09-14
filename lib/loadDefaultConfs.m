@@ -43,6 +43,7 @@ mode.colorBalance_on = 0; % 0 for auto balance (rand); 1, 2 for idxHighRewardCol
 mode.audio_on       = 1;
 mode.speak_on       = 1;
 mode.english_on         = 1;  % use English for Instructions etc., 0 for Chinese(not supported for now!)
+mode.linearStim_on  = 0;
 % DO NOT CHANGE UNLESS YOU KNOW EXCACTLY WHAT YOU ARE DOING
 mode.regenerate_on      = 1;  % mode.regenerate_on data for experiment, rather than using the saved one
 mode.tillResponse_on    = 1;  % flip after catching response
