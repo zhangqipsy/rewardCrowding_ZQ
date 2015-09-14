@@ -76,11 +76,11 @@ try
         render.task = 'RewardTask';
     end
 
-    switch render.Task
-        case {'reward', 'demo'}
+    switch render.task
+        case {'RewardTask', 'RewardDemo'}
             genSequence = @genRewardSequence;
             genData = @genRewardData;
-        case {'reward', 'demo'}
+        case {'CrowdingTask'}
             genSequence = @genCrowdingSequence;
             genData = @genCrowdingdData;
         otherwise
@@ -122,8 +122,8 @@ try
     if exist('./data', 'dir') ~= 7
         mkdir('data');
     end
-    if exist(['data/' data.Prefix], 'dir') ~= 7
-        mkdir(['data/' data.Prefix]);
+    if exist(['data/' render.dataPrefix], 'dir') ~= 7
+        mkdir(['data/' render.dataPrefix]);
     end
 
 
@@ -219,7 +219,7 @@ try
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %% data generatoin
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        data.draw = gendData(data.Trials(flow.nresp, :), render, conf, mode);
+        data.draw = genData(data.Trials(flow.nresp, :), render, conf, mode);
 
         % per trial initialization
         flow.response = 0;  % the current current response, just after the last response
