@@ -114,10 +114,13 @@ try
 
 
     data.Trials = genSequence(conf, mode);  % for predicted altruism
+
+    if mode.inspectDesign_on
     Display('Please make sure that this design is correct. Insert `dbcont` to continue, or `dbquit` to abort');
 
     %% exp begins
-    %keyboard;
+    keyboard;
+end
 
     if exist('./data', 'dir') ~= 7
         mkdir('data');
