@@ -11,7 +11,7 @@ function [conf, mode] = loadDefaultConfs()
 %
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
-% on Microsoft Windows 8.1 ∆Û“µ∞Ê Version 6.3 (Build 9600)
+% on Microsoft Windows 8.1 ‰ºÅ‰∏öÁâà Version 6.3 (Build 9600)
 %
 % Author: Hormet, 2015-08-31
 % UPDATED: 2015-08-31 16:04:17
@@ -44,6 +44,10 @@ mode.audio_on       = 1;
 mode.speak_on       = 1;
 mode.english_on         = 1;  % use English for Instructions etc., 0 for Chinese(not supported for now!)
 mode.linearStim_on  = 0;
+mode.procedureChannel = 0; % experiment methods;
+                            %'Constant',  0
+                            %'QUEST',    -1
+                            %'nUp1Down', -2
 % DO NOT CHANGE UNLESS YOU KNOW EXCACTLY WHAT YOU ARE DOING
 mode.regenerate_on      = 1;  % mode.regenerate_on data for experiment, rather than using the saved one
 mode.tillResponse_on    = 1;  % flip after catching response
@@ -62,6 +66,8 @@ conf.totalTrials        = 1008;     % respects this if repititions is zero
 conf.restpertrial       =  100;           % every x trial a rest
 conf.showLeftTrialsEvery     = 5;
 conf.nStims              =  6;          % number of stimuli (target+distractors) present in each trial/throughout the experiment
+conf.nUp1Down           = 3;
+conf.QUESTparams        = [0.1 0.1 0.1]; % FIXME: dunno what it means
 conf.nTargets           = 1;            % number of targets present in each trial/throughout the experiment
 conf.audioFreq = 44100;                 
 conf.fixLevels          = [.4 .5 .6];
@@ -73,7 +79,7 @@ conf.distractorOrientations = [pi/4 -pi/4];
 conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
 conf.audioTone1Hz   = 1000;
 conf.audioTone2Hz   = 500;
-conf.flpi               = .02;          % NOT used
+conf.flpi               = .02;          % NOTE:  NOT used
 
 % NOTE: check this values out!
 conf.monWidth   = 38.5;
@@ -95,7 +101,7 @@ color.targets = {color.red, color.green};
 % distractors
 color.blue = [0 0 95];
 color.cyan = [0 255 255]; % NOTE: this color could be too strong/light!
-color.pink = [106   12    59];%[230 55 125 ]; %∏ƒŒ™green
+color.pink = [106   12    59];%[230 55 125 ]; %Êîπ‰∏∫green
 color.orange = [115  54  3];
 color.yellow = [96   101  0];%[130 131 50];  % 110    45     0 [   101    22     0];
 color.white = [255 255 255]; % NOTE: this color could be too strong/light!

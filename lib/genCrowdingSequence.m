@@ -1,4 +1,4 @@
-function Trials = genRewardSequence(conf, mode)
+function Trials = genCrowdingSequence(conf, mode)
 %GENTRIALCONDITIONS generates stimulus data and experiment settings based on `conf` struct
 %
 % SYNOPSIS: data = genSequence(nBlocks, nTrials, nStims)
@@ -8,7 +8,8 @@ function Trials = genRewardSequence(conf, mode)
 %
 %
 % OUTPUT data
-%       data.Trials is the output. This is a big table, each column representing a different variable.
+%       data.Trials is the output. This is a big table, each column representing a different variable. Here we implement —ïynamic generation; to be able to interface with standard psychophysics methods such as QUEST. *negative* integers in the variable field (such as those idx* will use different procudure to generate the random number for the next trials based on the data from last few trials). Refer to channelSelection() to see the negative integers and the specific method that is to be used.
+%
 %	Column 1
 %	    trialN
 %	    To be recorded.
@@ -21,15 +22,15 @@ function Trials = genRewardSequence(conf, mode)
 %	Column 4
 %	    fixDuration
 %	Column 5
-%	    idxTargetPosition
+%	    idxTargetDist (major)
 %	Column 6
-%	    idxTargetColor
+%	    idxTargetColor (balance)
 %	Column 7
-%	    idxTargetBar
+%	    idxFlankerDist (major)
 %	Column 8
-%	    idxHighRewardColor
+%	    idxFlankerColor (balance)
 %	Column 9
-%	    isHighReward
+%	    crossCoor
 %	Column 10
 %	    respType
 %	    To be recorded.
@@ -48,14 +49,12 @@ function Trials = genRewardSequence(conf, mode)
 %	Column 15
 %	    rewardAmount
 %	    To be recorded.
-%	Column 16~22
-%	    idxDistractorColor
-%	Column 23~28
-%	    idxDistractorBar
+%	Column 16
+%	    idxTargetShape  (balance)
 %
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
-% on Microsoft Windows 8.1 ∆Û“µ∞Ê Version 6.3 (Build 9600)
+% on Microsoft Windows 8.1 ‰ºÅ‰∏öÁâà Version 6.3 (Build 9600)
 %
 % Author: Hormet, 2015-08-31
 % UPDATED: 2015-08-31 16:55:41

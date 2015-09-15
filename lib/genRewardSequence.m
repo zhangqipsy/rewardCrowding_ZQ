@@ -1,19 +1,21 @@
 function Trials = genRewardSequence(conf, mode)
 %GENTRIALCONDITIONS generates stimulus data and experiment settings based on `conf` struct
 %
-% SYNOPSIS: data = genSequence(nBlocks, nTrials, nStims)
+% SYNOPSIS: data = genSequence(conf, mode)
 %
 % INPUT
 %
 %
 %
 % OUTPUT data
-%       data.Trials is the output. This is a big table, each column representing a different variable.
+%       data.Trials is the output. This is a big table, each column
+%       representing a different variable.
 %	Column 1
 %	    trialN
 %	    To be recorded.
 %	Column 2
-%	    blockID
+%	    blockID (in trial-by-trial experiments that uses adaptive stimulation
+%	    methods such as QUEST, different blockID represents different sequence)
 %	    To be recorded.
 %	Column 3
 %	    trialID
