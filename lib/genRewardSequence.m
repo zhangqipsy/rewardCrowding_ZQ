@@ -50,9 +50,9 @@ function Trials = genRewardSequence(conf, mode)
 %	Column 15
 %	    rewardAmount
 %	    To be recorded.
-%	Column 16~22
+%	Column 16~21
 %	    idxDistractorColor
-%	Column 23~28
+%	Column 22~27
 %	    idxDistractorBar
 %
 
@@ -81,7 +81,7 @@ function Trials = genRewardSequence(conf, mode)
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-nColumns = 27;
+nColumns = 28;
 if conf.repetitions == 0
     Trials = NaN(conf.totalTrials, nColumns);
     [Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(conf.totalTrials, 1, conf.fixLevels, conf.nStims, numel(conf.color.targets), conf.targetOrientations);
@@ -125,13 +125,14 @@ Trials(:, 9) = ((rand(size(Trials,1),1)>conf.highRewardLevel) & (Trials(:, 6) ==
 Trials(:, 14) = zeros(size(Trials,1), 1);
 Trials(:, 15) = zeros(size(Trials,1), 1);
 
-%	Column 16~22
+keyboard
+%	Column 16~21
 %	    idxDistractorColor
 Trials(:, 16:16+conf.nStims-1) = Shuffle(repmat(1:conf.nStims, size(Trials, 1), 1)')';
 
-%	Column 23~27
+%	Column 22~27
 %	    idxDistractorBar
-Trials(:, 23:23+conf.nStims-1) = Randi(numel(conf.distractorOrientations), [size(Trials,1), conf.nStims]);
+Trials(:, 22:22+conf.nStims-1) = Randi(numel(conf.distractorOrientations), [size(Trials,1), conf.nStims]);
 
 if mode.once_on > 0
     Trials = Trials(1:mode.once_on, :);

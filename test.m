@@ -2,7 +2,7 @@ function status = test(testWhat)
     switch(testWhat)
         case {'draw'}
             [conf, mode] = loadDefaultConfs();
-            data.Trials = genSequence(conf, mode);
+            data.Trials = genRewardSequence(conf, mode);
             iTrial = 1;
             render.wsize = [0 0 600 800];
             render.cx = render.wsize(3)/2;
