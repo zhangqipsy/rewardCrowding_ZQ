@@ -11,7 +11,7 @@ function [conf, mode] = loadDefaultConfs()
 %
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
-% on Microsoft Windows 8.1 企业版 Version 6.3 (Build 9600)
+% on Microsoft Windows 8.1 企业�?Version 6.3 (Build 9600)
 %
 % Author: Hormet, 2015-08-31
 % UPDATED: 2015-08-31 16:04:17
@@ -63,7 +63,7 @@ mode.once_on            = 0;  % end of experiment after these many trials
 
 
 % experiment configuration vatiables
-conf.repetitions        =  13;           % repetition time of a condition
+conf.repetitions        =  14;           % repetition time of a condition
 % NOTE: usign totalTrials requireѕ knowledge of the code; therefore it is NOT RECOMMENDED
 % simply use repetition
 conf.totalTrials        = 1008;     % respects this if repititions is zero
@@ -98,41 +98,39 @@ conf.cmPerPix = conf.monWidth/1024;
 % NOTE: these color values folow the original code by Li Ya from Sheng Li lab at PKU; as for the reason for the chosen values, it remains to be investigated; or in short, as her why she chose these colors.
 
 % targets
-color.red = [106 0 0];
-color.green = [0 60 0];
+color.red = [211 0 0];
+color.green = [0 95 0];
 color.targets = {color.red, color.green};
-
+color.black = [0 0 0];
+color.white = [255 255 255];
 % distractors
-color.blue = [0 0 95];
-color.cyan = [0 255 255]; % NOTE: this color could be too strong/light!
-color.pink = [106   12    59];%[230 55 125 ]; %改为green
-color.orange = [115  54  3];
-color.yellow = [96   101  0];%[130 131 50];  % 110    45     0 [   101    22     0];
-color.white = [255 255 255]; % NOTE: this color could be too strong/light!
-color.distractors = {color.blue ,color.cyan ,color.pink ,color.orange ,color.yellow ,color.white};
+color.blue = [0 50 255];
+color.cyan = [0 83 83]; 
+color.pink = [131 37 84];
+color.orange = [123 53 11];
+color.yellow = [67 74 0];
+color.lightpurple = [74 47 157]; % NOTE: this color could be too strong/light!
+color.distractors = {color.blue ,color.cyan ,color.pink ,color.orange ,color.yellow ,color.lightpurple};
 
 
 % other colors
-color.lightpurple = [74 47 157];%;[ 0    26  11];[150 118 115] %NOTE: this color was not present in the original paper
-color.gray = [74 92 82];%[123 79 255]; [196 5 230]%NOTE: this color was not present in the original paper
-color.backgroundColor = [128 128 128];% background color=black
+color.gray = [67 67 67];
+color.backgroundColor = [67 67 67];% background color=black
 color.barcolor = 180;
 color.textcolor = 256*[1 1 1]; % used for instruction
 color.textcolor2 = [40 40 40]; % used for feedback
 
-color.bar = color.white;
+color.bar = color.black;
 color.fix = color.white;
 
 conf.color = color;
 
 
 % Parameter in degree
-range_r     = 4.8;   % radius of imaginary circle(deg)
-bar_r       = 1.5;  % length (diameter) of the bar(deg)
-bar_r       = 1.5;  % length (diameter) of the bar(deg)
+range_r     = 5;   % radius of imaginary circle(deg)
+bar_r       = 0.76;  % length (diameter) of the bar(deg)
 bar_r2     = 0.08;  % width (diameter) of the bar(deg)
-bar_r2     = 0.08;  % width (diameter) of the bar(deg)
-cir_r       = 2.5/2;  % deg of circle (deg)
+cir_r       = 2.3/2;  % deg of circle (deg)
 fix_r       = 0.25; % long arm radius of fixation cross (deg)
 fix_r2    = 0.03; % short arm radius of fixation cross (deg)
 
