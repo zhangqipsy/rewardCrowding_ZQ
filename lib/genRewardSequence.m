@@ -113,7 +113,7 @@ end
 Trials(:, 8) = conf.idxHighRewardColor; % see conf.color.targets for idx used
 randSequence = rand(size(Trials, 1),1);
 keyboard
-Trials(:, 9) = ((randSequence>conf.highRewardLevel) & (Trials(:, 6) == Trials(:, 8))) + ((randSequence<(1-conf.highRewardLevel)) & (Trials(:, 6) ~= Trials(:, 8)));
+Trials(:, 9) = ((randSequence>conf.highRewardLevel) & (Trials(:, 6) == Trials(:, 8))) +((randSequence<(1-conf.highRewardLevel)) & (Trials(:, 6) ~= Trials(:, 8)));
 
 
 %	Column 14
