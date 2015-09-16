@@ -111,7 +111,8 @@ end
 %	Column 9
 %	    isHighReward
 Trials(:, 8) = conf.idxHighRewardColor; % see conf.color.targets for idx used
-Trials(:, 9) = ((rand(size(Trials,1),1)>conf.highRewardLevel) & (Trials(:, 6) == Trials(:, 8))) + ((rand(size(Trials,1),1)<(1-conf.highRewardLevel)) & (Trials(:, 6) ~= Trials(:, 8)));
+randSequence = rand(size(Trials, 1));
+Trials(:, 9) = ((randSequence>conf.highRewardLevel) & (Trials(:, 6) == Trials(:, 8))) + ((randSequence<(1-conf.highRewardLevel)) & (Trials(:, 6) ~= Trials(:, 8)));
 
 
 %	Column 14
