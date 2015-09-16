@@ -125,7 +125,7 @@ Trials(:, 9) = ((rand(size(Trials,1),1)>conf.highRewardLevel) & (Trials(:, 6) ==
 Trials(:, 14) = zeros(size(Trials,1), 1);
 Trials(:, 15) = zeros(size(Trials,1), 1);
 
-keyboard
+%keyboard
 %	Column 16~21
 %	    idxDistractorColor
 Trials(:, 16:16+conf.nStims-1) = Shuffle(repmat(1:conf.nStims, size(Trials, 1), 1)')';

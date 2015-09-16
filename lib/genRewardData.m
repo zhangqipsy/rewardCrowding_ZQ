@@ -42,7 +42,7 @@ draw.circle.width = repmat(conf.metric.circle_width, conf.nStims, 1);
 draw.circle.isFill = zeros(conf.nStims, 1);
 
 draw.line.coor = draw.circle.coor;
-draw.line.orientation = conf.distractorOrientations(thisTrial(:, 23:23+conf.nStims-1));
+draw.line.orientation = conf.distractorOrientations(thisTrial(:, 22:22+conf.nStims-1));
 
 draw.line.len = repmat(conf.metric.bar_r, conf.nStims, 1);
 draw.line.width = repmat(conf.metric.bar_r2, conf.nStims, 1);
