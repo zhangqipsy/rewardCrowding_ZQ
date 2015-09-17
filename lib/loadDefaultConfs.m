@@ -63,7 +63,7 @@ mode.once_on            = 0;  % end of experiment after these many trials
 
 
 % experiment configuration vatiables
-conf.repetitions        =  14;           % repetition time of a condition
+conf.repetitions        =  1;           % repetition time of a condition
 % NOTE: usign totalTrials requireѕ knowledge of the code; therefore it is NOT RECOMMENDED
 % simply use repetition
 conf.totalTrials        = 1008;     % respects this if repititions is zero

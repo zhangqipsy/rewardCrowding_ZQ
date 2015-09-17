@@ -77,7 +77,7 @@ function [data flow]= recordResponse(flow, data, conf)
 %
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
-% on Microsoft Windows 8.1 企业版 Version 6.3 (Build 9600)
+% on Microsoft Windows 8.1 企业�?Version 6.3 (Build 9600)
 %
 % Author: Hormet, 2015-08-31
 % UPDATED: 2015-08-31 16:55:41
@@ -110,7 +110,7 @@ data.Trials(flow.nresp, 1) = flow.nresp; % this keeps rising after every trial
 %	Column 2
 %	    blockID
 %	    To be recorded.
-data.Trials(flow.nresp, 2) = floor(flow.nresp/conf.restpertrial)+1;
+data.Trials(flow.nresp, 2) = floor((flow.nresp-1)/conf.restpertrial)+1;
 %	Column 3
 %	    trialID
 %	    To be recorded.
