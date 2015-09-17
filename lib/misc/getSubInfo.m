@@ -1,8 +1,8 @@
 function Subinfo= getSubInfo()
 
-  promptParameters = {'Subject Name', 'Age', 'Gender (F or M?)','Handedness (L or R)', 'Left eyesight', 'Right eyesight', 'dominant eye (L or R)', 'Phone'};
+  promptParameters = {'Subject ID','His','Date','Subject Name', 'Age', 'Gender (F or M?)','Handedness (L or R)', 'Left eyesight/degree', 'Right eyesight/degree', 'Phone'};
 
-  defaultParameters = {'reward_default', '20','F', 'R', '1.0', '1.0', 'L', '13244445555'};
+  defaultParameters = {'01','','2015/10/1','zhangqi', '20','F', 'R', '1.0/250', '1.0/250', '13244445555'};
 
   if ~ IsOctave
 

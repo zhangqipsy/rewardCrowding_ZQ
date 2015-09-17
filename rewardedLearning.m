@@ -151,7 +151,7 @@ end
     end
 
     % Get Subject information
-    if exist('Subinfo','var');data.Subinfo = Subinfo; else data.Subinfo = getSubInfo();end
+    if exist('Subinfo','var');data.Subinfo = Subinfo'; else data.Subinfo = getSubInfo()';end
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
