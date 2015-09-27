@@ -1,6 +1,28 @@
 function Trials = genCrowdingSequence(conf, mode)
 %GENTRIALCONDITIONS generates stimulus data and experiment settings based on `conf` struct
 %
+% We cannot have seperate QUEST sequences that measures thresholds for
+% different variables in a single run of experiment, since that could
+% complicate experiment. For example, we could measure the distance between the
+% fixation to the target, and the spacing between the flankers and the target.
+% These two variables both could capture the spatial profile of crowding. But,
+% since they are both continuous variables, we should be using a
+% two-dimentional QUEST to get the contour curves rather than blindly adjusting
+% around using one-dimentional QUEST that we have now. So, we should always
+% only measure one varibale using QUEST.
+%
+% That being said, we can still have several QUEST sequences under different
+% discrete conditions for the same variable. For example, we could change the
+% shape of the target so the salience is controlled under different levels,
+% fixate the distance between fixation and the target (eccentricity), then
+% measure the threshold for flanker spacing; or fixate spacing and measure
+% eccentricity. 
+%
+% As for implementation, we could only have one variable that says "QUEST" for
+% the procedure, and all others could be constants.
+%
+%
+%
 % SYNOPSIS: data = genSequence(nBlocks, nTrials, nStims)
 %
 % INPUT
