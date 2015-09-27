@@ -18,8 +18,13 @@ function Trials = genCrowdingSequence(conf, mode)
 % measure the threshold for flanker spacing; or fixate spacing and measure
 % eccentricity. 
 %
-% As for implementation, we could only have one variable that says "QUEST" for
-% the procedure, and all others could be constants.
+% As for implementation, we could only have one variable that specifies the
+% procedure (for example "QUEST"), and all others could be generated. However,
+% "Constant" and one adaptive method could be used simultenously for generating
+% several sequences at the same time. For example, if the Shepe is "Constant"
+% and flanker distance is quest, then several sequences of QUEST is generated
+% for measuring threshold flanker distance for each level conbination of
+% constants. Variables that specify constant should also provide the levels.
 %
 %
 %
