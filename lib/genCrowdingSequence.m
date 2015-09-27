@@ -53,7 +53,7 @@ function Trials = genCrowdingSequence(conf, mode)
 %	Column 6
 %	    idxTargetColor (balance)
 %	Column 7
-%	    idxFlankerDist (major)
+%	    idxFlankerDist (major[default in test.m])
 %	Column 8
 %	    idxFlankerColor (balance)
 %	Column 9
@@ -108,22 +108,22 @@ function Trials = genCrowdingSequence(conf, mode)
 nColumns = 16;
 
 [whichProcedure codeProcedure]= lower(channelSelection(mode.procedureChannel));
+%if conf.repetitions == 0
+    %% FIXME: deal with BalanceTrials() way of generatoin later!
+    %Trials = NaN(conf.totalTrials, nColumns);
+    %[Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(conf.totalTrials, 1, conf.fixLevels, conf.nStims, numel(conf.color.targets), conf.targetOrientations);
+%if mode.demo_on
+ %minTrials = prod([numel(conf.fixLevels), conf.nStims, conf.nTargets, numel(conf.targetOrientations)]);
+    %[Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(minTrials, 1, conf.fixLevels, conf.nStims, numel(conf.color.targets), conf.targetOrientations);
+%end
+%
+%else
+%
+% let's only use this before BalanceTrials is ready
+[Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.metric.targetDist), numel(conf.metric.range_r), numel(conf.targetShapes)]);
+
 switch 
     case {'Constant', 'constant'}
-
-if conf.repetitions == 0
-    Trials = NaN(conf.totalTrials, nColumns);
-    [Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(conf.totalTrials, 1, conf.fixLevels, conf.nStims, numel(conf.color.targets), conf.targetOrientations);
-if mode.demo_on
- minTrials = prod([numel(conf.fixLevels), conf.nStims, conf.nTargets, numel(conf.targetOrientations)]);
-    [Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(minTrials, 1, conf.fixLevels, conf.nStims, numel(conf.color.targets), conf.targetOrientations);
-end
-
-else
-[Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.targetOrientations)]);
-if mode.demo_on
-    [Trialsequence, Trials] = genTrial(1, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.targetOrientations)]);
-end
 
 case {'QUEST' , 'quest'}
     % we use the QUEST procedure here!
