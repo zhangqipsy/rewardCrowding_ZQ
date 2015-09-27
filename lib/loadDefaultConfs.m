@@ -1,6 +1,12 @@
 function [conf, mode] = loadDefaultConfs()
 %LOADDEFAULTCONFS loads all the default values for the experiment, which would normally be overwritten by the shell wrapper.
 %
+% The procedureChannel tells which procedure to apply; When the supposed
+% procedure is applied, then values are set based on the conf.*param the fist
+% value in this param indicates the column in the Trials table where the
+% channel is applied, and the following values in the param specifies for given
+% method.
+%
 % SYNOPSIS: [cond, mode] = loadDefaultConfs()
 %
 % INPUT
@@ -11,7 +17,7 @@ function [conf, mode] = loadDefaultConfs()
 %
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
-% on Microsoft Windows 8.1 企业�?Version 6.3 (Build 9600)
+% on Microsoft Windows 8.1 浼佷笟鐗?Version 6.3 (Build 9600)
 %
 % Author: Hormet, 2015-08-31
 % UPDATED: 2015-08-31 16:04:17
@@ -64,14 +70,17 @@ mode.once_on            = 0;  % end of experiment after these many trials
 
 % experiment configuration vatiables
 conf.repetitions        =  1;           % repetition time of a condition
-% NOTE: usign totalTrials requireѕ knowledge of the code; therefore it is NOT RECOMMENDED
+% NOTE: usign totalTrials require knowledge of the code; therefore it is NOT RECOMMENDED
 % simply use repetition
 conf.totalTrials        = 1008;     % respects this if repititions is zero
 conf.restpertrial       =  100;           % every x trial a rest
 conf.showLeftTrialsEvery     = 5;
 conf.nStims              =  6;          % number of stimuli (target+distractors) present in each trial/throughout the experiment
-conf.nUp1DownParams     = [3 40 ] ;
-conf.QUESTparams        = [0.1 40  0.1]; % FIXME: dunno what it means
+conf.nUp1DownParams     = [6 40 ] ;
+conf.QUESTparams        = [6 0.1 40  0.1]; % FIXME: dunno what it means
+conf.Constantparams     = [4 7]; % FIXME: dunno what it means
+
+
 conf.nTargets           = 1;            % number of targets present in each trial/throughout the experiment
 conf.audioFreq = 44100;                 
 conf.fixLevels          = [.4 .5 .6];
@@ -101,8 +110,8 @@ conf.cmPerPix = conf.monWidth/1024;
 color.red = [211 0 0];
 color.green = [0 95 0];
 color.targets = {color.red, color.green};
-color.black = [0 0 0];
-color.white = [255 255 255];
+
+
 % distractors
 color.blue = [0 50 255];
 color.cyan = [0 83 83]; 
@@ -114,6 +123,8 @@ color.distractors = {color.blue ,color.cyan ,color.pink ,color.orange ,color.yel
 
 
 % other colors
+color.black = [0 0 0];
+color.white = [255 255 255];
 color.gray = [67 67 67];
 color.backgroundColor = [67 67 67];% background color=black
 color.barcolor = 180;
