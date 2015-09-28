@@ -175,8 +175,7 @@ end
 
 % helper functions
 function drawPoly(w, polygon, cmd)
-    % all polygons should be connected
-    % if not, we add another point here
+    % all polygons are connected
     Screen(cmd, w, polygon.color', polygon.points', polygon.width');
     %disp('Drawing polygons...');
 end
