@@ -19,7 +19,6 @@ function status = test(testWhat)
             rewardedLearning(conf, mode)
         case {'crowding'}
           mode.linearStim_on = 1;
-          conf.repititions = 1;
           conf.nStim = 1;
           conf.fixLevels = [.3];
           %conf.color.targets = [conf.color.red, conf.color.green];
@@ -32,6 +31,7 @@ function status = test(testWhat)
           conf.metric.range_r = -1;
           mode.procedureChannel = 'QUEST'; % experiment methods;
           conf.QUESTparams        = {7 100 0.1 0.8}; % FIXME: dunno what it means
+          conf.repititions = conf.QUESTparams{2};
         otherwise
             disp('No test specified!')
     end
