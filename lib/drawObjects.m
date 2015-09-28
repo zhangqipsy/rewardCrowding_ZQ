@@ -80,7 +80,7 @@ if exist('draw', 'var') == 1 && isfield(draw, 'circle')
 
         else
             % seperately draw
-            warning('drawObjects:circlsIsFill', 'Filled and Framed circles are found!');
+            warning('drawObjects:circlelsIsFill', 'Filled and Framed circles are found!');
             for iCircle = 1:size(draw.circle.coor, 1)
                 if draw.circle.isFill(iCircle ) == 1
                     drawCmd = 'FillOval';
@@ -93,6 +93,34 @@ if exist('draw', 'var') == 1 && isfield(draw, 'circle')
     end
 end
 
+% draw polygons
+if exist('draw', 'var') == 1 && isfield(draw, 'poly')
+    if ~isempty(draw.poly.coor)
+
+        % draw seperately?
+        if all(draw.poly.isFill == draw.poly.isFill(1))
+            % all of the same type; draw together
+            if draw.poly.isFill(1) == 1
+                drawCmd = 'FillPoly';
+            else
+                drawCmd = 'FramePoly';
+            end
+            drawPoly(w, draw.poly, drawCmd);
+
+        else
+            % seperately draw
+            warning('drawObjects:PolylsIsFill', 'Filled and Framed circles are found!');
+            for iPoly = 1:size(draw.poly.coor, 1)
+                if draw.poly.isFill(iPoly ) == 1
+                    drawCmd = 'FillPoly';
+                else
+                    drawCmd = 'FramePoly';
+                end
+                drawPoly(w, render, draw.circle(iPoly, :));
+            end
+        end
+    end
+end
 
 
 % draw lines
@@ -145,6 +173,13 @@ function drawCircle(w, circle, cmd)
     %disp('Drawing ovals...');
 end
 
+% helper functions
+function drawPoly(w, polygon, cmd)
+    % all polygons should be connected
+    % if not, we add another point here
+    Screen(cmd, w, polygon.color', polygon.points', polygon.width');
+    %disp('Drawing polygons...');
+end
 
 
 
