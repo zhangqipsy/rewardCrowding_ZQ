@@ -25,6 +25,7 @@ function status = test(testWhat)
           conf.color.targets = [conf.color.red, conf.color.green];
           conf.metric.targetDist = [2 4 8];
           conf.targetShapes = [Inf 6 8];
+          conf.distractorShapes = [Inf]; % Inf is circle
           conf.metric.range_r = -1;
           mode.procedureChannel = 'QUEST'; % experiment methods;
           conf.QUESTparams        = {7 100 0.1 0.8}; % FIXME: dunno what it means

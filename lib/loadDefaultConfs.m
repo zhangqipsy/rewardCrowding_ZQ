@@ -80,7 +80,8 @@ conf.repetitions        =  1;           % repetition time of a condition
 conf.totalTrials        = 1008;     % respects this if repititions is zero
 conf.restpertrial       =  100;           % every x trial a rest
 conf.showLeftTrialsEvery     = 5;
-conf.nStims              =  6;          % number of stimuli (target+distractors) present in each trial/throughout the experiment
+conf.nStims              =  6;          % number of stimuli (target+distractors) present in each trial/throughout the experiment (target is always one of these)
+conf.nFlankers           = 2;           % pure flankers, target can never be one here (used only for Crowding)
 
 
 
@@ -94,6 +95,7 @@ conf.rewardAmounts      = [0.1 0.5];
 conf.targetOrientations = [0 pi/2];
 conf.targetShapes   = [Inf 6 8 12];
 conf.distractorOrientations = [pi/4 -pi/4];
+conf.flankerOrientations = [pi/2 -pi/2];
 conf.distractorShapes = [Inf]; % Inf is circle
 conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
 conf.audioTone1Hz   = 1000;

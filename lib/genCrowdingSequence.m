@@ -78,6 +78,8 @@ function Trials = genCrowdingSequence(conf, mode)
 %	    To be recorded.
 %	Column 16
 %	    idxTargetShape  (balance)
+%	Column 17
+%	    idxDistractorShape  (balance)
 %
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
@@ -105,10 +107,10 @@ function Trials = genCrowdingSequence(conf, mode)
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-nColumns = 16;
+nColumns = 17;
 
 % let's only use this before BalanceTrials is ready
-[Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.metric.targetDist), numel(conf.metric.range_r), numel(conf.color.distractors), numel(conf.targetShapes)]);
+[Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.metric.targetDist), numel(conf.metric.range_r), numel(conf.color.distractors), numel(conf.targetShapes), numel(conf.distractorShapes)]);
 
 
 %	Column 4
@@ -123,8 +125,10 @@ nColumns = 16;
 %	    idxFlankerColor (balance)
 %	Column 16
 %	    idxTargetShape  (balance)
+%	Column 17
+%	    idxDistractorShape  (balance)
 tmp=15; % second term is nStims: which is one for crowding since we only have one target
-Trials(:, [4 tmp 6 5 7 8 16]) = Trialsequence;
+Trials(:, [4 tmp 6 5 7 8 16 17]) = Trialsequence;
 Trials(:, tmp) = NaN(size(Trials,1), 1);
 
 
@@ -136,14 +140,6 @@ Trials(:, 9) = repmat(conf.metric.crossCoor, size(Trials,1),1);
 %	    initialize here
 Trials(:, 14) = zeros(size(Trials,1), 1);
 Trials(:, 15) = zeros(size(Trials,1), 1);
-
-%	Column 16~22
-%	    idxDistractorColor
-Trials(:, 16:16+conf.nStims-1) = Shuffle(repmat(1:conf.nStims, size(Trials, 1), 1)')';
-
-%	Column 23~27
-%	    idxDistractorBar
-Trials(:, 23:23+conf.nStims-1) = Randi(numel(conf.distractorOrientations), [size(Trials,1), conf.nStims]);
 
 
 
