@@ -42,7 +42,7 @@ function Trials = genCrowdingSequence(conf, mode)
 %	    To be recorded.
 %	Column 2
 %	    blockID
-%	    To be recorded.
+%	    this controls the adaptive sequence!
 %	Column 3
 %	    trialID
 %	    To be recorded.

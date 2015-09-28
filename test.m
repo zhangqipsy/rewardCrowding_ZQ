@@ -22,14 +22,16 @@ function status = test(testWhat)
           conf.repititions = 1;
           conf.nStim = 1;
           conf.fixLevels = [.3];
+          %conf.color.targets = [conf.color.red, conf.color.green];
           conf.color.targets = [conf.color.red, conf.color.green];
           conf.metric.targetDist = [2 4 8];
-          conf.targetShapes = [Inf 6 8];
+          conf.Constantparams     = [5 6]; % the column indicators for seperate QUEST sequences (5,6 are distance, color for target)
+          conf.targetShapes = [Inf 8];
+          conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
           conf.distractorShapes = [Inf]; % Inf is circle
           conf.metric.range_r = -1;
           mode.procedureChannel = 'QUEST'; % experiment methods;
           conf.QUESTparams        = {7 100 0.1 0.8}; % FIXME: dunno what it means
-          conf.Constantparams     = [5 16]; % the column indicators for seperate QUEST sequences
         otherwise
             disp('No test specified!')
     end

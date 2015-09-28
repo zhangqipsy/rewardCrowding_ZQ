@@ -66,10 +66,12 @@ try
         render.dataPrefix = ['Demo/'];
         render.dataSuffix = [render.dataSuffix '_RawardDemo_'];
         render.task = 'RewardDemo';
+        mode.feedback_on = 0;
     elseif mode.linearStim_on
         render.dataPrefix = ['CrowdingTask/'];
         render.dataSuffix = [render.dataSuffix '_CrowdingTask_'];
         render.task = 'CrowdingTask';
+        mode.feedback_on = 0;
     else
         render.dataPrefix = ['RewardTask/'];
         render.dataSuffix = [render.dataSuffix '_RawardTask_'];
@@ -80,9 +82,11 @@ try
         case {'RewardTask', 'RewardDemo'}
             genSequence = @genRewardSequence;
             genData = @genRewardData;
+            recordResponse = @recordRewardResponse;
         case {'CrowdingTask'}
             genSequence = @genCrowdingSequence;
             genData = @genCrowdingdData;
+            recordResponse = @recordCrowdingResponse;
         otherwise
             error('Unknown task!');
     end
@@ -222,6 +226,13 @@ end
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %% data generatoin
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        if flow.nresp == 1
+            % initialization
+            [data.Trials(flow.nresp, :) flow.Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(flow.nresp, :), [], data.Trials(:,2));
+        elseif flow.nresp > 1
+            [data.Trials(flow.nresp, :) flow.Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(flow.nresp, :), flow.Q, data.Trials(:,2));
+        end
+
         data.draw = genData(data.Trials(flow.nresp, :), render, conf, mode);
 
         % per trial initialization
@@ -296,7 +307,7 @@ end
                 % record response
                 [data, flow] = recordResponse(flow, data, conf);
 
-                if ~mode.demo_on
+                if mode.feedback_on
                     % demo_on calcels feedback
                 % give feedback
                 if flow.isCorrect

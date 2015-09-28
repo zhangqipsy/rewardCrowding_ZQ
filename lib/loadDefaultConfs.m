@@ -70,7 +70,7 @@ mode.once_on            = 0;  % end of experiment after these many trials
 
 % experiment configuration vatiables
 conf.nUp1DownParams     = {6 40 } ;
-conf.QUESTparams        = {7 100 0.1 0.8}; % FIXME: dunno what it means
+conf.QUESTparams        = {7 100 3 0.2 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
 conf.Constantparams     = [4 7]; % the column indicators
 conf.repetitions        =  1;           % repetition time of a condition
 
