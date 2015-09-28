@@ -111,20 +111,6 @@ nColumns = 16;
 % let's only use this before BalanceTrials is ready
 [Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.metric.targetDist), numel(conf.metric.range_r), numel(conf.targetShapes)]);
 
-switch 
-    case {'Constant', 'constant'}
-
-case {'QUEST' , 'quest'}
-    % we use the QUEST procedure here!
-
-
-case {'nUp1Down' , 'nup1down'}
-    % we use the nUp1Down (N-up-1-down) procedure here!
-
-
-otherwise
-    error('genCrowdingSequence:unknownProcedure', 'procedure %s is unknown!');
-end
 
 
 %	Column 4
@@ -164,6 +150,36 @@ Trials(:, 16:16+conf.nStims-1) = Shuffle(repmat(1:conf.nStims, size(Trials, 1), 
 %	Column 23~27
 %	    idxDistractorBar
 Trials(:, 23:23+conf.nStims-1) = Randi(numel(conf.distractorOrientations), [size(Trials,1), conf.nStims]);
+
+switch 
+    case {'Constant', 'constant'}
+        % do nothing, the above generates Constant sequence
+
+case {'QUEST' , 'quest'}
+    % we use the QUEST procedure here!
+    if ~isempty(conf.Constantparams)
+        warning('genCrowdingSequence:QUEST', '%d sequences are generated based on combinations of columns %s in Trials, for the QUEST procedure to measure data for the %dth column of Trials', prod(conf.Constantparams), num2str(conf.Constantparams), conf.QUESTparams{1});
+        sequencesControlMatrix = Trials(:, conf.Constantparams);
+        blockID = sequencesControlMatrix * [max(sequencesControlMatrix(:) .^ [1:numel(conf.Constantparams)]]';
+    else
+        warning('genCrowdingSequence:QUEST', 'A single sequence is generated for the QUEST procedure to measure data for the %dth column of Trials', conf.QUESTparams{1});
+    end
+
+
+
+case {'nUp1Down' , 'nup1down'}
+    % we use the nUp1Down (N-up-1-down) procedure here!
+    % FIXME: not implemented yet
+    % we do not know how many trials should suffice so balancing before
+    % the experiment is impossible. Therefore, rather than generating the
+    % data here set the probabilities for each parameter here and let the
+    % nUp1Down function itself care about random number generation
+    error('genCrowdingSequence:nUp1Down', 'Not implemented!');
+otherwise
+    error('genCrowdingSequence:unknownProcedure', 'procedure %s is unknown!');
+end
+
+
 
 if mode.once_on > 0
     Trials = Trials(1:mode.once_on, :);
