@@ -107,38 +107,32 @@ function Trials = genCrowdingSequence(conf, mode)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 nColumns = 16;
 
-[whichProcedure codeProcedure]= lower(channelSelection(mode.procedureChannel));
 % let's only use this before BalanceTrials is ready
-[Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.metric.targetDist), numel(conf.metric.range_r), numel(conf.targetShapes)]);
-
+[Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.metric.targetDist), numel(conf.metric.range_r), numel(conf.color.distractors), numel(conf.targetShapes)]);
 
 
 %	Column 4
 %	    fixDuration
-%	Column 5
-%	    idxTargetPosition
 %	Column 6
-%	    idxTargetColor
-Trials(:, [4 5 6 7]) = Trialsequence;
-Trials(:, 4) = Replace(Trials(:,4), 1:numel(conf.fixLevels), conf.fixLevels);
-end
-
-
+%	    idxTargetColor (balance)
+%	Column 5
+%	    idxTargetDist (major)
+%	Column 7
+%	    idxFlankerDist (major[default in test.m])
 %	Column 8
-%	    idxHighRewardColor
+%	    idxFlankerColor (balance)
+%	Column 16
+%	    idxTargetShape  (balance)
+tmp=15; % second term is nStims: which is one for crowding since we only have one target
+Trials(:, [4 tmp 6 5 7 8 16]) = Trialsequence;
+Trials(:, tmp) = NaN(size(Trials,1), 1);
+
+
 %	Column 9
-%	    isHighReward
-Trials(:, 8) = conf.idxHighRewardColor; % see conf.color.targets for idx used
-Trials(:, 9) = ((rand(size(Trials,1),1)>conf.highRewardLevel) & (Trials(:, 6) == Trials(:, 8))) + ((rand(size(Trials,1),1)<(1-conf.highRewardLevel)) & (Trials(:, 6) ~= Trials(:, 8)));
+%	    crossCoor
+Trials(:, 9) = repmat(conf.metric.crossCoor, size(Trials,1),1);
 
 
-%	Column 14
-%	    counterTillCorrect
-%	    To be recorded.
-%	Column 15
-%	    rewardAmount
-%	    To be recorded.
-%
 %	    initialize here
 Trials(:, 14) = zeros(size(Trials,1), 1);
 Trials(:, 15) = zeros(size(Trials,1), 1);
@@ -151,7 +145,10 @@ Trials(:, 16:16+conf.nStims-1) = Shuffle(repmat(1:conf.nStims, size(Trials, 1), 
 %	    idxDistractorBar
 Trials(:, 23:23+conf.nStims-1) = Randi(numel(conf.distractorOrientations), [size(Trials,1), conf.nStims]);
 
-switch 
+
+
+[whichProcedure codeProcedure]= lower(channelSelection(mode.procedureChannel));
+switch whichProcedure
     case {'Constant', 'constant'}
         % do nothing, the above generates Constant sequence
 
@@ -160,11 +157,15 @@ case {'QUEST' , 'quest'}
     if ~isempty(conf.Constantparams)
         warning('genCrowdingSequence:QUEST', '%d sequences are generated based on combinations of columns %s in Trials, for the QUEST procedure to measure data for the %dth column of Trials', prod(conf.Constantparams), num2str(conf.Constantparams), conf.QUESTparams{1});
         sequencesControlMatrix = Trials(:, conf.Constantparams);
-        blockID = sequencesControlMatrix * [max(sequencesControlMatrix(:) .^ [1:numel(conf.Constantparams)]]';
+        blockID = sequencesControlMatrix * [max(sequencesControlMatrix(:)) .^ [1:numel(conf.Constantparams)]]';
     else
         warning('genCrowdingSequence:QUEST', 'A single sequence is generated for the QUEST procedure to measure data for the %dth column of Trials', conf.QUESTparams{1});
+        blockID = ones(size(Trials,1), 1);
     end
-
+%	Column 2
+%	    blockID
+Trials(:,2) = blockID;
+Trials(:, conf.QUESTparams{1}) = codeProcedure;
 
 
 case {'nUp1Down' , 'nup1down'}

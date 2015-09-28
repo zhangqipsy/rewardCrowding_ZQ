@@ -17,7 +17,7 @@ function [conf, mode] = loadDefaultConfs()
 %
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
-% on Microsoft Windows 8.1 浼佷笟鐗?Version 6.3 (Build 9600)
+% on Microsoft Windows 8.1 Ultimate Version 6.3 (Build 9600)
 %
 % Author: Hormet, 2015-08-31
 % UPDATED: 2015-08-31 16:04:17
@@ -50,11 +50,11 @@ mode.audio_on       = 1;
 mode.speak_on       = 1;
 mode.english_on         = 1;  % use English for Instructions etc., 0 for Chinese(not supported for now!)
 mode.linearStim_on  = 0;
+mode.inspectDesign_on = 1; % see experiment design before starting the experiment
 mode.procedureChannel = 0; % experiment methods;
                             %'Constant',  0
                             %'QUEST',    -1
                             %'nUp1Down', -2
-mode.inspectDesign_on = 1; % see experiment design before starting the experiment
 
 % DO NOT CHANGE UNLESS YOU KNOW EXCACTLY WHAT YOU ARE DOING
 mode.regenerate_on      = 1;  % mode.regenerate_on data for experiment, rather than using the saved one
@@ -69,16 +69,20 @@ mode.once_on            = 0;  % end of experiment after these many trials
 
 
 % experiment configuration vatiables
+conf.nUp1DownParams     = {6 40 } ;
+conf.QUESTparams        = {7 100 0.1 0.8}; % FIXME: dunno what it means
+conf.Constantparams     = [4 7]; % the column indicators
 conf.repetitions        =  1;           % repetition time of a condition
+
+
 % NOTE: usign totalTrials require knowledge of the code; therefore it is NOT RECOMMENDED
 % simply use repetition
 conf.totalTrials        = 1008;     % respects this if repititions is zero
 conf.restpertrial       =  100;           % every x trial a rest
 conf.showLeftTrialsEvery     = 5;
 conf.nStims              =  6;          % number of stimuli (target+distractors) present in each trial/throughout the experiment
-conf.nUp1DownParams     = [6 40 ] ;
-conf.QUESTparams        = [6 0.1 40  0.1]; % FIXME: dunno what it means
-conf.Constantparams     = [4 7]; % FIXME: dunno what it means
+
+
 
 
 conf.nTargets           = 1;            % number of targets present in each trial/throughout the experiment
@@ -88,7 +92,9 @@ conf.idxHighRewardColor = 1;
 conf.highRewardLevel    = .2;
 conf.rewardAmounts      = [0.1 0.5];
 conf.targetOrientations = [0 pi/2];
+conf.targetShapes   = [Inf 6 8 12];
 conf.distractorOrientations = [pi/4 -pi/4];
+conf.distractorShapes = [Inf]; % Inf is circle
 conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
 conf.audioTone1Hz   = 1000;
 conf.audioTone2Hz   = 500;
@@ -144,6 +150,8 @@ bar_r2     = 0.08;  % width (diameter) of the bar(deg)
 cir_r       = 2.3/2;  % deg of circle (deg)
 fix_r       = 0.25; % long arm radius of fixation cross (deg)
 fix_r2    = 0.03; % short arm radius of fixation cross (deg)
+crossCoor = 5;
+targetDist = [2 4 8];
 
 
 % Parameter in pix
@@ -154,6 +162,7 @@ metric.cir_r       = round(DegreesToRetinalMM(cir_r,conf.viewDist)/conf.cmPerPix
 metric.fix_r       = round(DegreesToRetinalMM(fix_r,conf.viewDist)/conf.cmPerPix); % long arm radius of fixation cross (pix)
 metric.fix_r2    = round(DegreesToRetinalMM(fix_r2,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix)
 metric.circle_width = 3.35;
+metric.targetDist =round(DegreesToRetinalMM(targetDist,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix) ;
 scale             =  1;          % linear magnifier
 
 metric = structfun(@(x) scale*x, metric, 'UniformOutput', false);
