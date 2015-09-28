@@ -142,7 +142,55 @@ color.textcolor2 = [40 40 40]; % used for feedback
 color.bar = color.black;
 color.fix = color.white;
 
-conf.color = color;
+conf.xuexin.color = color;
+
+% Lab corrected colors: L=0.5 (MATLAB lab2rgb)
+% method: use rgb2lab to find Lab values for distint RGB values (e.g. [1 0 0] -- red)
+% Then interactively find a possible color (within range [0, 1] using lab2rgb)
+% at L:50, interactively hunt for a,b
+fromLab.white = [1 1 1];
+fromLab.gray25  = [0.2325    0.2325    0.2325];
+fromLab.gray30  = [0.2770    0.2770    0.2770];
+fromLab.gray35  = [0.3227    0.3227    0.3227];
+fromLab.gray40  = [0.3695    0.3696    0.3695];
+fromLab.gray45  = [0.4174    0.4175    0.4174];
+fromLab.gray50  = [0.4663    0.4664    0.4663];
+fromLab.gray55  = [0.5161    0.5162    0.5161];
+fromLab.gray60  = [0.5668    0.5669    0.5668];
+fromLab.gray65  = [0.6183    0.6185    0.6184];
+fromLab.gray70  = [0.6707    0.6708    0.6707];
+fromLab.gray80  = [0.7777    0.7778    0.7777];
+fromLab.gray85  = [0.8322    0.8324    0.8323];
+fromLab.gray40 = [.4663 .4663 .4663];
+fromLab.gray50 = [.4663 .4663 .4663];
+fromLab.gray50 = [.4663 .4663 .4663];
+fromLab.black = [0 0 0];%
+fromLab.grey = fromLab.gray50;
+
+fromLab.red = [.9082 .1439 .0472];
+fromLab.green = [.1377 .5391 .0633];
+fromLab.blue = [.7278 .1675 .9435];
+fromLab.yellow = [.4235 .4980 .0825];
+fromLab.purple = [.7697 .1449 .8746];
+fromLab.cyan = [.0676 .5154 .5565];
+fromLab.pink = [.8620 .1744 .4769];
+fromLab.brown = [.7418 .3595 .0158];
+
+fromLab.backgroundColor = fromLab.gray50;% background color=black
+fromLab.barcolor = fromLab.gray85;
+fromLab.textcolor = fromLab.white; % used for instruction
+fromLab.textcolor2 = fromLab.gray25; % used for feedback
+fromLab.bar = color.black;
+fromLab.fix = color.white;
+
+scaleRGB             = 255;          % linear magnifier
+fromLab = structfun(@(x) scaleRGB*x, fromLab, 'UniformOutput', false);
+
+fromLab.targets = {color.red, color.green};
+fromLab.distractors = {color.blue ,color.yellow ,color.purple ,color.cyan, color.pink, color.brown};
+
+color = fromLab; % override xuexin color with fromLab color
+
 
 
 % Parameter in degree
