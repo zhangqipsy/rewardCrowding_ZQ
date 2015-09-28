@@ -1,5 +1,4 @@
-Let's also do the crowding!
-
+Let's test the crowding program
 
 drawObjects also support poly, rect
         fixation coor and width
