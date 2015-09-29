@@ -1,4 +1,4 @@
-function [data flow]= recordResponse(flow, data, conf)
+function [data flow]= recordRewardResponse(flow, data, conf)
 % recordResponse records responses
 %
 % After a response has been collected, decide whether 

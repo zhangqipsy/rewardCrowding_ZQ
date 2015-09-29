@@ -186,10 +186,10 @@ fromLab.fix = color.white;
 scaleRGB             = 255;          % linear magnifier
 fromLab = structfun(@(x) scaleRGB*x, fromLab, 'UniformOutput', false);
 
-fromLab.targets = {color.red, color.green};
-fromLab.distractors = {color.blue ,color.yellow ,color.purple ,color.cyan, color.pink, color.brown};
+fromLab.targets = {fromLab.red, fromLab.green};
+fromLab.distractors = {fromLab.blue ,fromLab.yellow ,fromLab.purple ,fromLab.cyan, fromLab.pink, fromLab.brown};
 
-color = fromLab; % override xuexin color with fromLab color
+conf.color = fromLab; % override xuexin color with fromLab color
 
 
 

@@ -57,9 +57,9 @@ if nargin > 0
     mode = updateStruct(render.mode, mode);
 end
 
+
 try
-
-
+    keyboard
     render.dataPrefix=[];
     render.dataSuffix=[];
     if mode.demo_on
@@ -153,6 +153,7 @@ end
         data.audio.tone2(1,:) = MakeBeep(conf.audioTone2Hz, getTime('audioTone', mode.debug_on), conf.audioFreq);
         data.audio.tone2(2,:) = data.audio.tone2(1,:); % tone2 is the last tone that indicate the end of the sound sequence.
     end
+
 
     % Get Subject information
     if exist('Subinfo','var');data.Subinfo = Subinfo'; else data.Subinfo = getSubInfo()';end
