@@ -39,7 +39,7 @@ function [thisTrial Q]= tunnelUpdate(ch, conf, thisTrial, Q, blockID)
                 error('tunnelUpdate:nUp1Down', 'Not implemented!');
 
             otherwise
-                error('genCrowdingSequence:unknownProcedure', 'procedure %s is unknown!');
+                error('genCrowdingSequence:unknownProcedure', 'procedure %s is unknown!', whichProcedure);
         end
 
 
@@ -72,7 +72,7 @@ function [thisTrial Q]= tunnelUpdate(ch, conf, thisTrial, Q, blockID)
             % FIXME: not implemented yet
 
         otherwise
-            error('genCrowdingSequence:unknownProcedure', 'procedure %s is unknown!');
+                error('genCrowdingSequence:unknownProcedure', 'procedure %s is unknown!', whichProcedure);
     end %switch for existing Q
 
 
