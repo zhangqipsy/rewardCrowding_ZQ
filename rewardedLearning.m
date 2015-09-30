@@ -177,9 +177,9 @@ end
     render.screenNumber=max(render.screens);
 
     if mode.debug_on
-        [w,render.wsize]=Screen('OpenWindow',render.screenNumber,conf.color.backgroundColor,[1,1,801,601],[]);
+        [w,render.wsize]=Screen('ow',render.screenNumber,conf.color.backgroundColor,[1,1,801,601],[]);
     else
-        [w,render.wsize]=Screen('OpenWindow',render.screenNumber,conf.color.backgroundColor,[],32);
+        [w,render.wsize]=Screen('ow',render.screenNumber,conf.color.backgroundColor,[],32);
     end
     Screen('BlendFunction', w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
