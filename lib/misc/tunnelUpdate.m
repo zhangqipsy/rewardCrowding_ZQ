@@ -1,5 +1,5 @@
 function [thisTrial Q]= tunnelUpdate(ch, conf, thisTrial, Q, blockID)
-    [whichProcedure codeProcedure]= lower(tunnelSelection(ch));
+    [whichProcedure codeProcedure]= tunnelSelection(lower(ch));
 
     % lastTrial is the last trial in the same quest sequence
     if  ~exist('Q', 'var') == 1 || isempty(Q)
@@ -7,7 +7,7 @@ function [thisTrial Q]= tunnelUpdate(ch, conf, thisTrial, Q, blockID)
         switch whichProcedure
             case {'Constant', 'constant'}
                 % do nothing
-                disp('Non-adaptive design. Not generating Q!');
+                disp('Non-adaptive design procedure. Not generating Q!');
                 Q = [];
 
             case {'QUEST' , 'quest'}
