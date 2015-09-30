@@ -59,7 +59,6 @@ end
 
 
 try
-    keyboard
     render.dataPrefix=[];
     render.dataSuffix=[];
     if mode.demo_on
