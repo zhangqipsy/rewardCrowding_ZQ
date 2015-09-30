@@ -47,7 +47,7 @@ channelTable = {...
 % NOTE: isequal in GNU Octave can handle numerics as well as strings
 %       not sure about MATLAB though
 %       Also note that GNU Octave lower(n) returns n when n is numeric
-theRow = sum(cellfun(@(x) isequal(lower(x), lower(ch)), channelTable, 'UniformOutput', true), 2);
+theRow = logical(sum(cellfun(@(x) isequal(lower(x), lower(ch)), channelTable, 'UniformOutput', true), 2));
 
 if ismember(find(theRow), 1:size(channelTable, 1))
     sProcedure = channelTable(theRow, 2);
