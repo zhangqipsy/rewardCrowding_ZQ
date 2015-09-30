@@ -59,7 +59,7 @@ end
 
 
 try
-    
+
     render.dataPrefix=[];
     render.dataSuffix=[];
     if mode.demo_on
@@ -96,10 +96,10 @@ try
         case 0
             % auto-balance the color
             if round(rand)
-                conf.idxHighRewardColor = 1;        
+                conf.idxHighRewardColor = 1;
                 render.dataSuffix = [render.dataSuffix '_redTarget_'];
             else
-                conf.idxHighRewardColor = 2;        
+                conf.idxHighRewardColor = 2;
                 render.dataSuffix = [render.dataSuffix '_greenTarget_'];
             end
             render.dataSuffix = [render.dataSuffix '_autoColorBalance_'];
@@ -202,9 +202,9 @@ end
 
     render.cx = render.wsize(3)/2; %center x
     render.cy = render.wsize(4)/2; %center y
-    
+
     % NOT used by now; could be convenient when none of the conf are needed
-    render.backgroundColor = conf.color.backgroundColor; 
+    render.backgroundColor = conf.color.backgroundColor;
 
 
     %% Instructions
@@ -216,7 +216,7 @@ end
 
 
 
-    flow.nresp    = 1;  % the total number of response recorded 
+    flow.nresp    = 1;  % the total number of response recorded
     flow.restcount= 0;  % the number of trials from last rest
     flow.trialID = 1;
     %% Here begins our trial
@@ -322,12 +322,12 @@ end
                 % deadline is reached!
                 % record this as -1
                 % NOTE: encoding as -1 treats the reponse as INCORRECT, which in turn
-                % remembers this trial for later data recollection 
+                % remembers this trial for later data recollection
                 flow.idxResponse = -1;
                 [data, flow] = recordResponse(flow, data, conf);
 
                 % Here comes the sound
-                if mode.audio_on; 
+                if mode.audio_on;
                     %playSound(pahandle, conf.audioFreq, data.paceRate, data.moveDirection(flow.nresp, 1));
                     Snd('Play',data.audio.tone2, conf.audioFreq,16);
                 end
