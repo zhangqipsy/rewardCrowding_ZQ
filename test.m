@@ -12,6 +12,7 @@ function status = test(testWhat)
             keyboard
         case {'reward'}
             mode.debug_on = 1;      % smaller screen
+            mode.inspectDesign_on = 0;
             mode.procedureChannel = 'Constant'; % experiment methods;
             conf.repetitions = 1;    % repetition of each condition (if set to 0, uses totalTrials below instead)
             conf.totalTrials = 1008; % respects this if repititions is zero

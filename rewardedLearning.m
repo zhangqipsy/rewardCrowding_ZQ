@@ -123,7 +123,7 @@ try
     Display('Please make sure that this design is correct. Insert `dbcont` to continue, or `dbquit` to abort');
 
     %% exp begins
-   % keyboard;
+    keyboard;
 end
 
     if exist('./data', 'dir') ~= 7
@@ -167,6 +167,7 @@ end
     ListenChar(2);
     if mode.debug_on
         Screen('Preference','SkipSyncTests', 1);
+        Screen('Preference', 'Verbosity', 0);
     else
         Screen('Preference','SkipSyncTests', 0);
     end
@@ -219,6 +220,7 @@ end
     flow.nresp    = 1;  % the total number of response recorded
     flow.restcount= 0;  % the number of trials from last rest
     flow.trialID = 1;
+    flow.Q = [];
     %% Here begins our trial
     while true
         % only ends when ALL trials have collected correct response
@@ -227,13 +229,8 @@ end
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %% data generatoin
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        if flow.nresp == 1
-            % initialization
-            keyboard
-            [data.Trials(flow.nresp, :) flow.Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(flow.nresp, :), [], data.Trials(:,2));
-        elseif flow.nresp > 1
-            [data.Trials(flow.nresp, :) flow.Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(flow.nresp, :), flow.Q, data.Trials(:,2));
-        end
+        % initialization
+        [data.Trials(flow.nresp, :) flow.Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(flow.nresp, :), flow.Q, data.Trials(:,2));
 
         data.draw = genData(data.Trials(flow.nresp, :), render, conf, mode);
 
@@ -365,7 +362,9 @@ end
 
 
 
-    Display(char('','','data/latest.mat saved successfully, use for debugging!',''));
+    disp('');
+    Display('data/latest.mat saved successfully, use for debugging!');
+    disp('');
     render.matFileName = ['data/',render.dataPrefix, data.Subinfo{1} , render.dataSuffix, date, '.mat'];
     save(render.matFileName,'Trials','conf','flow','mode','data');
     wrkspc = load(render.matFileName);
@@ -384,7 +383,9 @@ end
 catch
     % always save the buggy data for debugging
     save data/buggy.mat;
-    Display(char('','','data/buggy.mat saved successfully, use for debugging!',''));
+    disp('');
+    Display('data/buggy.mat saved successfully, use for debugging!');
+    disp('');
     save(['data/', render.dataPrefix, data.Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
     wrkspc = load(['data/', render.dataPrefix, data.Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
     %     disp(['';'';'data/buggy saved successfully, use for debugging!']);
@@ -394,6 +395,7 @@ catch
     ShowCursor;
     ListenChar(0);
     psychrethrow(psychlasterror);
+    Screen('Preference', 'Verbosity', 3);
     format short;
 end
 
@@ -403,6 +405,7 @@ Screen('CloseAll');
 Priority(0);
 ShowCursor;
 ListenChar(0);
+Screen('Preference', 'Verbosity', 3);
 
 % always save the latest data for the last experiment
 save data/latest.mat;
