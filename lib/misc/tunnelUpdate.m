@@ -21,7 +21,7 @@ function [thisTrial Q]= tunnelUpdate(ch, conf, thisTrial, Q, blockID)
                 Q = {unique(blockID) repmat(q, numel(unique(blockID),1)) NaN(numel(unique(blockID),1)) NaN(numel(unique(blockID),1))}; % blockID type, Quest Q, tTestLast, measureLast
 
                 % get the first tTest
-                tTest=QuestQuantile(Q{2}(Q{1)==thisTrial(2)}));	% Recommended by Pelli (1987), and still our favorite.
+                tTest=QuestQuantile(Q{2}(Q{1}==thisTrial(2)));	% Recommended by Pelli (1987), and still our favorite.
                 Q{3}(Q{1}==thisTrial(2)) = tTest;
 
                 thisTrial(conf.QUESTparams(1)) = Q{3}(Q{1}==thisTrial(2));
@@ -59,7 +59,7 @@ function [thisTrial Q]= tunnelUpdate(ch, conf, thisTrial, Q, blockID)
             else
                 % this is not the first trial in this blockID type
                 Q{2}(Q{1}==thisTrial(2)) = QuestUpdate(Q{2}(Q{1}==thisTrial(2)),Q{3}(Q{1}==thisTrial(2)), Q{4}(Q{1}==thisTrial(2))); % Add the new datum (actual test intensity and observer response) to the database.
-                tTest=QuestQuantile(Q{2}(Q{1)==thisTrial(2)}));	% Recommended by Pelli (1987), and still our favorite.
+                tTest=QuestQuantile(Q{2}(Q{1}==thisTrial(2)));	% Recommended by Pelli (1987), and still our favorite.
                 Q{3}(Q{1}==thisTrial(2)) = tTest; % save in Q database to update next Quest call
                 thisTrial(conf.QUESTparams(1)) = Q{3}(Q{1}==thisTrial(2));
             end

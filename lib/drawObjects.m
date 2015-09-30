@@ -60,6 +60,7 @@ if isDemo
     %[w, rect] = Screen('OpenWindow', screenNumber, 0,[], 32, 2);
     [w, rect] = Screen('OpenWindow', screenNumber, 0*[1 1 1]);
     Screen('BlendFunction', w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    Screen('FillRect', w, conf.color.backgroundColor);
 end
 
 
