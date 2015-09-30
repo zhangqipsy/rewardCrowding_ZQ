@@ -158,6 +158,7 @@ end
     % Get Subject information
     if exist('Subinfo','var');data.Subinfo = Subinfo'; else data.Subinfo = getSubInfo()';end
 
+    keyboard
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% initialization
@@ -177,9 +178,9 @@ end
     render.screenNumber=max(render.screens);
 
     if mode.debug_on
-        [w,render.wsize]=Screen('ow',render.screenNumber,conf.color.backgroundColor,[1,1,801,601],[]);
+        [w,render.wsize]=Screen('OpenWindow',render.screenNumber,conf.color.backgroundColor,[1,1,801,601],[]);
     else
-        [w,render.wsize]=Screen('ow',render.screenNumber,conf.color.backgroundColor,[],32);
+        [w,render.wsize]=Screen('OpenWindow',render.screenNumber,conf.color.backgroundColor,[],32);
     end
     Screen('BlendFunction', w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -229,6 +230,7 @@ end
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         if flow.nresp == 1
             % initialization
+            keyboard
             [data.Trials(flow.nresp, :) flow.Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(flow.nresp, :), [], data.Trials(:,2));
         elseif flow.nresp > 1
             [data.Trials(flow.nresp, :) flow.Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(flow.nresp, :), flow.Q, data.Trials(:,2));

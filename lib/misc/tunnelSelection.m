@@ -1,4 +1,4 @@
-function [sProcedure, code]= channelSelection(ch)
+function [sProcedure, code]= tunnelSelection(ch)
 % Return the procedure string and the channel code for the channel specified in the `ch` input
 %
 % SYNOPSIS:hProcedure = channelSelection(ch)

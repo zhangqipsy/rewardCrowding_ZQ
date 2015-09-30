@@ -1,10 +1,14 @@
 function [thisTrial Q]= tunnelUpdate(ch, conf, thisTrial, Q, blockID)
+    [whichProcedure codeProcedure]= lower(tunnelSelection(ch));
+
     % lastTrial is the last trial in the same quest sequence
-    if isempty(Q)
-        % initialize Q
+    if  ~exist('Q', 'var') == 1 || isempty(Q)
+        % initialize Q switch whichProcedure
         switch whichProcedure
             case {'Constant', 'constant'}
                 % do nothing
+                disp('Non-adaptive design. Not generating Q!');
+                Q = [];
 
             case {'QUEST' , 'quest'}
                 % we use the QUEST procedure here!
@@ -40,10 +44,8 @@ function [thisTrial Q]= tunnelUpdate(ch, conf, thisTrial, Q, blockID)
 
 
         return
-    end
+    else
 
-    q = encapsule(thisTrial);
-    [whichProcedure codeProcedure]= lower(channelSelection(ch));
     switch whichProcedure
         case {'Constant', 'constant'}
             % do nothing
@@ -52,7 +54,7 @@ function [thisTrial Q]= tunnelUpdate(ch, conf, thisTrial, Q, blockID)
             % we use the QUEST procedure here!
             % update the database and get new value
             if isnan(Q{3}(Q{1}==thisTrial(2)))
-                tTest=QuestQuantile(Q{2}(Q{1)==thisTrial(2)}));	% Recommended by Pelli (1987), and still our favorite.
+                tTest=QuestQuantile(Q{2}(Q{1}==thisTrial(2)));	% Recommended by Pelli (1987), and still our favorite.
                 Q{3}(Q{1}==thisTrial(2)) = tTest;
                 thisTrial(conf.QUESTparams(1)) = Q{3}(Q{1}==thisTrial(2));
 
@@ -71,8 +73,9 @@ function [thisTrial Q]= tunnelUpdate(ch, conf, thisTrial, Q, blockID)
 
         otherwise
             error('genCrowdingSequence:unknownProcedure', 'procedure %s is unknown!');
-    end
+    end %switch for existing Q
 
 
+end % if Q exists
 
-end
+end % function
