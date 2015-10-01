@@ -48,7 +48,7 @@ elseif isnumeric(thisTrial(16))
     % poly
     draw.poly.coor = [draw.poly.coor; [thisTrial(9)+conf.idxTargetDist(thisTrial(5)) render.cy]];
     draw.poly.color = [draw.poly.color; conf.colors.target{thisTrial(6)}];
-    draw.poly.points = [draw.poly.points; octalCoor(render.wsize, conf.metric.cir_r, thisTrial(16));
+    draw.poly.points = [draw.poly.points; octalCoor(render.wsize, conf.metric.cir_r, thisTrial(16))];
     draw.poly.width = [draw.poly.width; conf.metric.circle_width];
     draw.poly.isFill = [draw.poly.isFill; 0];
 end % circle or poly
@@ -67,7 +67,7 @@ for iFlanker = 1:conf.nFlankers
         % poly
         draw.poly.coor = [draw.poly.coor; [thisTrial(9)+conf.idxTargetDist(thisTrial(5)) render.cy+sin(conf.flankerOrientations(thisTrial(iFlanker)))]];
         draw.poly.color = [draw.poly.color; conf.colors.distractors{thisTrial(8)}];
-        draw.poly.points = [draw.poly.points; octalCoor(render.wsize, conf.metric.cir_r, thisTrial(17));
+        draw.poly.points = [draw.poly.points; octalCoor(render.wsize, conf.metric.cir_r, thisTrial(17))];
         draw.poly.width = [draw.poly.width; conf.metric.circle_width];
         draw.poly.isFill = [draw.poly.isFill; 0];
     end % circle or poly
