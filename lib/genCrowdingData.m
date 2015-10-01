@@ -51,28 +51,27 @@ elseif isnumeric(thisTrial(16))
     draw.poly.points = [draw.poly.points; octalCoor(render.wsize, conf.metric.cir_r, thisTrial(16));
     draw.poly.width = [draw.poly.width; conf.metric.circle_width];
     draw.poly.isFill = [draw.poly.isFill; 0];
-end
-
+end % circle or poly
 
 % this is flankers
 for iFlanker = 1:conf.nFlankers
-if isinf(thisTrial(17))
-    % this is circle
-    draw.circle.coor = [draw.circle.coor; [thisTrial(9)+conf.idxTargetDist(thisTrial(5)) render.cy+sin(conf.flankerOrientations(thisTrial(iFlanker)))]];
-    draw.circle.color = [draw.circle.color; conf.colors.distractors{thisTrial(8)}];
-    draw.circle.r = [draw.circle.r; conf.metric.cir_r];
-    draw.circle.width = [draw.circle.width; conf.metric.circle_width];
-    draw.circle.isFill = [draw.circle.isFill; 0];
+    if isinf(thisTrial(17))
+        % this is circle
+        draw.circle.coor = [draw.circle.coor; [thisTrial(9)+conf.idxTargetDist(thisTrial(5)) render.cy+sin(conf.flankerOrientations(thisTrial(iFlanker)))]];
+        draw.circle.color = [draw.circle.color; conf.colors.distractors{thisTrial(8)}];
+        draw.circle.r = [draw.circle.r; conf.metric.cir_r];
+        draw.circle.width = [draw.circle.width; conf.metric.circle_width];
+        draw.circle.isFill = [draw.circle.isFill; 0];
 
-elseif isnumeric(thisTrial(16))
-    % poly
-    draw.poly.coor = [draw.poly.coor; [thisTrial(9)+conf.idxTargetDist(thisTrial(5)) render.cy+sin(conf.flankerOrientations(thisTrial(iFlanker)))]];
-    draw.poly.color = [draw.poly.color; conf.colors.distractors{thisTrial(8)}];
-    draw.poly.points = [draw.poly.points; octalCoor(render.wsize, conf.metric.cir_r, thisTrial(17));
-    draw.poly.width = [draw.poly.width; conf.metric.circle_width];
-    draw.poly.isFill = [draw.poly.isFill; 0];
-end
-end
+    elseif isnumeric(thisTrial(16))
+        % poly
+        draw.poly.coor = [draw.poly.coor; [thisTrial(9)+conf.idxTargetDist(thisTrial(5)) render.cy+sin(conf.flankerOrientations(thisTrial(iFlanker)))]];
+        draw.poly.color = [draw.poly.color; conf.colors.distractors{thisTrial(8)}];
+        draw.poly.points = [draw.poly.points; octalCoor(render.wsize, conf.metric.cir_r, thisTrial(17));
+        draw.poly.width = [draw.poly.width; conf.metric.circle_width];
+        draw.poly.isFill = [draw.poly.isFill; 0];
+    end % circle or poly
+end %for flankers
 
 draw.fix.coor = [render.cx-thisTrial(9) render.cy];
 draw.fix.type = '+';
