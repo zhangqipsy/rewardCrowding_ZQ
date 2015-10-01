@@ -7,7 +7,8 @@ function draw = initializeDraw()
 
     draw.poly.coor =[];
     draw.poly.color =[];
-    draw.poly.points =[];
+    draw.poly.nPoints = []; % group poly.points according to the rows of nPoints
+    draw.poly.points =[];   % each row does NOT necessarily belong to a seperate polygon
     draw.poly.width =[];
     draw.poly.isFill =[];
 

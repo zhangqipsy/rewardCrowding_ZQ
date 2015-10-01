@@ -22,6 +22,7 @@ function status = test(testWhat)
             conf.questparams        = {7 100 0.1 0.8}; % fixme: dunno what it means
             [data.Trials(iTrial, :) Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(iTrial, :), [], data.Trials(:,2));
             data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf, mode);
+            save buggy
             data.draw1 = drawObjects([], [], data.draw);
             %keyboard
         case {'reward'}

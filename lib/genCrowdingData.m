@@ -63,7 +63,7 @@ for iFlanker = 1:conf.nFlankers
         draw.circle.width = [draw.circle.width; conf.metric.circle_width];
         draw.circle.isFill = [draw.circle.isFill; 0];
 
-    elseif isnumeric(thisTrial(16))
+    elseif isnumeric(thisTrial(17))
         % poly
         draw.poly.coor = [draw.poly.coor; [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+sin(conf.flankerOrientations(iFlanker))]];
         draw.poly.color = [draw.poly.color; conf.color.distractors{thisTrial(8)}];

@@ -2,16 +2,18 @@ function draw = drawObjects(w, render, draw)
 %drawObjects draws objects in a draw struct object.
 %
 % SYNOPSIS: data = drawObjects(w, render, draw)
+% 
+% NOTE: this function should not have access to conf. struct. Everything should
+% be prepared by genData() into the data.Trial() then into data.draw();
+%
 %
 % INPUT
-%   w is the window pointer to draw
-%   render.wsize is the window size
-%   draw.circle, draw.bar, draw.fix are the main three objects
-%   Each are by themselves structures whose fields are matrix, 
-%   such as draw.circle.coor, draw.circle.color; each row is 
-%   another object. For example, to draw six circles, you need
-%   draw.circle.coor to be 6x2 matrix, the two columns for the 
-%   x and y coordinates.
+% w is the window pointer to draw render.wsize is the window size draw.circle,
+% draw.bar, draw.fix are the main three objects Each are by themselves
+% structures whose fields are matrix, such as draw.circle.coor,
+% draw.circle.color; each row is another object. For example, to draw six
+% circles, you need draw.circle.coor to be 6x2 matrix, the two columns for the
+% x and y coordinates.
 %
 %   Also implement for Oval, Poly, Rect, Text
 %
@@ -60,7 +62,7 @@ if isDemo
     %[w, rect] = Screen('OpenWindow', screenNumber, 0,[], 32, 2);
     [w, rect] = Screen('OpenWindow', screenNumber, 0*[1 1 1]);
     Screen('BlendFunction', w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    Screen('FillRect', w, conf.color.backgroundColor);
+    Screen('FillRect', w, 67*[1 1 1]);
 end
 
 
@@ -174,10 +176,12 @@ function drawCircle(w, circle, cmd)
     %disp('Drawing ovals...');
 end
 
-% helper functions
+
 function drawPoly(w, polygon, cmd)
     % all polygons are connected
-    Screen(cmd, w, polygon.color', polygon.points', polygon.width');
+    % this function is VERY different from the rest of PTB plotting functions in that the input points should be nx2 matrix, rather than 2xn one;
+    % And this function of cource plots one polygon at a time
+    Screen(cmd, w, polygon.color', polygon.points, polygon.width');
     %disp('Drawing polygons...');
 end
 
