@@ -1,4 +1,4 @@
-function [draw] = genCrowdingdData(thisTrial, render, conf, mode)
+function [draw] = genCrowdingData(thisTrial, render, conf, mode)
 % Generates data.draw for the crowding experiment stimuli
 %
 % SYNOPSIS: [draw] = genRewardData(thisTrial, render, conf, mode)
