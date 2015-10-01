@@ -7,7 +7,7 @@ function [thisTrial Q]= tunnelUpdate(ch, conf, thisTrial, Q, blockID)
         switch whichProcedure
             case {'Constant', 'constant'}
                 % do nothing
-                disp('Non-adaptive design procedure. Not generating Q!');
+                %Display('Non-adaptive design procedure. Not generating Q!');
                 Q = [];
 
             case {'QUEST' , 'quest'}

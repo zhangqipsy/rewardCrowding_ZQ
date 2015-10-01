@@ -1,6 +1,6 @@
 function status = test(testWhat)
     switch(testWhat)
-        case {'draw'}
+        case {'draw', 'drawReward'}
             [conf, mode] = loadDefaultConfs();
             data.Trials = genRewardSequence(conf, mode);
             iTrial = 1;
@@ -8,6 +8,16 @@ function status = test(testWhat)
             render.cx = render.wsize(3)/2;
             render.cy = render.wsize(4)/2;
             data.draw = genRewardData(data.Trials(iTrial, :), render, conf, mode);
+            data.draw1 = drawObjects([], [], data.draw);
+            keyboard
+        case {'drawCrowding'}
+            [conf, mode] = loadDefaultConfs();
+            data.Trials = genCrowdingSequence(conf, mode);
+            iTrial = 1;
+            render.wsize = [0 0 600 800];
+            render.cx = render.wsize(3)/2;
+            render.cy = render.wsize(4)/2;
+            data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf, mode);
             data.draw1 = drawObjects([], [], data.draw);
             keyboard
         case {'reward'}
