@@ -143,7 +143,7 @@ Trials(:, 15) = zeros(size(Trials,1), 1);
 
 
 
-[whichProcedure codeProcedure]= lower(channelSelection(mode.procedureChannel));
+[whichProcedure codeProcedure]= tunnelSelection(lower(mode.procedureChannel));
 switch whichProcedure
     case {'Constant', 'constant'}
         % do nothing, the above generates Constant sequence
