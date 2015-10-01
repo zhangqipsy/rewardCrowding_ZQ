@@ -181,7 +181,10 @@ function drawPoly(w, polygon, cmd)
     % all polygons are connected
     % this function is VERY different from the rest of PTB plotting functions in that the input points should be nx2 matrix, rather than 2xn one;
     % And this function of cource plots one polygon at a time
-    Screen(cmd, w, polygon.color', polygon.points, polygon.width');
+    pointInitIdx = cumsum([0; polygon.nPoints]);
+    for iPoly = 1:numel(polygon.nPoints)
+        Screen(cmd, w, polygon.color(iPoly,:), polygon.points(pointInitIdx(iPoly)+1:pointInitIdx(iPoly+1)), polygon.width');
+    end
     %disp('Drawing polygons...');
 end
 

@@ -1,4 +1,6 @@
 function status = test(testWhat)
+startup;
+try
     switch(testWhat)
         case {'draw', 'drawReward'}
             [conf, mode] = loadDefaultConfs();
@@ -52,4 +54,10 @@ function status = test(testWhat)
         otherwise
             disp('No test specified!')
     end
+
+catch
+    sca;
+end %try
+
 end
+
