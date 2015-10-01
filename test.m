@@ -1,6 +1,6 @@
 function status = test(testWhat)
 startup;
-try
+%try
     switch(testWhat)
         case {'draw', 'drawReward'}
             [conf, mode] = loadDefaultConfs();
@@ -25,8 +25,8 @@ try
             [data.Trials(iTrial, :) Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(iTrial, :), [], data.Trials(:,2));
             data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf, mode);
             save buggy
+            keyboard
             data.draw1 = drawObjects([], [], data.draw);
-            %keyboard
         case {'reward'}
             mode.debug_on = 1;      % smaller screen
             mode.inspectDesign_on = 0;
@@ -55,9 +55,9 @@ try
             disp('No test specified!')
     end
 
-catch
-    sca;
-end %try
+%catch
+    %sca;
+%end %try
 
 end
 
