@@ -50,8 +50,8 @@ channelTable = {...
 theRow = logical(sum(cellfun(@(x) isequal(lower(x), lower(ch)), channelTable, 'UniformOutput', true), 2));
 
 if ismember(find(theRow), 1:size(channelTable, 1))
-    sProcedure = channelTable{theRow, 2};
-    code = channelTable{theRow, 1};
+    sProcedure = channelTable{theRow, 1};
+    code = channelTable{theRow, 2};
 else
     error('channelSelection:undefinedRequest', 'The requested channel: %s was not found in the `channelTable`!', ch);
 end
