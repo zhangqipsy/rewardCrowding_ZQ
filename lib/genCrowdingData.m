@@ -44,7 +44,8 @@ if isinf(thisTrial(16))
     draw.circle.width = [draw.circle.width; conf.metric.circle_width];
     draw.circle.isFill = [draw.circle.isFill; 0];
 
-elseif isnumeric(thisTrial(16))
+else
+    if isfinite(thisTrial(16))
     % poly
     draw.poly.coor = [draw.poly.coor; [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy]];
     draw.poly.color = [draw.poly.color; conf.color.targets{thisTrial(6)}];
@@ -54,7 +55,9 @@ elseif isnumeric(thisTrial(16))
     draw.poly.isFill = [draw.poly.isFill; 0];
 end % circle or poly
 
+
 % this is flankers
+keyboard
 for iFlanker = 1:conf.nFlankers
     if isinf(thisTrial(17))
         % this is circle
@@ -64,7 +67,8 @@ for iFlanker = 1:conf.nFlankers
         draw.circle.width = [draw.circle.width; conf.metric.circle_width];
         draw.circle.isFill = [draw.circle.isFill; 0];
 
-    elseif isnumeric(thisTrial(17))
+    else 
+        if isfinite(thisTrial(17))
         % poly
         draw.poly.coor = [draw.poly.coor; [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+sin(conf.flankerOrientations(iFlanker))]];
         draw.poly.color = [draw.poly.color; conf.color.distractors{thisTrial(8)}];
