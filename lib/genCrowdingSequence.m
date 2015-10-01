@@ -143,6 +143,7 @@ Trials(:, 15) = zeros(size(Trials,1), 1);
 
 
 
+% calculate blockID, to be used for generating/separating several parallel sequences
 [whichProcedure codeProcedure]= tunnelSelection(lower(mode.procedureChannel));
 switch whichProcedure
     case {'Constant', 'constant'}
@@ -152,6 +153,7 @@ case {'QUEST' , 'quest'}
     % we use the QUEST procedure here!
     if ~isempty(conf.Constantparams)
         warning('genCrowdingSequence:QUEST', '%d sequences are generated based on combinations of columns %s in Trials, for the QUEST procedure to measure data for the %dth column of Trials', prod(conf.Constantparams), num2str(conf.Constantparams), conf.QUESTparams{1});
+
         sequencesControlMatrix = Trials(:, conf.Constantparams);
         blockID = sequencesControlMatrix * [max(sequencesControlMatrix(:)) .^ [1:numel(conf.Constantparams)]]';
     else
