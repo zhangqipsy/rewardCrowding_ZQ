@@ -183,7 +183,7 @@ function drawPoly(w, polygon, cmd)
     % And this function of cource plots one polygon at a time
     pointInitIdx = cumsum([0; polygon.nPoints]);
     for iPoly = 1:numel(polygon.nPoints)
-        Screen(cmd, w, polygon.color(iPoly,:), polygon.points(pointInitIdx(iPoly)+1:pointInitIdx(iPoly+1)), polygon.width');
+        Screen(cmd, w, polygon.color(iPoly,:), polygon.points([pointInitIdx(iPoly)+1:pointInitIdx(iPoly+1)],:), polygon.width');
     end
     %disp('Drawing polygons...');
 end
