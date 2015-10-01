@@ -17,9 +17,12 @@ function status = test(testWhat)
             render.wsize = [0 0 600 800];
             render.cx = render.wsize(3)/2;
             render.cy = render.wsize(4)/2;
+            mode.procedurechannel = 'quest'; % experiment methods;
+            conf.questparams        = {7 100 0.1 0.8}; % fixme: dunno what it means
+            [data.Trials(iTrial, :) Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(iTrial, :), [], data.Trials(:,2));
             data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf, mode);
             data.draw1 = drawObjects([], [], data.draw);
-            keyboard
+            %keyboard
         case {'reward'}
             mode.debug_on = 1;      % smaller screen
             mode.inspectDesign_on = 0;
@@ -41,8 +44,8 @@ function status = test(testWhat)
           conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
           conf.distractorShapes = [Inf]; % Inf is circle
           conf.metric.range_r = -1;
-          mode.procedureChannel = 'QUEST'; % experiment methods;
-          conf.QUESTparams        = {7 100 0.1 0.8}; % FIXME: dunno what it means
+          mode.procedurechannel = 'quest'; % experiment methods;
+          conf.questparams        = {7 100 0.1 0.8}; % fixme: dunno what it means
           conf.repititions = conf.QUESTparams{2};
         otherwise
             disp('No test specified!')
