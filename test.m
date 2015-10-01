@@ -11,6 +11,7 @@ function status = test(testWhat)
             data.draw1 = drawObjects([], [], data.draw);
             keyboard
         case {'drawCrowding'}
+          Screen('Preference', 'Verbosity', 0);
             [conf, mode] = loadDefaultConfs();
             data.Trials = genCrowdingSequence(conf, mode);
             iTrial = 1;
