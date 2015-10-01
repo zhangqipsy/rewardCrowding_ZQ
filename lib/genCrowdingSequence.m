@@ -131,6 +131,10 @@ tmp=15; % second term is nStims: which is one for crowding since we only have on
 Trials(:, [4 tmp 6 5 7 8 16 17]) = Trialsequence;
 Trials(:, tmp) = NaN(size(Trials,1), 1);
 
+% replace the values since drawObjects() has no access to conf.
+Trials(:,16) = Replace(Trials(:, 16), unique(Trials(:,16)), conf.targetShapes);
+Trials(:,17) = Replace(Trials(:, 17), unique(Trials(:,17)),conf.distractorShapes);
+
 
 %	Column 9
 %	    crossCoor
