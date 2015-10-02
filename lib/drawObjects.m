@@ -173,7 +173,7 @@ end %drawObjects
 % helper functions
 function drawCircle(w, circle, cmd)
     % the rect should use d=2*r rather than r as the radius for the rect!
-    OvalRect = CenterRectOnPoint([zeros(size(circle.r,1), 2) repmat(circle.r/2, 1, 2)] , circle.coor(:,1), circle.coor(:,2));
+    OvalRect = CenterRectOnPoint([zeros(size(circle.r,1), 2) repmat(circle.r*2, 1, 2)] , circle.coor(:,1), circle.coor(:,2));
     Screen(cmd, w, circle.color', OvalRect', circle.width');
     %disp('Drawing ovals...');
 end

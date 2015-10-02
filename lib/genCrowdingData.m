@@ -34,12 +34,11 @@ function [draw] = genCrowdingData(thisTrial, render, conf, mode)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 draw = initializeDraw();
-
-% flankers do not overlap with target
-if thisTrial(7) < conf.metric.cir_r
-    thisTrial(7) = conf.metric.cir_r;
+% flankers should not overlap with target
+% one radius for the flanker, another for the target
+if thisTrial(7) < 2*conf.metric.cir_r
+    thisTrial(7) = 2*conf.metric.cir_r;
 end
-
 % this is target
 if isinf(thisTrial(16))
     % this is circle
