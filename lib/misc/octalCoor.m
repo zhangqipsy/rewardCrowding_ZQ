@@ -1,5 +1,7 @@
 function [clockarm, prCoor, angls]= octalCoor(rect, r, n)
 % return n arm coors of of clock within wsize
+% octalCoor(rect, r, n):
+%  generate a n-sided regular convex (not star) polygons with radius r (pixels) and move its center to the center of rect. r can be smaller than 1 (pixel), in which case, when r is within [0,1], r is treated relative to the rect(4); the real r0 = r * rect(4) when r is [0,1]
 % r relate to the hvec of the screen; center:0 highest edge:1
 
 angl=2*pi/n;
