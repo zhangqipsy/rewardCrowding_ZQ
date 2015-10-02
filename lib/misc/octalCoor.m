@@ -1,4 +1,4 @@
-function [clockarm, prCoor, angls]= octalCoor(wsize, r, n)
+function [clockarm, prCoor, angls]= octalCoor(rect, r, n)
 % return n arm coors of of clock within wsize
 % r relate to the hvec of the screen; center:0 highest edge:1
 
@@ -8,7 +8,7 @@ if r>1
     R = 1; % no scaling factor
 else
     % r is in relative
-R=wsize(4)/2;
+R=rect(4)/2;
 end
 
 angls = angl*[1:n];
@@ -19,4 +19,4 @@ if n==-8;
 end
 prCoor = [cos(angls)', sin(angls)'];
 
-clockarm = [wsize(3)/2+r.*R.*cos(angls)', wsize(4)/2+r.*R.*sin(angls)'];
+clockarm = rect([3 4])/2 .* r .* R .* [cos(angls)' sin(angls)'];
