@@ -1,5 +1,8 @@
 function status = test(testWhat)
 startup;
+if nargin == 0
+  testWhat = 'drawCrowding';
+end
 %try
     switch(testWhat)
         case {'draw', 'drawReward'}
@@ -20,12 +23,17 @@ startup;
             render.wsize = [0 0 600 800];
             render.cx = render.wsize(3)/2;
             render.cy = render.wsize(4)/2;
+            mode.inspectDesign_on = 1; % see experiment design before starting the experiment
             mode.procedurechannel = 'quest'; % experiment methods;
             conf.questparams        = {7 100 0.1 0.8}; % fixme: dunno what it means
             [data.Trials(iTrial, :) Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(iTrial, :), [], data.Trials(:,2));
             data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf, mode);
-            save buggy
-            keyboard
+            save /scratch/buggy
+            data.Trials(iTrial,:)
+            data.draw.circle
+            data.draw.poly
+            pause
+
             data.draw1 = drawObjects([], [], data.draw);
         case {'reward'}
             mode.debug_on = 1;      % smaller screen
