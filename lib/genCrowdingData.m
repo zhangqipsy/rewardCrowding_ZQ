@@ -23,8 +23,7 @@ function [draw] = genCrowdingData(thisTrial, render, conf, mode)
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
-% (at your option) any later version.
-%
+% (at your option) any later version.  %
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -58,11 +57,10 @@ end % circle or poly
 
 
 % this is flankers
-keyboard
 for iFlanker = 1:conf.nFlankers
     if isinf(thisTrial(17))
         % this is circle
-        draw.circle.coor = [draw.circle.coor; [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+sin(conf.flankerOrientations(iFlanker))]];
+        draw.circle.coor = [draw.circle.coor; [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))]];
         draw.circle.color = [draw.circle.color; conf.color.distractors{thisTrial(8)}];
         draw.circle.r = [draw.circle.r; conf.metric.cir_r];
         draw.circle.width = [draw.circle.width; conf.metric.circle_width];
@@ -71,7 +69,7 @@ for iFlanker = 1:conf.nFlankers
     else 
         if isfinite(thisTrial(17))
         % poly
-        draw.poly.coor = [draw.poly.coor; [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+sin(conf.flankerOrientations(iFlanker))]];
+        draw.poly.coor = [draw.poly.coor; [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))]];
         draw.poly.color = [draw.poly.color; conf.color.distractors{thisTrial(8)}];
         draw.poly.points = [draw.poly.points; octalCoor(render.wsize, conf.metric.cir_r, thisTrial(17))];
         draw.poly.nPoints = [draw.poly.nPoints; size(octalCoor(render.wsize, conf.metric.cir_r, thisTrial(17)), 1)]; % group poly.points according to the rows of nPoints

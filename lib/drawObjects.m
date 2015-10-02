@@ -169,6 +169,7 @@ end %drawObjects
 
 
 
+% ###################################################################
 % helper functions
 function drawCircle(w, circle, cmd)
     OvalRect = CenterRectOnPoint([zeros(size(circle.r,1), 2) repmat(circle.r, 1, 2)] , circle.coor(:,1), circle.coor(:,2));
