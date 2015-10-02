@@ -53,6 +53,7 @@ else
     draw.poly.nPoints = [draw.poly.nPoints; size(octalCoor(render.wsize, conf.metric.cir_r, thisTrial(16)), 1)]; % group poly.points according to the rows of nPoints
     draw.poly.width = [draw.poly.width; conf.metric.circle_width];
     draw.poly.isFill = [draw.poly.isFill; 0];
+    end
 end % circle or poly
 
 
@@ -76,6 +77,7 @@ for iFlanker = 1:conf.nFlankers
         draw.poly.nPoints = [draw.poly.nPoints; size(octalCoor(render.wsize, conf.metric.cir_r, thisTrial(17)), 1)]; % group poly.points according to the rows of nPoints
         draw.poly.width = [draw.poly.width; conf.metric.circle_width];
         draw.poly.isFill = [draw.poly.isFill; 0];
+        end
     end % circle or poly
 end %for flankers
 
