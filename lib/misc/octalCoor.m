@@ -12,7 +12,7 @@ R=wsize(4)/2;
 end
 
 angls = angl*[1:n];
-if n==8;
+if n==-8;
     adjst = pi/15;
     angls([1 5]) = angls([1 5]) - adjst;
     angls([3 7]) = angls([3 7]) + adjst;
