@@ -197,9 +197,6 @@ conf.color = fromLab; % override xuexin color with fromLab color
 range_r     = 5;   % radius of imaginary circle(deg)
 bar_r       = 0.76;  % length (diameter) of the bar(deg)
 bar_r2     = 0.08;  % width (diameter) of the bar(deg)
-% NOTE: code in genData() used cir_r for circles as diameter d rather than the
-% radius for the actual stimuli generation. The diameter of the flankers are
-% ALWAYS the same as the ACTUAL presented/would-be-presented circles.
 cir_r       = 2.3/2;  % deg of circle (deg)
 fix_r       = 0.25; % long arm radius of fixation cross (deg)
 fix_r2    = 0.03; % short arm radius of fixation cross (deg)

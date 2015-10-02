@@ -55,7 +55,7 @@ else
     % poly
     polygon.coor =  [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy];
     polygon.color =  conf.color.targets{thisTrial(6)};
-    polygon.points =  octalCoor(2*[0 0 polygon.coor], conf.metric.cir_r/2, thisTrial(16));
+    polygon.points =  octalCoor(2*[0 0 polygon.coor], conf.metric.cir_r, thisTrial(16));
     polygon.width =  conf.metric.circle_width;
     polygon.isFill =  0;
     draw = insertObject(draw, 'poly', polygon);
@@ -79,7 +79,7 @@ for iFlanker = 1:conf.nFlankers
         % poly
         polygon.coor =  [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))];
         polygon.color =  conf.color.distractors{thisTrial(8)};
-        polygon.points =  octalCoor(2*[0 0 polygon.coor], conf.metric.cir_r/2, thisTrial(17));
+        polygon.points =  octalCoor(2*[0 0 polygon.coor], conf.metric.cir_r, thisTrial(17));
         polygon.width =  conf.metric.circle_width;
         polygon.isFill =  0;
         draw = insertObject(draw, 'poly', polygon);
