@@ -19,4 +19,4 @@ if n==-8;
 end
 prCoor = [cos(angls)', sin(angls)'];
 
-clockarm = rect([3 4])/2 .* r .* R .* [cos(angls)' sin(angls)'];
+clockarm = rect([3 4])/2 + r .* R .* [cos(angls)' sin(angls)'];
