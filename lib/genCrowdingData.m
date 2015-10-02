@@ -43,21 +43,23 @@ end
 % this is target
 if isinf(thisTrial(16))
     % this is circle
-    draw.circle.coor = [draw.circle.coor; [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy]];
-    draw.circle.color = [draw.circle.color; conf.color.targets{thisTrial(6)}];
-    draw.circle.r = [draw.circle.r; conf.metric.cir_r];
-    draw.circle.width = [draw.circle.width; conf.metric.circle_width];
-    draw.circle.isFill = [draw.circle.isFill; 0];
+    circle.coor =  [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy];
+    circle.color =  conf.color.targets{thisTrial(6)};
+    circle.r =  conf.metric.cir_r;
+    circle.width =  conf.metric.circle_width;
+    circle.isFill =  0;
+    draw = insertObject(draw, 'circle', circle);
 
 else
     if isfinite(thisTrial(16))
     % poly
-    draw.poly.coor = [draw.poly.coor; [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy]];
-    draw.poly.color = [draw.poly.color; conf.color.targets{thisTrial(6)}];
-    draw.poly.points = [draw.poly.points; octalCoor(render.wsize, conf.metric.cir_r, thisTrial(16))];
-    draw.poly.nPoints = [draw.poly.nPoints; size(octalCoor(render.wsize, conf.metric.cir_r, thisTrial(16)), 1)]; % group poly.points according to the rows of nPoints
-    draw.poly.width = [draw.poly.width; conf.metric.circle_width];
-    draw.poly.isFill = [draw.poly.isFill; 0];
+    polygon.coor =  [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy];
+    polygon.color =  conf.color.targets{thisTrial(6)};
+    polygon.points =  octalCoor(render.wsize, conf.metric.cir_r, thisTrial(16));
+    polygon.nPoints =  size(octalCoor( , conf.metric.cir_r, thisTrial(16)), 1); % group poly.points according to the rows of nPoints
+    polygon.width =  conf.metric.circle_width;
+    polygon.isFill =  0;
+    draw = insertObject(draw, 'poly', polygon);
     end
 end % circle or poly
 
@@ -66,30 +68,33 @@ end % circle or poly
 for iFlanker = 1:conf.nFlankers
     if isinf(thisTrial(17))
         % this is circle
-        draw.circle.coor = [draw.circle.coor; [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))]];
-        draw.circle.color = [draw.circle.color; conf.color.distractors{thisTrial(8)}];
-        draw.circle.r = [draw.circle.r; conf.metric.cir_r];
-        draw.circle.width = [draw.circle.width; conf.metric.circle_width];
-        draw.circle.isFill = [draw.circle.isFill; 0];
+        circle.coor =  [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))];
+        circle.color =  conf.color.distractors{thisTrial(8)};
+        circle.r =  conf.metric.cir_r;
+        circle.width =  conf.metric.circle_width;
+        circle.isFill =  0;
+        draw = insertObject(draw, 'circle', circle);
 
     else 
         if isfinite(thisTrial(17))
         % poly
-        draw.poly.coor = [draw.poly.coor; [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))]];
-        draw.poly.color = [draw.poly.color; conf.color.distractors{thisTrial(8)}];
-        draw.poly.points = [draw.poly.points; octalCoor(render.wsize, conf.metric.cir_r, thisTrial(17))];
-        draw.poly.nPoints = [draw.poly.nPoints; size(octalCoor(render.wsize, conf.metric.cir_r, thisTrial(17)), 1)]; % group poly.points according to the rows of nPoints
-        draw.poly.width = [draw.poly.width; conf.metric.circle_width];
-        draw.poly.isFill = [draw.poly.isFill; 0];
+        polygon.coor =  [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))];
+        polygon.color =  conf.color.distractors{thisTrial(8)};
+        polygon.points =  octalCoor(render.wsize, conf.metric.cir_r, thisTrial(17));
+        polygon.nPoints =  size(octalCoor(render.wsize, conf.metric.cir_r, thisTrial(17)), 1); % group poly.points according to the rows of nPoints
+        polygon.width =  conf.metric.circle_width;
+        polygon.isFill =  0;
+        draw = insertObject(draw, 'poly', polygon);
         end
     end % circle or poly
 end %for flankers
 
-draw.fix.coor = [render.cx-thisTrial(9) render.cy];
-draw.fix.type = '+';
-draw.fix.r = conf.metric.fix_r;
-draw.fix.width = conf.metric.fix_r2;
-draw.fix.color = conf.color.fix;
+fix.coor = [render.cx-thisTrial(9) render.cy];
+fix.type = '+';
+fix.r = conf.metric.fix_r;
+fix.width = conf.metric.fix_r2;
+fix.color = conf.color.fix;
+draw = insertObject(draw, 'fix', fix);
 
 % output data (add to data later since `data` is not in the input augument)
 % data.draw = draw;
