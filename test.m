@@ -23,7 +23,6 @@ end
             render.wsize = [0 0 600 800];
             render.cx = render.wsize(3)/2;
             render.cy = render.wsize(4)/2;
-            mode.inspectDesign_on = 1; % see experiment design before starting the experiment
             mode.procedurechannel = 'quest'; % experiment methods;
             conf.questparams        = {7 100 0.1 0.8}; % fixme: dunno what it means
             [data.Trials(iTrial, :) Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(iTrial, :), [], data.Trials(:,2));
