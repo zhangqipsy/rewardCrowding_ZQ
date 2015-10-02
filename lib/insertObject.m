@@ -10,8 +10,9 @@ case {'circle'}
 case {'poly'}
     draw.poly.coor= [draw.poly.coor; objectStruct.coor];
     draw.poly.color= [draw.poly.color; objectStruct.color];
-    draw.poly.nPoints= [draw.poly.nPoints; objectStruct.nPoints]; % group poly.points according to the rows of nPointdraw.poly.nPoints 
     draw.poly.points= [draw.poly.points; objectStruct.points];   % each row does NOT necessarily belong to a seperate polygodraw.poly.points 
+    % we can just calculate them
+    draw.poly.nPoints= [draw.poly.nPoints; size(objectStruct.points,1)]; % group poly.points according to the rows of nPointdraw.poly.nPoints 
     draw.poly.width= [draw.poly.width; objectStruct.width];
     draw.poly.isFill= [draw.poly.isFill; objectStruct.isFill];
 
