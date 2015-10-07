@@ -21,4 +21,5 @@ if n==-8;
 end
 prCoor = [cos(angls)', sin(angls)'];
 
-clockarm = rect([3 4])/2 + r .* R .* [cos(angls)' sin(angls)'];
+clockarm = repmat(rect([3 4])/2, n, 1) + r .* R .* [cos(angls)' sin(angls)'];
+end
