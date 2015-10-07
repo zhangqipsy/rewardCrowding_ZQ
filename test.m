@@ -50,7 +50,7 @@ end
           conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
           conf.distractorShapes = [Inf]; % Inf is circle
           conf.metric.range_r = -1;
-          mode.procedurechannel = 'QUEST'; % experiment methods;
+          mode.procedureChannel = 'QUEST'; % experiment methods;
           conf.QUESTparams        = {7 100 3 0.2 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
           conf.repititions = conf.QUESTparams{2};
           rewardedLearning(conf, mode)
