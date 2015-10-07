@@ -135,7 +135,7 @@ data.Trials(flow.nresp, 13) = flow.isCorrect;
 
 
 disp(flow.Q)
-flow.Q{4, (flow.Q{1}==data.Trials(flow.nresp,2))} = flow.isCorrect;
+flow.Q{4}(flow.Q{1}==data.Trials(flow.nresp,2)) = flow.isCorrect;
 
 flow.nresp    = flow.nresp + 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
 Display([flow.nresp size(data.Trials, 1)])
@@ -143,10 +143,10 @@ Display([flow.nresp size(data.Trials, 1)])
 if flow.nresp > size(data.Trials, 1) || data.Trials(flow.nresp, 3) < 0 
     % all the trials as well as scheduled trials finished collecting correct responses
 
-    for iQ = 1:numel(Q{1})
+    for iQ = 1:numel(flow.Q{1}) % each of the Quest procedure
         % compute 
         % Recommended by Pelli (1989) and King-Smith et al. (1994). Still our favorite.
-        data.t=[Q{2}(Q{1}(iQ)) QuestMean(Q{2}(Q(1)(iQ)))  QuestSd(Q{2}(Q(1)(iQ)))]; % blockID, t, tSD
+        data.t=[flow.Q{1}(iQ) QuestMean(flow.Q{2}(iQ)) QuestSd(flow.Q{2}(iQ))]; % blockID, t, tSD
         % end the experiment
         flow.isquit = 1;
     end
