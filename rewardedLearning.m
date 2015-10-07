@@ -222,7 +222,7 @@ end
     flow.nresp    = 1;  % the total number of response recorded
     flow.restcount= 0;  % the number of trials from last rest
     flow.trialID = 1;
-    flow.Q = [];
+    flow.Q = {}; % blockID type, Quest Q, tTestLast, measureLast
     %% Here begins our trial
     while true
         % only ends when ALL trials have collected correct response

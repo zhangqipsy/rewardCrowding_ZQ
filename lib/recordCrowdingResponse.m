@@ -134,8 +134,8 @@ data.Trials(flow.nresp, 13) = flow.isCorrect;
 %	    not used for 2AFC
 
 
-keyboard
-flow.Q{4}(flow.Q{1}==data.Trials(flow.nresp,2)) = flow.isCorrect;
+disp(flow.Q)
+flow.Q{4, (flow.Q{1}==data.Trials(flow.nresp,2))} = flow.isCorrect;
 
 flow.nresp    = flow.nresp + 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
 Display([flow.nresp size(data.Trials, 1)])
