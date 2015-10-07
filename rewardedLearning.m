@@ -122,7 +122,7 @@ end
     Display('Please make sure that this design is correct. Insert `dbcont` to continue, or `dbquit` to abort');
 
     %% exp begins
-    keyboard;
+    %keyboard;
 end
 
     if exist('./data', 'dir') ~= 7

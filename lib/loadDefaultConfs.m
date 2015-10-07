@@ -216,7 +216,6 @@ metric.targetDist =round(DegreesToRetinalMM(targetDist,conf.viewDist)/conf.cmPer
 metric.crossCoor =round(DegreesToRetinalMM(crossCoor,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix) ;
 scale             =  1;          % linear magnifier
 
-keyboard
 metric = structfun(@(x) scale*x, metric, 'UniformOutput', false);
 metric.scale = scale;
 

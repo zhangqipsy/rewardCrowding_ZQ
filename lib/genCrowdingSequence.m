@@ -138,7 +138,6 @@ Trials(:,17) = Replace(Trials(:, 17), unique(Trials(:,17)),conf.distractorShapes
 
 %	Column 9
 %	    crossCoor
-keyboard
 Trials(:, 9) = repmat(conf.metric.crossCoor, size(Trials,1),1);
 
 
