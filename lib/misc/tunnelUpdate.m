@@ -22,13 +22,14 @@ function [thisTrial Q]= tunnelUpdate(ch, conf, thisTrial, Q, blockID)
                 q=QuestCreate(tGuess,tGuessSd,pThreshold,beta,delta,gamma);
                 q.normalizePdf=1; % This adds a few ms per call to QuestUpdate, but otherwise the pdf will underflow after about 1000 trials.
 
-                Q = {unique(blockID) repmat(q, numel(unique(blockID),1)) NaN(numel(unique(blockID),1)) NaN(numel(unique(blockID),1))}; % blockID type, Quest Q, tTestLast, measureLast
+                Q = {unique(blockID) repmat(q, numel(unique(blockID)),1) NaN(numel(unique(blockID)),1) NaN(numel(unique(blockID)),1)}; % blockID type, Quest Q, tTestLast, measureLast
 
                 % get the first tTest
-                tTest=QuestQuantile(Q{2}(Q{1}==thisTrial(2)));	% Recommended by Pelli (1987), and still our favorite.
-                Q{3}(Q{1}==thisTrial(2)) = tTest;
+                whichBlockID = Q{1} == thisTrial(2);
+                tTest=QuestQuantile(Q{2}(whichBlockID));	% Recommended by Pelli (1987), and still our favorite.
 
-                thisTrial(conf.QUESTparams(1)) = Q{3}(Q{1}==thisTrial(2));
+                thisTrial(conf.QUESTparams(1)) = tTest;
+                Q{3}(whichBlockID) = tTest;
 
 
             case {'nUp1Down' , 'nup1down'}
@@ -53,17 +54,19 @@ function [thisTrial Q]= tunnelUpdate(ch, conf, thisTrial, Q, blockID)
         case {'QUEST' , 'quest'}
             % we use the QUEST procedure here!
             % update the database and get new value
-            if isnan(Q{3}(Q{1}==thisTrial(2)))
-                tTest=QuestQuantile(Q{2}(Q{1}==thisTrial(2)));	% Recommended by Pelli (1987), and still our favorite.
-                Q{3}(Q{1}==thisTrial(2)) = tTest;
-                thisTrial(conf.QUESTparams(1)) = Q{3}(Q{1}==thisTrial(2));
+            whichBlockID = Q{1} == thisTrial(2);
+            if isnan(Q{3}(whichBlockID))
+                tTest=QuestQuantile(Q{2}(whichBlockID));	% Recommended by Pelli (1987), and still our favorite.
+
+                thisTrial(conf.QUESTparams(1)) = tTest;
+                Q{3}(whichBlockID) = tTest;
 
             else
                 % this is not the first trial in this blockID type
-                Q{2}(Q{1}==thisTrial(2)) = QuestUpdate(Q{2}(Q{1}==thisTrial(2)),Q{3}(Q{1}==thisTrial(2)), Q{4}(Q{1}==thisTrial(2))); % Add the new datum (actual test intensity and observer response) to the database.
-                tTest=QuestQuantile(Q{2}(Q{1}==thisTrial(2)));	% Recommended by Pelli (1987), and still our favorite.
-                Q{3}(Q{1}==thisTrial(2)) = tTest; % save in Q database to update next Quest call
-                thisTrial(conf.QUESTparams(1)) = Q{3}(Q{1}==thisTrial(2));
+                Q{2}(whichBlockID) = QuestUpdate(Q{2}(whichBlockID),Q{3}(whichBlockID), Q{4}(whichBlockID)); % Add the new datum (actual test intensity and observer response) to the database.
+                tTest=QuestQuantile(Q{2}(whichBlockID));	% Recommended by Pelli (1987), and still our favorite.
+                Q{3}(whichBlockID) = tTest; % save in Q database to update next Quest call
+                thisTrial(conf.QUESTparams(1)) = tTest;
             end
 
         case {'nUp1Down' , 'nup1down'}
