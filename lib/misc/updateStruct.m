@@ -1,18 +1,24 @@
-function new = updateStruct(old, new)
-    % update the Sturcture with new field values
+function targetStruct = updateStruct(partial, targetStruct)
+    % update the Sturcture with targetStruct field values
+    % use targetStruct to update partial
+    % partial's fields are always a subset to targetStruct's fields
 
-    fNames=fieldnames(old);
-    for i=1:length(fNames)
-        if isstruct(old.(fNames{i}))
+    % For example, partial is the user defined struct while targetStruct is the default struct
+
+    partialFields=fieldnames(partial);
+    for i=1:length(partialFields)
+        if isstruct(partial.(partialFields{i}))
             % struct within a struct; we need to recurse
             % Oh I hate recursion
-            updateStruct(new.(fNames{i}), old.(fNames{i}));
+            targetStruct.(partialFields{i}) = updateStruct(partial.(partialFields{i}), targetStruct.(partialFields{i}));
+
         else
-            % only update when the old one exists
-            if isfield(old, fNames{i})
-                new = setfield(new, fNames{i}, getfield(old, fNames{i}));
+            % only update when the to-be-updated targetStruct field already exists
+            if isfield(targetStruct, partialFields{i})
+                targetStruct.(partialFields{i}) = partial.(partialFields{i});
             else
-                error('updateStruct:nonExistentField', 'Trying to update a non-existent field!');
+                disp(targetStruct);
+                error('updateStruct:nonExistentField', 'Trying to update a non-existent field: `%s`! \nYou might have a typo in the field name. See above for a list of valid field names.', partialFields{i});
             end
         end
     end
