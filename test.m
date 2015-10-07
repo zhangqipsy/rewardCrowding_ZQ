@@ -1,7 +1,7 @@
 function status = test(testWhat)
 startup;
 if nargin == 0
-  testWhat = 'drawCrowding';
+  testWhat = 'crowding';
 end
 %try
     switch(testWhat)
@@ -30,8 +30,6 @@ end
             data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf, mode);
             %save /scratch/buggy
             %data.Trials(iTrial,:), data.draw.circle, data.draw.poly
-            pause
-
             data.draw1 = drawObjects([], [], data.draw);
         case {'reward'}
             mode.debug_on = 1;      % smaller screen
