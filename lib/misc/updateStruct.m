@@ -8,6 +8,10 @@ function new = updateStruct(old, new)
             % Oh I hate recursion
             updateStruct(new.(fNames{i}), old.(fNames{i}));
         else
+            % only update when the old one exists
+            if isfield(old, fNames{i})
             new = setfield(new, fNames{i}, getfield(old, fNames{i}));
+        else
+            error('updateStruct:nonExistentField', 'Trying to update a non-existent field!');
         end
     end
