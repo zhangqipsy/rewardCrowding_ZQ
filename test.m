@@ -41,7 +41,7 @@ end
             rewardedLearning(conf, mode)
         case {'crowding'}
           mode.linearStim_on = 1;
-          conf.nStim = 1;
+          conf.nStims = 1;
           conf.fixLevels = [.3];
           %conf.color.targets = [conf.color.red, conf.color.green]; % this is default
           conf.metric.targetDist = [2 4 8];
@@ -52,7 +52,7 @@ end
           conf.metric.range_r = -1;
           mode.procedureChannel = 'QUEST'; % experiment methods;
           conf.QUESTparams        = {7 100 3 0.2 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
-          conf.repititions = conf.QUESTparams{2};
+          conf.repetitions      = conf.QUESTparams{2};
           rewardedLearning(conf, mode)
         otherwise
             disp('No test specified!')
