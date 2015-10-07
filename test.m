@@ -1,7 +1,7 @@
 function status = test(testWhat)
 startup;
 if nargin == 0
-  testWhat = 'drawCrowding';
+  testWhat = 'crowding';
 end
 %try
     switch(testWhat)
@@ -29,8 +29,6 @@ end
             data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf, mode);
             %save /scratch/buggy
             %data.Trials(iTrial,:), data.draw.circle, data.draw.poly
-            pause
-
             data.draw1 = drawObjects([], [], data.draw);
         case {'reward'}
             mode.debug_on = 1;      % smaller screen
@@ -45,17 +43,17 @@ end
           mode.linearStim_on = 1;
           conf.nStim = 1;
           conf.fixLevels = [.3];
-          %conf.color.targets = [conf.color.red, conf.color.green];
-          conf.color.targets = [conf.color.red, conf.color.green];
+          %conf.color.targets = [conf.color.red, conf.color.green]; % this is default
           conf.metric.targetDist = [2 4 8];
           conf.Constantparams     = [5 6]; % the column indicators for seperate QUEST sequences (5,6 are distance, color for target)
           conf.targetShapes = [Inf 8];
           conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
           conf.distractorShapes = [Inf]; % Inf is circle
           conf.metric.range_r = -1;
-          mode.procedurechannel = 'quest'; % experiment methods;
-          conf.questparams        = {7 100 0.1 0.8}; % fixme: dunno what it means
+          mode.procedurechannel = 'QUEST'; % experiment methods;
+          conf.QUESTparams        = {7 100 3 0.2 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
           conf.repititions = conf.QUESTparams{2};
+          rewardedLearning(conf, mode)
         otherwise
             disp('No test specified!')
     end

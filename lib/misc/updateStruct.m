@@ -1,7 +1,13 @@
 function new = updateStruct(old, new)
-  % update the Sturcture with new field values
+    % update the Sturcture with new field values
 
-  tmp=fieldnames(old);
-  for i=1:length(tmp)
-    new = setfield(new, tmp{i}, getfield(old, tmp{i}));
-  end
+    fNames=fieldnames(old);
+    for i=1:length(fNames)
+        if isstruct(old.(fNames{i}))
+            % struct within a struct; we need to recurse
+            % Oh I hate recursion
+            updateStruct(new.(fNames{i}), old.(fNames{i}));
+        else
+            new = setfield(new, fNames{i}, getfield(old, fNames{i}));
+        end
+    end

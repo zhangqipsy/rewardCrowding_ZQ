@@ -58,7 +58,6 @@ if nargin > 0
 end
 
 
-try
 
     render.dataPrefix=[];
     render.dataSuffix=[];
@@ -85,7 +84,7 @@ try
             recordResponse = @recordRewardResponse;
         case {'CrowdingTask'}
             genSequence = @genCrowdingSequence;
-            genData = @genCrowdingdData;
+            genData = @genCrowdingData;
             recordResponse = @recordCrowdingResponse;
         otherwise
             error('Unknown task!');
@@ -123,7 +122,7 @@ try
     Display('Please make sure that this design is correct. Insert `dbcont` to continue, or `dbquit` to abort');
 
     %% exp begins
-    keyboard;
+    %keyboard;
 end
 
     if exist('./data', 'dir') ~= 7
@@ -162,6 +161,9 @@ end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% initialization
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    try
+    % only use try for the Psychtoolbox part
+
     AssertOpenGL; % Check if PTB-3 is properly installed on the system
     HideCursor;
     ListenChar(2);
