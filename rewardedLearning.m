@@ -368,7 +368,7 @@ end
     Display('data/latest.mat saved successfully, use for debugging!');
     disp('');
     render.matFileName = ['data/',render.dataPrefix, data.Subinfo{1} , render.dataSuffix, date, '.mat'];
-    save(render.matFileName,'Trials','conf','flow','mode','data');
+    save(render.matFileName,'conf','flow','mode','data','render');
     wrkspc = load(render.matFileName);
     Display(render.matFileName);
 
