@@ -26,7 +26,7 @@ end
             mode.procedureChannel = 'QUEST'; % experiment methods;
             conf.QUESTparams        = {7 3 3 0.2 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
             [data.Trials(iTrial, :) Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(iTrial, :), [], data.Trials(:,2));
-            data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf, mode);
+            data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf);
             %save /scratch/buggy
             %data.Trials(iTrial,:), data.draw.circle, data.draw.poly
             data.draw1 = drawObjects([], [], data.draw);
