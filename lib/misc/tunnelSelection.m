@@ -36,7 +36,7 @@ function [sProcedure, code]= tunnelSelection(ch)
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 code = NaN;
-sProcedure = @NaN;
+sProcedure = NaN;
 
 channelTable = {...
                 'Constant',  0;...
