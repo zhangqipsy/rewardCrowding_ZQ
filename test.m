@@ -23,8 +23,8 @@ end
             render.wsize = [0 0 600 800];
             render.cx = render.wsize(3)/2;
             render.cy = render.wsize(4)/2;
-            mode.procedureChannel = 'quest'; % experiment methods;
-            conf.questparams        = {7 100 0.1 0.8}; % fixme: dunno what it means
+            mode.procedureChannel = 'QUEST'; % experiment methods;
+            conf.QUESTparams        = {7 3 3 0.2 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
             [data.Trials(iTrial, :) Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(iTrial, :), [], data.Trials(:,2));
             data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf, mode);
             %save /scratch/buggy
