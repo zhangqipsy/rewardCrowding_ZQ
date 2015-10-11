@@ -66,7 +66,7 @@ end
         render.dataSuffix = [render.dataSuffix '_RawardDemo_'];
         render.task = 'RewardDemo';
         mode.feedback_on = 0;
-    elseif mode.linearStim_on
+    elseif mode.crowding_on
         render.dataPrefix = ['CrowdingTask/'];
         render.dataSuffix = [render.dataSuffix '_CrowdingTask_'];
         render.task = 'CrowdingTask';

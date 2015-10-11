@@ -40,7 +40,7 @@ switch(testWhat)
     mode.once_on = 6; % overrises all trial numbers; number of total trials (0 to cancel this effect)
     rewardedLearning(conf, mode)
   case {'crowding'}
-    mode.linearStim_on = 1;
+    mode.crowding_on = 1; % data saving and render.task (instructions etc.)
     conf.nStims = 1;
     conf.fixLevels = [.3];
     %conf.color.targets = [conf.color.red, conf.color.green]; % this is default

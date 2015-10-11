@@ -49,7 +49,7 @@ mode.colorBalance_on = 2; % 0 for auto balance (rand); 1, 2 for idxHighRewardCol
 mode.audio_on       = 1;
 mode.speak_on       = 1;
 mode.english_on         = 1;  % use English for Instructions etc., 0 for Chinese(not supported for now!)
-mode.linearStim_on  = 0;
+mode.crowding_on  = 0;
 mode.inspectDesign_on = 1; % see experiment design before starting the experiment
 mode.procedureChannel = 0; % experiment methods;
                             %'Constant',  0
