@@ -12,7 +12,7 @@ end
             render.wsize = [0 0 600 800];
             render.cx = render.wsize(3)/2;
             render.cy = render.wsize(4)/2;
-            data.draw = genRewardData(data.Trials(iTrial, :), render, conf, mode);
+            data.draw = genRewardData(data.Trials(iTrial, :), render, conf);
             data.draw1 = drawObjects([], [], data.draw);
             keyboard
         case {'drawCrowding'}
@@ -44,7 +44,7 @@ end
           conf.nStims = 1;
           conf.fixLevels = [.3];
           %conf.color.targets = [conf.color.red, conf.color.green]; % this is default
-          conf.metric.targetDist = [2 4 8];
+          conf.metric.targetDist = [120 140 180];
           conf.Constantparams     = [5 6]; % the column indicators for seperate QUEST sequences (5,6 are distance, color for target)
           conf.targetShapes = [Inf 8];
           conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
