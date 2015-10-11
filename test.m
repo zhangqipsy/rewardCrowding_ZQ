@@ -23,11 +23,13 @@ switch(testWhat)
     render.wsize = [0 0 600 800];
     render.cx = render.wsize(3)/2;
     render.cy = render.wsize(4)/2;
+    % we are going through the Constant tunnel here
     [data.Trials(iTrial, :), Q] = tunnelUpdate(mode.procedureChannel, conf, data.Trials(iTrial, :), [], data.Trials(:,2));
     data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf);
     %save /scratch/buggy
     %data.Trials(iTrial,:), data.draw.circle, data.draw.poly
     data.draw1 = drawObjects([], [], data.draw);
+    keyboard
   case {'reward'}
     mode.debug_on = 1;      % smaller screen
     mode.inspectDesign_on = 0;
