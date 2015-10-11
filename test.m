@@ -18,13 +18,11 @@ switch(testWhat)
   case {'drawCrowding'}
     Screen('Preference', 'Verbosity', 0);
     [conf, mode] = loadDefaultConfs();
-    mode.procedureChannel = 'QUEST'; % experiment methods;
     data.Trials = genCrowdingSequence(conf, mode);
     iTrial = 1;
     render.wsize = [0 0 600 800];
     render.cx = render.wsize(3)/2;
     render.cy = render.wsize(4)/2;
-    conf.QUESTparams        = {7 3 3 0.2 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
     [data.Trials(iTrial, :), Q] = tunnelUpdate(mode.procedureChannel, conf, data.Trials(iTrial, :), [], data.Trials(:,2));
     data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf);
     %save /scratch/buggy
