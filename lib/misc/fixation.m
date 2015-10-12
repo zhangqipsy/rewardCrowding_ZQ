@@ -40,7 +40,7 @@ switch lower(type)
         fix.sound=1;
         fix.ptr=NaN;
     otherwise
-        Display('Just cross with lines as of type `+` !');
+        % Display('Just cross with lines as of type `+` !');
         Screen('DrawLine',offptr,color,0,fixationSize/2,fixationSize,fixationSize/2,3);
         Screen('DrawLine',offptr,color,fixationSize/2,0,fixationSize/2,fixationSize,3);
         fix.ptr=offptr;
