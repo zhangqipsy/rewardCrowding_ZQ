@@ -3,10 +3,11 @@ startup;
 if nargin == 0
   testWhat = 'crowding';
 end
-%try
-set_test_gamma;
+
+
 switch(testWhat)
   case {'draw', 'drawReward'}
+    set_test_gamma;
     [conf, mode] = loadDefaultConfs();
     data.Trials = genRewardSequence(conf, mode);
     iTrial = 1;
@@ -16,6 +17,7 @@ switch(testWhat)
     data.draw = genRewardData(data.Trials(iTrial, :), render, conf);
     data.draw1 = drawObjects([], [], data.draw);
   case {'drawCrowding'}
+    set_test_gamma;
     Screen('Preference', 'Verbosity', 0);
     [conf, mode] = loadDefaultConfs();
     data.Trials = genCrowdingSequence(conf, mode);
@@ -58,9 +60,7 @@ switch(testWhat)
 end
 
 reset_gamma;
-%catch
-%sca;
-%end %try
+
 
 end
 

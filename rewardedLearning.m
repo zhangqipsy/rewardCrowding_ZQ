@@ -38,9 +38,8 @@ function wrkspc = rewardedLearning(conf, mode, Subinfo)
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 flow.iniTimer = GetSecs;
-addpath('./data', './lib', './lib/misc', './resources');
+addpath('./data', './lib', './lib/misc', './lib/gammaCorrection', './resources');
 data=struct();
 
 % input variables, use them via updateStruct() to update the defined variables below
@@ -181,8 +180,10 @@ end
 
     if mode.debug_on
         [w,render.wsize]=Screen('OpenWindow',render.screenNumber,conf.color.backgroundColor,[1,1,801,601],[]);
+        set_test_gamma;
     else
         [w,render.wsize]=Screen('OpenWindow',render.screenNumber,conf.color.backgroundColor,[],32);
+        set_test_gamma;
     end
     Screen('BlendFunction', w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -299,7 +300,6 @@ end
         switch flow.response
             case {'Escape', 'escape'}
                 flow.isquit = 1;
-                reset_gamma;
                 manualAbort();
 
             case conf.validKeys(3:end) % all stimuli (first two are space and escape)
@@ -392,6 +392,7 @@ catch
     save(['data/', render.dataPrefix, data.Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
     wrkspc = load(['data/', render.dataPrefix, data.Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
     %     disp(['';'';'data/buggy saved successfully, use for debugging!']);
+    reset_gamma;
     Screen('CloseAll');
     %if mode.audio_on; PsychPortAudio('Close'); end
     Priority(0);
@@ -403,6 +404,7 @@ catch
 end
 
 %% exp ends
+reset_gamma;
 Screen('CloseAll');
 %if mode.audio_on; PsychPortAudio('Close'); end
 Priority(0);
@@ -418,5 +420,4 @@ figure;
 %title([data.Subinfo{1} ':' render.task]);
 %format short;
 Display('Experiment was successful!');
-
 end
