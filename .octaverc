@@ -1,2 +1,2 @@
 % just call the startup
-startup();
+startup;
