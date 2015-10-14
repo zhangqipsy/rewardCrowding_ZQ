@@ -180,11 +180,10 @@ end
 
     if mode.debug_on
         [w,render.wsize]=Screen('OpenWindow',render.screenNumber,conf.color.backgroundColor,[1,1,801,601],[]);
-        set_test_gamma;
     else
         [w,render.wsize]=Screen('OpenWindow',render.screenNumber,conf.color.backgroundColor,[],32);
-        set_test_gamma;
     end
+    set_test_gamma;
     Screen('BlendFunction', w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 

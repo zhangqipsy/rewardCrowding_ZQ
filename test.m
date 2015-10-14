@@ -16,6 +16,7 @@ switch(testWhat)
     render.cy = render.wsize(4)/2;
     data.draw = genRewardData(data.Trials(iTrial, :), render, conf);
     data.draw1 = drawObjects([], [], data.draw);
+    reset_gamma;
   case {'drawCrowding'}
     set_test_gamma;
     Screen('Preference', 'Verbosity', 0);
@@ -31,6 +32,7 @@ switch(testWhat)
     %save /scratch/buggy
     %data.Trials(iTrial,:), data.draw.circle, data.draw.poly
     data.draw1 = drawObjects([], [], data.draw);  
+    reset_gamma;
   case {'reward'}
     mode.debug_on = 1;      % smaller screen
     mode.inspectDesign_on = 0;
@@ -58,8 +60,6 @@ switch(testWhat)
   otherwise
     disp('No test specified!')
 end
-
-reset_gamma;
 
 
 end
