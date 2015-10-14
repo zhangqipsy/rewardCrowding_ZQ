@@ -103,52 +103,12 @@ conf.audioTone2Hz   = 500;
 conf.flpi               = .02;          % NOTE:  NOT used
 
 % NOTE: check this values out!
-conf.monWidth   = 38.5;
+conf.monWidth   = 40;
 conf.viewDist       = 75;
 conf.cmPerPix = conf.monWidth/1024;
 
-%BlkNum_Learn = 7; TrlNumPerBlk_Learn = 120;TrlNumPerBlk_LearnPrac = 48;Split = 4.8;
-%ColorPatchTime_Learn = 0.6; waitTimeForResp_Learn = 1; ValH = 'b';ValL ='r';ValCon ='g';%0.6
-%monWidth = 38.5; viewDist = 75;cmPerPix = monWidth/1024;makeSti;Split = round(DegreesToRetinalMM(Split,viewDist)/cmPerPix); %120 trl
 
-
-% NOTE: these color values folow the original code by Li Ya from Sheng Li lab at PKU; as for the reason for the chosen values, it remains to be investigated; or in short, as her why she chose these colors.
-
-% targets
-color.red = [211 0 0];
-color.green = [0 95 0];
-color.targets = {color.red, color.green};
-
-
-% distractors
-color.blue = [0 50 255];
-color.cyan = [0 83 83]; 
-color.pink = [131 37 84];
-color.orange = [123 53 11];
-color.yellow = [67 74 0];
-color.lightpurple = [74 47 157]; % NOTE: this color could be too strong/light!
-color.distractors = {color.blue ,color.cyan ,color.pink ,color.orange ,color.yellow ,color.lightpurple};
-
-
-% other colors
-color.black = [0 0 0];
-color.white = [255 255 255];
-color.gray = [67 67 67];
-color.backgroundColor = [67 67 67];% background color=black
-color.barcolor = 180;
-color.textcolor = 256*[1 1 1]; % used for instruction
-color.textcolor2 = [40 40 40]; % used for feedback
-
-color.bar = color.black;
-color.fix = color.white;
-
-conf.xuexin.color = color;
-
-% Lab corrected colors: L=0.5 (MATLAB lab2rgb)
-% method: use rgb2lab to find Lab values for distint RGB values (e.g. [1 0 0] -- red)
-% Then interactively find a possible color (within range [0, 1] using lab2rgb)
 % at L:50, interactively hunt for a,b
-fromLab.white = [1 1 1];
 fromLab.gray25  = [0.2325    0.2325    0.2325];
 fromLab.gray30  = [0.2770    0.2770    0.2770];
 fromLab.gray35  = [0.3227    0.3227    0.3227];
@@ -161,35 +121,38 @@ fromLab.gray65  = [0.6183    0.6185    0.6184];
 fromLab.gray70  = [0.6707    0.6708    0.6707];
 fromLab.gray80  = [0.7777    0.7778    0.7777];
 fromLab.gray85  = [0.8322    0.8324    0.8323];
-fromLab.gray40 = [.4663 .4663 .4663];
 fromLab.gray50 = [.4663 .4663 .4663];
-fromLab.gray50 = [.4663 .4663 .4663];
-fromLab.black = [0 0 0];%
+fromLab.black = [0 0 0];
+fromLab.white = [1 1 1];
 fromLab.grey = fromLab.gray50;
-
-fromLab.red = [.9082 .1439 .0472];
-fromLab.green = [.1377 .5391 .0633];
-fromLab.blue = [.7278 .1675 .9435];
-fromLab.yellow = [.4235 .4980 .0825];
-fromLab.purple = [.7697 .1449 .8746];
-fromLab.cyan = [.0676 .5154 .5565];
-fromLab.pink = [.8620 .1744 .4769];
-fromLab.brown = [.7418 .3595 .0158];
-
-fromLab.backgroundColor = fromLab.gray50;% background color=black
-fromLab.barcolor = fromLab.gray85;
-fromLab.textcolor = fromLab.white; % used for instruction
-fromLab.textcolor2 = fromLab.gray25; % used for feedback
-fromLab.bar = color.black;
-fromLab.fix = color.white;
-
 scaleRGB             = 255;          % linear magnifier
 fromLab = structfun(@(x) scaleRGB*x, fromLab, 'UniformOutput', false);
 
-fromLab.targets = {fromLab.red, fromLab.green};
-fromLab.distractors = {fromLab.blue ,fromLab.yellow ,fromLab.purple ,fromLab.cyan, fromLab.pink, fromLab.brown};
 
-conf.color = fromLab; % override xuexin color with fromLab color
+fromLab.backgroundColor = fromLab.gray50;
+fromLab.barcolor = fromLab.gray85;
+fromLab.textcolor = fromLab.white; % used for instruction
+fromLab.textcolor2 = fromLab.gray25; % used for feedback
+fromLab.bar = fromLab.black;
+fromLab.fix = fromLab.white;
+
+% targets
+fromLab.red = [238.51  1.14  36.38];
+fromLab.green = [0   138.46  33.43];
+
+% distractors
+fromLab.blue = [3.07  110.71  253.03];
+fromLab.yellow = [108.01  127  21.05];
+fromLab.purple = [191.99  0  254.96];
+fromLab.cyan = [27.03  129.7  153.04];
+fromLab.pink = [218.98  16.9  171.64];
+fromLab.orange = [179.48  97.94  21.33];
+
+
+fromLab.targets = {fromLab.red, fromLab.green};
+fromLab.distractors = {fromLab.blue ,fromLab.yellow ,fromLab.purple ,fromLab.cyan, fromLab.pink, fromLab.orange};
+
+conf.color = fromLab; 
 
 
 
