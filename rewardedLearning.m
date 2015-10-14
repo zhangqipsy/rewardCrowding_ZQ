@@ -299,6 +299,7 @@ end
         switch flow.response
             case {'Escape', 'escape'}
                 flow.isquit = 1;
+                reset_gamma;
                 manualAbort();
 
             case conf.validKeys(3:end) % all stimuli (first two are space and escape)

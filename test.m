@@ -4,7 +4,7 @@ if nargin == 0
   testWhat = 'crowding';
 end
 %try
-
+set_test_gamma;
 switch(testWhat)
   case {'draw', 'drawReward'}
     [conf, mode] = loadDefaultConfs();
@@ -15,7 +15,6 @@ switch(testWhat)
     render.cy = render.wsize(4)/2;
     data.draw = genRewardData(data.Trials(iTrial, :), render, conf);
     data.draw1 = drawObjects([], [], data.draw);
-    keyboard
   case {'drawCrowding'}
     Screen('Preference', 'Verbosity', 0);
     [conf, mode] = loadDefaultConfs();
@@ -25,13 +24,11 @@ switch(testWhat)
     render.cx = render.wsize(3)/2;
     render.cy = render.wsize(4)/2;
     % we are going through the Constant tunnel here
-    keyboard
     [data.Trials(iTrial, :), Q] = tunnelUpdate(mode.procedureChannel, conf, data.Trials(iTrial, :), [], data.Trials(:,2));
     data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf);
     %save /scratch/buggy
     %data.Trials(iTrial,:), data.draw.circle, data.draw.poly
-    data.draw1 = drawObjects([], [], data.draw);
-    
+    data.draw1 = drawObjects([], [], data.draw);  
   case {'reward'}
     mode.debug_on = 1;      % smaller screen
     mode.inspectDesign_on = 0;
@@ -60,7 +57,7 @@ switch(testWhat)
     disp('No test specified!')
 end
 
-
+reset gamma;
 %catch
 %sca;
 %end %try
