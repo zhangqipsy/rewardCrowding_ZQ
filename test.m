@@ -57,7 +57,7 @@ switch(testWhat)
     disp('No test specified!')
 end
 
-reset gamma;
+reset_gamma;
 %catch
 %sca;
 %end %try
