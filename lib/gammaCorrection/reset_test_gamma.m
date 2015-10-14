@@ -7,3 +7,4 @@ function reset_test_gamma
     load([path '\' 'reset_gamma.mat'],'reset_gamma_table');
     
     screen('loadnormalizedgammatable',0,reset_gamma_table);
+end

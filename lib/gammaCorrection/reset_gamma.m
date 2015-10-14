@@ -20,3 +20,4 @@ function reset_gamma
             Screen('loadnormalizedgammatable',i,reset_gamma_table);
         end
     end
+end
