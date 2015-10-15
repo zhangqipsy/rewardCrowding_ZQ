@@ -45,6 +45,7 @@ switch(testWhat)
   case {'crowding'}
     mode.crowding_on = 1; % data saving and render.task (instructions etc.)
     conf.nStims = 1;
+    mode.debug_on = 0;
     conf.fixLevels = [.3];
     %conf.color.targets = [conf.color.red, conf.color.green]; % this is default
     conf.metric.targetDist = [120 140 180];
