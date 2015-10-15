@@ -15,6 +15,7 @@ if nargin<4
     backgroundcolor=255;
 end    
 wrect=Screen('Rect',wptr);
+% NOTE: look at fixationSize here
 fixationSize=max(wrect(3),wrect(4))*3/100;
 txtSize=floor(fixationSize);
 if ~mod(fixationSize,2)
@@ -41,6 +42,7 @@ switch lower(type)
         fix.ptr=NaN;
     otherwise
         % Display('Just cross with lines as of type `+` !');
+        % NOTE: look at fixationSize here: position is determined using it
         Screen('DrawLine',offptr,color,0,fixationSize/2,fixationSize,fixationSize/2,3);
         Screen('DrawLine',offptr,color,fixationSize/2,0,fixationSize/2,fixationSize,3);
         fix.ptr=offptr;

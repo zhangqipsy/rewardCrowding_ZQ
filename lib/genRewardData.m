@@ -48,6 +48,7 @@ draw.line.len = repmat(conf.metric.bar_r, conf.nStims, 1);
 draw.line.width = repmat(conf.metric.bar_r2, conf.nStims, 1);
 draw.line.color = repmat(conf.color.bar, conf.nStims, 1);
 
+% NOTE: look at coor here: location is determined using cx
 draw.fix.coor = [render.cx render.cy];
 draw.fix.type = '+';
 draw.fix.r = conf.metric.fix_r;

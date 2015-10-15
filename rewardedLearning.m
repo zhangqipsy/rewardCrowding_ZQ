@@ -1,16 +1,12 @@
 function wrkspc = rewardedLearning(conf, mode, Subinfo)
 %REWARDEDLEARNING serves both as the demo and the real experiment.
 %
-% SYNOPSIS: wrkspc = rewardedLearning(isRedHigh, isDemo)
+% SYNOPSIS: wrkspc = rewardedLearning(conf, mode, Subinfo)
 %
-% INPUT isRedHigh
-%			Red target is the higher reward, contrary to the greed being the higher one.
-%		isDemo
-%			Demo for the experiment, before the real learning experiment begins.
-%		All other settings and configurations of the expreiment could be changed directly by changing the value of the `conf` struct.
+%	All settings and configurations of the expreiment could be changed directly by changing the value of the `conf` and `mode` struct
 %
 % OUTPUT wrkspc
-%			All the useful variabl;es, includes everything except `render` struct
+%	All the useful variables, includes everything except `render` struct
 %
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
