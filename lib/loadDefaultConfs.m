@@ -161,8 +161,8 @@ range_r     = 5;   % radius of imaginary circle(deg)
 bar_r       = 0.76;  % length (diameter) of the bar(deg)
 bar_r2     = 0.08;  % width (diameter) of the bar(deg)
 cir_r       = 2.3/2;  % deg of circle (deg)
-fix_r       = 0.25; % long arm radius of fixation cross (deg)
-fix_r2    = 0.03; % short arm radius of fixation cross (deg)
+fix_r       = 0.75; % long arm radius of fixation cross (deg)
+fix_r2    = 0.075; % short arm radius of fixation cross (deg)
 crossCoor = 5;
 targetDist = [2 4 8];
 

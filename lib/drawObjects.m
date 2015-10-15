@@ -22,7 +22,7 @@ function draw = drawObjects(w, render, draw)
 %
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
-% on Microsoft Windows 8.1 企业版 Version 6.3 (Build 9600)
+% on Microsoft Windows 8.1 企业�?Version 6.3 (Build 9600)
 %
 % Author: Hormet, 2015-08-31
 % UPDATED: 2015-08-31 16:55:41
@@ -214,5 +214,5 @@ function XY = drawLine(w, render, line, cmd)
     lineColors = reshape(repmat(line.color, 1, 2)', 3, []);
 
     %disp('Drawing lines...');
-    Screen('DrawLines', w, XY, line.width', lineColors,[], 2);
+    Screen('DrawLines', w, XY, line.width', lineColors,[], 0);
 end
