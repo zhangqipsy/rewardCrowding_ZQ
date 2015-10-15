@@ -388,7 +388,7 @@ catch
     save(['data/', render.dataPrefix, data.Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
     wrkspc = load(['data/', render.dataPrefix, data.Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
     %     disp(['';'';'data/buggy saved successfully, use for debugging!']);
-    reset_gamma;
+    RestoreCluts;
     Screen('CloseAll');
     %if mode.audio_on; PsychPortAudio('Close'); end
     Priority(0);
@@ -400,7 +400,7 @@ catch
 end
 
 %% exp ends
-reset_gamma;
+RestoreCluts;
 Screen('CloseAll');
 %if mode.audio_on; PsychPortAudio('Close'); end
 Priority(0);
