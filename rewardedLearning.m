@@ -266,8 +266,9 @@ end
 
         %% now prsent Stim that you can see on the screen
         % show fixation
-        render.fix = fixation(w, '+', conf.color.fix, conf.color.backgroundColor);
-        showFix(w, render.wsize, render.fix, data.Trials(flow.nresp, 4));
+        data.drawFix.fix = data.draw.fix; % copy out the fixation in the stimuli
+        data.drawedFix = drawObjects(w, render, data.drawFix); % only the fix part
+        WaitSecs(data.Trials(flow.nresp, 4));
 
         % present stimuli
         data.drawed = drawObjects(w, render, data.draw);

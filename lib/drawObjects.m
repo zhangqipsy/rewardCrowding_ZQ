@@ -214,5 +214,6 @@ function XY = drawLine(w, render, line, cmd)
     lineColors = reshape(repmat(line.color, 1, 2)', 3, []);
 
     %disp('Drawing lines...');
-    Screen('DrawLines', w, XY, line.width', lineColors,[], 0);
+    Display(line.width);
+    Screen('DrawLines', w, XY, line.width', lineColors,[], 2);
 end
