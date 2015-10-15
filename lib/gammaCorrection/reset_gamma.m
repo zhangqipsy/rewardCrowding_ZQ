@@ -4,7 +4,7 @@ function reset_gamma
     clear reset
     
     path=fileparts(mfilename('fullpath'));
-    load([path '\' 'reset_gamma.mat'],'reset_gamma_table');
+    load([path '/' 'reset_gamma.mat'],'reset_gamma_table');
     
     screencount=size(Screen('screens'),2);
     if screencount==1
