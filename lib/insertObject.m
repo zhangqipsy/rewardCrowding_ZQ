@@ -1,4 +1,4 @@
-function draw = initializeDraw(draw, typeStr, objectStruct)
+function draw = insertObject(draw, typeStr, objectStruct)
 switch typeStr
 case {'circle'}
     draw.circle.coor= [draw.circle.coor; objectStruct.coor];
@@ -10,9 +10,9 @@ case {'circle'}
 case {'poly'}
     draw.poly.coor= [draw.poly.coor; objectStruct.coor];
     draw.poly.color= [draw.poly.color; objectStruct.color];
-    draw.poly.points= [draw.poly.points; objectStruct.points];   % each row does NOT necessarily belong to a seperate polygodraw.poly.points 
+    draw.poly.points= [draw.poly.points; objectStruct.points];   % each row does NOT necessarily belong to a seperate polygodraw.poly.points
     % we can just calculate them
-    draw.poly.nPoints= [draw.poly.nPoints; size(objectStruct.points,1)]; % group poly.points according to the rows of nPointdraw.poly.nPoints 
+    draw.poly.nPoints= [draw.poly.nPoints; size(objectStruct.points,1)]; % group poly.points according to the rows of nPointdraw.poly.nPoints
     draw.poly.width= [draw.poly.width; objectStruct.width];
     draw.poly.isFill= [draw.poly.isFill; objectStruct.isFill];
 
@@ -29,11 +29,11 @@ case {'fix'}
     draw.fix.r= [draw.fix.r; objectStruct.r];
     draw.fix.width= [draw.fix.width; objectStruct.width];
     draw.fix.color= [draw.fix.color; objectStruct.color];
-    
+
     otherwise
     error('insertObject:UnknownObject', 'Object %s is not implemented or unknown', typeStr);
 end
-    
-    
+
+
 
 end
