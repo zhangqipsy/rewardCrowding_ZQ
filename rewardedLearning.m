@@ -187,7 +187,7 @@ end
     render.ifi=Screen('GetFlipInterval', w);
     if render.ifi > conf.flpi + 0.0005 % allow 0.5ms error
         error('HardwareError:MonitorFlushRate',...
-            'Monitor Flip Interval is too large. Please adjust monitor flush rate \n from system preferences, or adjust conf.flpi fron *Task.m file.');
+            'Monitor Flip Interval is too large. Please adjust monitor flush rate \n from system preferences, or adjust conf.flpi fron test.m file.');
     end
     Priority(MaxPriority(w));
 
@@ -207,7 +207,13 @@ end
 
 
     %% Instructions
+    % FIXME: something wrong is here below
+    DrawFormattedText(w, 'Hi', 'center', 'center', conf.color.textcolor2);
+    Screen('Flip', w);
+    Display('Hi');
+
     DrawFormattedText(w, instrDB(render.task, mode.english_on), 'center', 'center', conf.color.textcolor);
+    % FIXME: something wrong is here above
     Screen('Flip', w);
     if mode.recordImage; recordImage(1,1,[render.task '_instr'],w,render.wsize);end
     %if ~mode.debug_on;Speak(sprintf(instrDB(render.task, mode.english_on)));end
