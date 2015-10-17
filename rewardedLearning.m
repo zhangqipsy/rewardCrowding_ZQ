@@ -268,11 +268,13 @@ end
         % show fixation
         data.drawFix.fix = data.draw.fix; % copy out the fixation in the stimuli
         data.drawedFix = drawObjects(w, render, data.drawFix); % only the fix part
+        Screen('Flip', w);
         WaitSecs(data.Trials(flow.nresp, 4));
 
         % present stimuli
         data.drawed = drawObjects(w, render, data.draw);
-        render.vlb = Screen('Flip', w, render.vlb + (1-0.5)*conf.flpi);%use the center of the interval
+        Screen('Flip', w);
+        %render.vlb = Screen('Flip', w, render.vlb + (1-0.5)*conf.flpi);%use the center of the interval
         % Flip the visual stimuli on the screen, along with timing
         % old = render.vlb;
         if mode.recordImage; recordImage(flow.Flip,10,render.task ,w,render.wsize);end
