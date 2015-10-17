@@ -267,7 +267,7 @@ end
         %% now prsent Stim that you can see on the screen
         % show fixation
         data.drawFix.fix = data.draw.fix; % copy out the fixation in the stimuli
-        data.drawedFix = drawObjects(w, render, data.drawFix); % only the fix part
+        data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
         Screen('Flip', w);
         WaitSecs(data.Trials(flow.nresp, 4));
 
