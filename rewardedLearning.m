@@ -268,6 +268,7 @@ end
         % show fixation
         data.drawFix.fix = data.draw.fix; % copy out the fixation in the stimuli
         data.drawedFix = drawObjects(w, render, data.drawFix); % only the fix part
+        Screen('Flip', w);
         WaitSecs(data.Trials(flow.nresp, 4));
 
         % present stimuli
