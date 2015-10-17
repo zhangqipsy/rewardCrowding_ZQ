@@ -162,6 +162,8 @@ end
     AssertOpenGL; % Check if PTB-3 is properly installed on the system
     HideCursor;
     ListenChar(2);
+
+    Screen('Preference', 'VisualDebugLevel', 1); % do NOT show the welcome screen
     if mode.debug_on
         Screen('Preference','SkipSyncTests', 1);
         Screen('Preference', 'Verbosity', 0);
