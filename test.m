@@ -34,7 +34,7 @@ switch(testWhat)
     data.draw1 = drawObjects([], [], data.draw);  
     reset_gamma;
   case {'reward'}
-    mode.debug_on = 1;      % smaller screen
+    mode.debug_on = 0;      % smaller screen
     mode.inspectDesign_on = 0;
     mode.procedureChannel = 'Constant'; % experiment methods;
     conf.repetitions = 1;    % repetition of each condition (if set to 0, uses totalTrials below instead)

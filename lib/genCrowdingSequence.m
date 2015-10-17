@@ -16,7 +16,7 @@ function Trials = genCrowdingSequence(conf, mode)
 % shape of the target so the salience is controlled under different levels,
 % fixate the distance between fixation and the target (eccentricity), then
 % measure the threshold for flanker spacing; or fixate spacing and measure
-% eccentricity. 
+% eccentricity.
 %
 % As for implementation, we could only have one variable that specifies the
 % procedure (for example "QUEST"), and all others could be generated. However,
@@ -129,6 +129,7 @@ nColumns = 17;
 %	    idxDistractorShape  (balance)
 tmp=15; % second term is nStims: which is one for crowding since we only have one target
 Trials(:, [4 tmp 6 5 7 8 16 17]) = Trialsequence;
+Trials(:,4) = Replace(Trials(:,4), 1:numel(conf.fixLevels), conf.fixLevels);
 Trials(:, tmp) = NaN(size(Trials,1), 1);
 
 % replace the values since drawObjects() has no access to conf.
