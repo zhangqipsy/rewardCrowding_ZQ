@@ -164,12 +164,13 @@ end
     ListenChar(2);
 
     Screen('Preference', 'VisualDebugLevel', 1); % do NOT show the welcome screen
-    if mode.debug_on
+    if mode.debug_on | IsOctave
         Screen('Preference','SkipSyncTests', 1);
-        Screen('Preference', 'Verbosity', 0);
     else
         Screen('Preference','SkipSyncTests', 0);
     end
+    if mode.debug_on; Screen('Preference', 'Verbosity', 0);end
+
     Screen('Preference', 'ConserveVRAM', 8);
     InitializeMatlabOpenGL;
 
