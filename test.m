@@ -49,15 +49,18 @@ switch(testWhat)
     mode.debug_on = 0;
     conf.fixLevels = [.3];
     %conf.color.targets = [conf.color.red, conf.color.green]; % this is default
-    conf.metric.targetDist = [120 140 180];
     mode.exclusiveTargetFlankerColor_on = 1;
+    fromLab.red = [238.51  1.14  36.38];
+    fromLab.green = [0   138.46  33.43];
+    conf.color.distractors = {fromLab.red ,fromLab.green};
+    conf.metric.targetDist = [0 677];
     conf.Constantparams     = [5 6]; % the column indicators for seperate QUEST sequences (5,6 are distance, color for target)
     conf.targetShapes = [Inf 8];
     conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
     conf.distractorShapes = [Inf]; % Inf is circle
     conf.metric.range_r = -1;
     mode.procedureChannel = 'QUEST'; % experiment methods;
-    conf.QUESTparams        = {7 3 3 0.2 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
+    conf.QUESTparams        = {7 1 3 0.2 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
     conf.repetitions      = conf.QUESTparams{2};
     rewardedLearning(conf, mode)
   otherwise
