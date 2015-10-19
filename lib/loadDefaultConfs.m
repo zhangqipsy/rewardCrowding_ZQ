@@ -52,6 +52,7 @@ mode.speak_on       = 1;
 mode.english_on         = 1;  % use English for Instructions etc., 0 for Chinese(not supported for now!)
 mode.crowding_on  = 0;
 mode.inspectDesign_on = 1; % see experiment design before starting the experiment
+mode.feedback_on = 1;
 mode.procedureChannel = 0; % experiment methods;
                             %'Constant',  0
                             %'QUEST',    -1
@@ -98,7 +99,7 @@ conf.targetShapes   = [Inf 6 8 12];
 conf.distractorOrientations = [pi/4 -pi/4];
 conf.flankerOrientations = [pi/2 -pi/2];
 conf.distractorShapes = [Inf]; % Inf is circle
-conf.validKeys          = {'space', 'escape', 'm', 'z'}; % always keep espace and space in this order!
+conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
 conf.audioTone1Hz   = 1000;
 conf.audioTone2Hz   = 500;
 conf.flpi               = .02;          % NOTE:  NOT used
@@ -162,7 +163,7 @@ range_r     = 5;   % radius of imaginary circle(deg)
 bar_r       = 0.76;  % length (diameter) of the bar(deg)
 bar_r2     = 0.08;  % width (diameter) of the bar(deg)
 cir_r       = 2.3/2;  % deg of circle (deg)
-fix_r       = 0.75; % long arm radius of fixation cross (deg)
+fix_r       = 0.5; % long arm radius of fixation cross (deg)
 fix_r2    = 0.075; % short arm radius of fixation cross (deg)
 crossCoor = 20;
 targetDist = [2 4 8];

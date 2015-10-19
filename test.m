@@ -40,7 +40,7 @@ switch(testWhat)
     mode.procedureChannel = 'Constant'; % experiment methods;
     conf.repetitions = 1;    % repetition of each condition (if set to 0, uses totalTrials below instead)
     conf.totalTrials = 1008; % respects this if repititions is zero
-    mode.demo_on = 1;        % sets totalTrials to the lowest mimimum if repetitions is 0 (also no feedback)
+    mode.demo_on = 0;        % sets totalTrials to the lowest mimimum if repetitions is 0 (also no feedback)
     mode.once_on = 6; % overrises all trial numbers; number of total trials (0 to cancel this effect)
     rewardedLearning(conf, mode)
   case {'crowding'}

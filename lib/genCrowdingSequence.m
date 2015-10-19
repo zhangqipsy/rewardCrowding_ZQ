@@ -80,8 +80,6 @@ function Trials = genCrowdingSequence(conf, mode)
 %	    idxTargetShape  (balance)
 %	Column 17
 %	    idxDistractorShape  (balance)
-%   Column 18
-%       idxCorrectResponse (from Column 16)
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
 % on Microsoft Windows 8.1 企业�?Version 6.3 (Build 9600)
@@ -108,7 +106,7 @@ function Trials = genCrowdingSequence(conf, mode)
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-nColumns = 18;
+nColumns = 17;
 
 % let's only use this before BalanceTrials is ready
 [Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.metric.targetDist), numel(conf.metric.range_r), numel(conf.color.distractors), numel(conf.targetShapes), numel(conf.distractorShapes)]);
@@ -134,15 +132,12 @@ Trials(:,4) = Replace(Trials(:,4), 1:numel(conf.fixLevels), conf.fixLevels);
 Trials(:, tmp) = NaN(size(Trials,1), 1);
 
 if mode.exclusiveTargetFlankerColor_on
-  Trials = Trials(Trials(:,6) != Trials(:,8),:);
-
+  Trials = Trials(Trials(:,6) ~= Trials(:,8),:);
 end
 
 % replace the values since drawObjects() has no access to conf.
 Trials(:,16) = Replace(Trials(:, 16), unique(Trials(:,16)), conf.targetShapes);
 Trials(:,17) = Replace(Trials(:, 17), unique(Trials(:,17)),conf.distractorShapes);
-Trials(:,18) = 1;
-Trials(Trials(:,16) ==inf,18) = 2;
 
 
 
