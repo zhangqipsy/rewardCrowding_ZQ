@@ -56,7 +56,6 @@ switch(testWhat)
     conf.metric.targetDist = [0 677];
     conf.Constantparams     = [5 6]; % the column indicators for seperate QUEST sequences (5,6 are distance, color for target)
     conf.targetShapes = [Inf 8];
-    conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
     conf.distractorShapes = [Inf]; % Inf is circle
     conf.metric.range_r = -1;
     mode.procedureChannel = 'QUEST'; % experiment methods;

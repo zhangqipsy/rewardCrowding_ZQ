@@ -64,7 +64,7 @@ mode.usekb_on           = 0;  % force use keyboard for input (also suppress outp
 mode.debug_on           = 0;  % default is 0; 1 is not to use full screen, and skip the synch test
 mode.recordImage        = 0;  % make screen capture and save as images; used for post-hoc demo
 mode.serialInput_on     = 0;  % serial input devices
-mode.once_on            = 0;  % end of experiment after these many trials
+mode.once_on            = 6;  % end of experiment after these many trials
 
 
 
@@ -98,7 +98,7 @@ conf.targetShapes   = [Inf 6 8 12];
 conf.distractorOrientations = [pi/4 -pi/4];
 conf.flankerOrientations = [pi/2 -pi/2];
 conf.distractorShapes = [Inf]; % Inf is circle
-conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
+conf.validKeys          = {'space', 'escape', 'm', 'z'}; % always keep espace and space in this order!
 conf.audioTone1Hz   = 1000;
 conf.audioTone2Hz   = 500;
 conf.flpi               = .02;          % NOTE:  NOT used

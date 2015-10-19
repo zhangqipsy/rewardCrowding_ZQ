@@ -20,7 +20,7 @@ function [data flow]= recordCrowdingResponse(flow, data, conf)
 %
 %   During data analysis, all rows of data.Trials
 %   whose counterTillCorrect is larger than 1 could
-%   be ignoreè¤§, since those are re-collected in a
+%   be ignoreè¤? since those are re-collected in a
 %   later trial.
 %
 %
@@ -132,7 +132,6 @@ data.Trials(flow.nresp, 13) = flow.isCorrect;
 %	Column 15
 %	    rewardAmount
 %	    not used for 2AFC
-
 
 disp(flow.Q)
 flow.Q{4}(flow.Q{1}==data.Trials(flow.nresp,2)) = flow.isCorrect;
