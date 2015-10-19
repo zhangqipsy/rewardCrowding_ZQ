@@ -215,5 +215,5 @@ function XY = drawLine(w, render, line, cmd)
 
     %disp('Drawing lines...');
     Display(line.width);
-    Screen('DrawLines', w, XY, line.width', lineColors,[], 2);
+    Screen('DrawLines', w, XY, line.width', lineColors,[], 1);
 end
