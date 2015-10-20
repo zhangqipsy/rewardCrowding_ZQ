@@ -132,6 +132,11 @@ Trials(:, [4 tmp 6 5 7 8 16 17]) = Trialsequence;
 Trials(:,4) = Replace(Trials(:,4), 1:numel(conf.fixLevels), conf.fixLevels);
 Trials(:, tmp) = NaN(size(Trials,1), 1);
 
+if mode.exclusiveTargetFlankerColor_on
+  Trials = Trials(Trials(:,6) != Trials(:,8),:);
+
+end
+
 % replace the values since drawObjects() has no access to conf.
 Trials(:,16) = Replace(Trials(:, 16), unique(Trials(:,16)), conf.targetShapes);
 Trials(:,17) = Replace(Trials(:, 17), unique(Trials(:,17)),conf.distractorShapes);

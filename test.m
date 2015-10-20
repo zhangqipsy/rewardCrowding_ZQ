@@ -21,6 +21,7 @@ switch(testWhat)
     set_test_gamma;
     Screen('Preference', 'Verbosity', 0);
     [conf, mode] = loadDefaultConfs();
+    mode.exclusiveTargetFlankerColor_on = 1;
     data.Trials = genCrowdingSequence(conf, mode);
     iTrial = 1;
     render.wsize = [0 0 600 800];
@@ -31,7 +32,7 @@ switch(testWhat)
     data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf);
     %save /scratch/buggy
     %data.Trials(iTrial,:), data.draw.circle, data.draw.poly
-    data.draw1 = drawObjects([], [], data.draw);  
+    data.draw1 = drawObjects([], [], data.draw);
     reset_gamma;
   case {'reward'}
     mode.debug_on = 0;      % smaller screen
@@ -49,6 +50,7 @@ switch(testWhat)
     conf.fixLevels = [.3];
     %conf.color.targets = [conf.color.red, conf.color.green]; % this is default
     conf.metric.targetDist = [120 140 180];
+    mode.exclusiveTargetFlankerColor_on = 1;
     conf.Constantparams     = [5 6]; % the column indicators for seperate QUEST sequences (5,6 are distance, color for target)
     conf.targetShapes = [Inf 8];
     conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace and space in this order!
