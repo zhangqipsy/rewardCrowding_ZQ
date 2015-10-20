@@ -46,11 +46,13 @@ function [conf, mode] = loadDefaultConfs()
 % state control variables
 mode.demo_on        = 0;  % baseline trial, without visual stimuli
 mode.colorBalance_on = 2; % 0 for auto balance (rand); 1, 2 for idxHighRewardColor
+mode.exclusiveTargetFlankerColor_on = 0;
 mode.audio_on       = 1;
 mode.speak_on       = 1;
 mode.english_on         = 1;  % use English for Instructions etc., 0 for Chinese(not supported for now!)
 mode.crowding_on  = 0;
 mode.inspectDesign_on = 1; % see experiment design before starting the experiment
+mode.feedback_on = 1;
 mode.procedureChannel = 0; % experiment methods;
                             %'Constant',  0
                             %'QUEST',    -1
@@ -87,9 +89,9 @@ conf.nFlankers           = 2;           % pure flankers, target can never be one
 
 
 conf.nTargets           = 1;            % number of targets present in each trial/throughout the experiment
-conf.audioFreq = 44100;                 
+conf.audioFreq = 44100;
 conf.fixLevels          = [.4 .5 .6];
-conf.idxHighRewardColor = 1;        
+conf.idxHighRewardColor = 1;
 conf.highRewardLevel    = .2;
 conf.rewardAmounts      = [0.1 0.5];
 conf.targetOrientations = [0 pi/2];
@@ -152,7 +154,7 @@ fromLab.orange = [179.48  97.94  21.33];
 fromLab.targets = {fromLab.red, fromLab.green};
 fromLab.distractors = {fromLab.blue ,fromLab.yellow ,fromLab.purple ,fromLab.cyan, fromLab.pink, fromLab.orange};
 
-conf.color = fromLab; 
+conf.color = fromLab;
 
 
 
@@ -161,9 +163,9 @@ range_r     = 5;   % radius of imaginary circle(deg)
 bar_r       = 0.76;  % length (diameter) of the bar(deg)
 bar_r2     = 0.08;  % width (diameter) of the bar(deg)
 cir_r       = 2.3/2;  % deg of circle (deg)
-fix_r       = 0.75; % long arm radius of fixation cross (deg)
+fix_r       = 0.5; % long arm radius of fixation cross (deg)
 fix_r2    = 0.075; % short arm radius of fixation cross (deg)
-crossCoor = 5;
+crossCoor = 20;
 targetDist = [2 4 8];
 
 

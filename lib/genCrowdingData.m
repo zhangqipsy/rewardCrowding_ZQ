@@ -9,7 +9,7 @@ function [draw] = genCrowdingData(thisTrial, render, conf)
 %
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
-% on Microsoft Windows 8.1 企业版 Version 6.3 (Build 9600)
+% on Microsoft Windows 8.1 企业�?Version 6.3 (Build 9600)
 %
 % Author: Hormet, 2015-08-31
 % UPDATED: 2015-08-31 16:04:17
@@ -42,7 +42,7 @@ end
 % this is target
 if isinf(thisTrial(16))
     % this is circle
-    circle.coor =  [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy];
+    circle.coor =  [render.cx-thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy];
     circle.color =  conf.color.targets{thisTrial(6)};
     circle.r =  conf.metric.cir_r;
     circle.width =  conf.metric.circle_width;
@@ -52,7 +52,7 @@ if isinf(thisTrial(16))
 else
     if isfinite(thisTrial(16))
     % poly
-    polygon.coor =  [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy];
+    polygon.coor =  [render.cx-thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy];
     polygon.color =  conf.color.targets{thisTrial(6)};
     polygon.points =  octalCoor(2*[0 0 polygon.coor], conf.metric.cir_r, thisTrial(16));
     polygon.width =  conf.metric.circle_width;
@@ -66,7 +66,7 @@ end % circle or poly
 for iFlanker = 1:conf.nFlankers
     if isinf(thisTrial(17))
         % this is circle
-        circle.coor =  [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))];
+        circle.coor =  [render.cx-thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))];
         circle.color =  conf.color.distractors{thisTrial(8)};
         circle.r =  conf.metric.cir_r;
         circle.width =  conf.metric.circle_width;
@@ -76,7 +76,7 @@ for iFlanker = 1:conf.nFlankers
     else 
         if isfinite(thisTrial(17))
         % poly
-        polygon.coor =  [thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))];
+        polygon.coor =  [render.cx-thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))];
         polygon.color =  conf.color.distractors{thisTrial(8)};
         polygon.points =  octalCoor(2*[0 0 polygon.coor], conf.metric.cir_r, thisTrial(17));
         polygon.width =  conf.metric.circle_width;
