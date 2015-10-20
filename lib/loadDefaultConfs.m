@@ -165,7 +165,7 @@ bar_r2     = 0.08;  % width (diameter) of the bar(deg)0.08
 cir_r       = 2.3/2;  % deg of circle (deg)
 fix_r       = 0.5; % long arm radius of fixation cross (deg)
 fix_r2    = 0.08; % short arm radius of fixation cross (deg)
-crossCoor = 20;
+crossCoor = 10;
 targetDist = [2 4 8];
 
 
