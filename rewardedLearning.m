@@ -422,7 +422,7 @@ Screen('Preference', 'Verbosity', 3);
 % always save the latest data for the last experiment
 save data/latest.mat;
 Display(char('','','data/latest.mat saved successfully, use for testing!',''));
-figure;
+%figure;
 %boxplot(Trials(:,3),Trials(:,2));
 %title([data.Subinfo{1} ':' render.task]);
 %format short;
