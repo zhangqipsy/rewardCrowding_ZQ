@@ -160,11 +160,11 @@ conf.color = fromLab;
 
 % Parameter in degree
 range_r     = 5;   % radius of imaginary circle(deg)
-bar_r       = 0.76;  % length (diameter) of the bar(deg)
-bar_r2     = 0.08;  % width (diameter) of the bar(deg)
+bar_r       = 1.2;  % length (diameter) of the bar(deg)0.76
+bar_r2     = 0.08;  % width (diameter) of the bar(deg)0.08
 cir_r       = 2.3/2;  % deg of circle (deg)
 fix_r       = 0.5; % long arm radius of fixation cross (deg)
-fix_r2    = 0.075; % short arm radius of fixation cross (deg)
+fix_r2    = 0.08; % short arm radius of fixation cross (deg)
 crossCoor = 20;
 targetDist = [2 4 8];
 
@@ -176,7 +176,7 @@ metric.bar_r2       = round(DegreesToRetinalMM(bar_r2,conf.viewDist)/conf.cmPerP
 metric.cir_r       = round(DegreesToRetinalMM(cir_r,conf.viewDist)/conf.cmPerPix);  % deg of circle (pix)
 metric.fix_r       = round(DegreesToRetinalMM(fix_r,conf.viewDist)/conf.cmPerPix); % long arm radius of fixation cross (pix)
 metric.fix_r2    = round(DegreesToRetinalMM(fix_r2,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix)
-metric.circle_width = 3.35;
+metric.circle_width = 4;
 metric.targetDist =round(DegreesToRetinalMM(targetDist,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix) ;
 metric.crossCoor =round(DegreesToRetinalMM(crossCoor,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix) ;
 scale             =  1;          % linear magnifier
