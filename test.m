@@ -50,8 +50,8 @@ switch(testWhat)
     conf.fixLevels = [.3];
     %conf.color.targets = [conf.color.red, conf.color.green]; % this is default
     mode.exclusiveTargetFlankerColor_on = 1;
-    fromLab.red = [238.51  1.14  36.38];
-    fromLab.green = [0   138.46  33.43];
+    fromLab.red = [222  52  70];
+    fromLab.green = [0   138  33];
     conf.color.distractors = {fromLab.red ,fromLab.green};
     conf.metric.targetDist = [0 677];
     conf.Constantparams     = [5 6]; % the column indicators for seperate QUEST sequences (5,6 are distance, color for target)

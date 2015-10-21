@@ -139,16 +139,16 @@ fromLab.bar = fromLab.black;
 fromLab.fix = fromLab.white;
 
 % targets
-fromLab.red = [238.51  1.14  36.38];
-fromLab.green = [0   138.46  33.43];
+fromLab.red = [222  52  70];
+fromLab.green = [0   138  33];
 
 % distractors
-fromLab.blue = [3.07  110.71  253.03];
-fromLab.yellow = [108.01  127  21.05];
-fromLab.purple = [191.99  0  254.96];
-fromLab.cyan = [27.03  129.7  153.04];
-fromLab.pink = [218.98  16.9  171.64];
-fromLab.orange = [179.48  97.94  21.33];
+fromLab.blue = [55  121  197];
+fromLab.yellow = [156  111  27];
+fromLab.purple = [162 63  255];
+fromLab.cyan = [43  131  135];
+fromLab.pink = [208  52  160];
+fromLab.orange = [191  88  66];
 
 
 fromLab.targets = {fromLab.red, fromLab.green};
