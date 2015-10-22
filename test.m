@@ -38,10 +38,10 @@ switch(testWhat)
     mode.debug_on = 0;      % smaller screen
     mode.inspectDesign_on = 0;
     mode.procedureChannel = 'Constant'; % experiment methods;
-    conf.repetitions = 1;    % repetition of each condition (if set to 0, uses totalTrials below instead)
+    conf.repetitions = 2;    % repetition of each condition (if set to 0, uses totalTrials below instead)
     conf.totalTrials = 1008; % respects this if repititions is zero
     mode.demo_on = 0;        % sets totalTrials to the lowest mimimum if repetitions is 0 (also no feedback)
-    mode.once_on = 6; % overrises all trial numbers; number of total trials (0 to cancel this effect)
+    mode.once_on = 0; % overrises all trial numbers; number of total trials (0 to cancel this effect)
     rewardedLearning(conf, mode)
   case {'crowding'}
     mode.crowding_on = 1; % data saving and render.task (instructions etc.)
@@ -50,8 +50,8 @@ switch(testWhat)
     conf.fixLevels = [.3];
     %conf.color.targets = [conf.color.red, conf.color.green]; % this is default
     mode.exclusiveTargetFlankerColor_on = 1;
-    fromLab.red = [238.51  1.14  36.38];
-    fromLab.green = [0   138.46  33.43];
+    fromLab.red = [222  52  70];
+    fromLab.green = [0   138  33];
     conf.color.distractors = {fromLab.red ,fromLab.green};
     conf.metric.targetDist = [0 677];
     conf.Constantparams     = [5 6]; % the column indicators for seperate QUEST sequences (5,6 are distance, color for target)
