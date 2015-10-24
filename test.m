@@ -20,6 +20,7 @@ switch(testWhat)
   case {'drawCrowding'}
     set_test_gamma;
     Screen('Preference', 'Verbosity', 0);
+    if IsOctave;Screen('Preference','SkipSyncTests', 1);end
     [conf, mode] = loadDefaultConfs();
     mode.exclusiveTargetFlankerColor_on = 1;
     data.Trials = genCrowdingSequence(conf, mode);

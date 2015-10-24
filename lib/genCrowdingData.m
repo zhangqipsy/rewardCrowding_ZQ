@@ -47,11 +47,10 @@ scale             =  1;          % linear magnifier
 metric = structfun(@(x) scale*round(DegreesToRetinalMM(x, conf.viewDist)/conf.cmPerPix), conf.deg, 'UniformOutput', false);
 metric.scale = scale;
 conf.metric = metric;
-keyboard
 
+% also transform the deg from the Trials -> pixels
+thisTrial(9) = scale*round(DegreesToRetinalMM(thisTrial(9), conf.viewDist)/conf.cmPerPix);
 
-
-draw = initializeDraw();
 % flankers should not overlap with target
 % one radius for the flanker, another for the target
 if conf.metric.range_r(thisTrial(7)) < 2*conf.metric.cir_r
@@ -59,6 +58,10 @@ if conf.metric.range_r(thisTrial(7)) < 2*conf.metric.cir_r
 elseif conf.metric.range_r(thisTrial(7))>render.cy-conf.metric.cir_r
     conf.metric.range_r(thisTrial(7)) = render.cy-conf.metric.cir_r;
 end
+
+
+draw = initializeDraw();
+
 % this is target
 if isinf(thisTrial(16))
     % this is circle
