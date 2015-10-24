@@ -28,7 +28,7 @@ switch(testWhat)
     render.wsize = [0 0 600 800];
     render.cx = render.wsize(3)/2;
     render.cy = render.wsize(4)/2;
-    % we are going through the Constant tunnel here
+    % we are going through the Constant tunnel here [default]
     [data.Trials(iTrial, :), Q] = tunnelUpdate(mode.procedureChannel, conf, data.Trials(iTrial, :), [], data.Trials(:,2));
     data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf);
     %save /scratch/buggy
