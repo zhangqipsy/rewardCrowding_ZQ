@@ -59,7 +59,7 @@ switch(testWhat)
     conf.distractorShapes = [Inf]; % Inf is circle
     conf.metric.range_r = -1;
     mode.procedureChannel = 'QUEST'; % experiment methods;
-    conf.QUESTparams        = {7 1 3 0.2 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
+    conf.QUESTparams        = {7 1 log10(100) 0.2 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
     conf.repetitions      = conf.QUESTparams{2};
     rewardedLearning(conf, mode)
   otherwise

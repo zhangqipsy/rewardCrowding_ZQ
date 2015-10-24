@@ -142,12 +142,12 @@ Display([flow.nresp size(data.Trials, 1)])
 if flow.nresp > size(data.Trials, 1) || data.Trials(flow.nresp, 3) < 0
     % all the trials as well as scheduled trials finished collecting correct responses
 
+    data.t = zeros(numel(flow.Q{1}), 3);
     for iQ = 1:numel(flow.Q{1}) % each of the Quest procedure
         % compute
         % Recommended by Pelli (1989) and King-Smith et al. (1994). Still our favorite.
-        data.t=[flow.Q{1}(iQ) QuestMean(flow.Q{2}(iQ)) QuestSd(flow.Q{2}(iQ))]; % blockID, t, tSD
+        data.t(iQ,:)=[flow.Q{1}(iQ) QuestMean(flow.Q{2}(iQ)) QuestSd(flow.Q{2}(iQ))]; % blockID, t, tSD
     end
-
         % end the experiment
         flow.isquit = 1;
 end
