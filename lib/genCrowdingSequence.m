@@ -143,7 +143,7 @@ Trials(:,17) = Replace(Trials(:, 17), unique(Trials(:,17)),conf.distractorShapes
 
 %	Column 9
 %	    crossCoor
-Trials(:, 9) = repmat(conf.metric.crossCoor, size(Trials,1),1);
+Trials(:, 9) = repmat(conf.deg.crossCoor, size(Trials,1),1);
 
 
 %	    initialize here
@@ -164,7 +164,6 @@ switch whichProcedure
     else
         error('genCrowdingSequence:ConstantRequestedWithoutSayingIt', 'You requested a Constant procedure without specifying which columns of the Trials table to use for it. Are you nuts?')
     end
-
 
 case {'QUEST' , 'quest'}
     % we use the QUEST procedure here!
