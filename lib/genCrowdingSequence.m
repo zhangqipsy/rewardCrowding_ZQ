@@ -156,7 +156,15 @@ Trials(:, 15) = zeros(size(Trials,1), 1);
 [whichProcedure codeProcedure]= tunnelSelection(lower(mode.procedureChannel));
 switch whichProcedure
     case {'Constant', 'constant'}
-        % do nothing, the above generates Constant sequence
+        % do SOMETHING, the above generates Constant sequence
+        % we need to do blockID to get away from NaN errors introduced in recordCrowdingResponse
+    if ~isempty(conf.Constantparams)
+        sequencesControlMatrix = Trials(:, conf.Constantparams);
+        blockID = sequencesControlMatrix * [max(sequencesControlMatrix(:)) .^ [1:numel(conf.Constantparams)]]';
+    else
+        error('genCrowdingSequence:ConstantRequestedWithoutSayingIt', 'You requested a Constant procedure without specifying which columns of the Trials table to use for it. Are you nuts?')
+    end
+
 
 case {'QUEST' , 'quest'}
     % we use the QUEST procedure here!
