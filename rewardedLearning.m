@@ -286,7 +286,7 @@ end
         %render.vlb = Screen('Flip', w, render.vlb + (1-0.5)*conf.flpi);%use the center of the interval
         % Flip the visual stimuli on the screen, along with timing
         % old = render.vlb;
-        if mode.recordImage; recordImage(flow.Flip,10,render.task ,w,render.wsize);end
+        if mode.recordImage; recordImage(1,1,render.task ,w,render.wsize);end
 
 
         % get the response
@@ -422,7 +422,7 @@ Screen('Preference', 'Verbosity', 3);
 % always save the latest data for the last experiment
 save data/latest.mat;
 Display(char('','','data/latest.mat saved successfully, use for testing!',''));
-figure;
+%figure;
 %boxplot(Trials(:,3),Trials(:,2));
 %title([data.Subinfo{1} ':' render.task]);
 %format short;

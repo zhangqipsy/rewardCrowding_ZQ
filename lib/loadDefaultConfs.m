@@ -45,7 +45,7 @@ function [conf, mode] = loadDefaultConfs()
 % evaluate the input arguments of this function
 % state control variables
 mode.demo_on        = 0;  % baseline trial, without visual stimuli
-mode.colorBalance_on = 2; % 0 for auto balance (rand); 1, 2 for idxHighRewardColor
+mode.colorBalance_on = 2; % 0 for auto balance (rand); 1, 2 for idxHighRewardColor 1red 2green
 mode.exclusiveTargetFlankerColor_on = 0;
 mode.audio_on       = 1;
 mode.speak_on       = 1;
@@ -72,7 +72,10 @@ mode.once_on            = 0;  % end of experiment after these many trials
 
 % experiment configuration vatiables
 conf.nUp1DownParams     = {6 40 } ;
-conf.QUESTparams        = {7 100 3 0.2 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
+conf.QUESTparams        = {7 100 3 0.2 0.82 3.5 0.01 0.5}; % columnN,totalTrials,tGuess(log intensity),tGuessSd,pThreshold,beta,delta,gamma
+% delta: when log intensity is infinite, the false alarm rate is still not zero! "finger mistakes"
+% gamma: when log intensity is zero, the hit rate. For 2AFC: .5, nAFC:1/n, yes-no: false alarm rate.
+
 conf.Constantparams     = [4 7]; % the column indicators
 conf.repetitions        =  1;           % repetition time of a condition
 
@@ -139,16 +142,16 @@ fromLab.bar = fromLab.black;
 fromLab.fix = fromLab.white;
 
 % targets
-fromLab.red = [238.51  1.14  36.38];
-fromLab.green = [0   138.46  33.43];
+fromLab.red = [222  52  70];
+fromLab.green = [0   138  33];
 
 % distractors
-fromLab.blue = [3.07  110.71  253.03];
-fromLab.yellow = [108.01  127  21.05];
-fromLab.purple = [191.99  0  254.96];
-fromLab.cyan = [27.03  129.7  153.04];
-fromLab.pink = [218.98  16.9  171.64];
-fromLab.orange = [179.48  97.94  21.33];
+fromLab.blue = [55  121  197];
+fromLab.yellow = [156  111  27];
+fromLab.purple = [162 63  255];
+fromLab.cyan = [43  131  135];
+fromLab.pink = [208  52  160];
+fromLab.orange = [191  88  66];
 
 
 fromLab.targets = {fromLab.red, fromLab.green};
@@ -160,12 +163,12 @@ conf.color = fromLab;
 
 % Parameter in degree
 range_r     = 5;   % radius of imaginary circle(deg)
-bar_r       = 0.76;  % length (diameter) of the bar(deg)
-bar_r2     = 0.08;  % width (diameter) of the bar(deg)
+bar_r       = 1.2;  % length (diameter) of the bar(deg)0.76
+bar_r2     = 0.08;  % width (diameter) of the bar(deg)0.08
 cir_r       = 2.3/2;  % deg of circle (deg)
 fix_r       = 0.5; % long arm radius of fixation cross (deg)
-fix_r2    = 0.075; % short arm radius of fixation cross (deg)
-crossCoor = 20;
+fix_r2    = 0.08; % short arm radius of fixation cross (deg)
+crossCoor = 10;
 targetDist = [2 4 8];
 
 
@@ -176,7 +179,7 @@ metric.bar_r2       = round(DegreesToRetinalMM(bar_r2,conf.viewDist)/conf.cmPerP
 metric.cir_r       = round(DegreesToRetinalMM(cir_r,conf.viewDist)/conf.cmPerPix);  % deg of circle (pix)
 metric.fix_r       = round(DegreesToRetinalMM(fix_r,conf.viewDist)/conf.cmPerPix); % long arm radius of fixation cross (pix)
 metric.fix_r2    = round(DegreesToRetinalMM(fix_r2,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix)
-metric.circle_width = 3.35;
+metric.circle_width = 4;
 metric.targetDist =round(DegreesToRetinalMM(targetDist,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix) ;
 metric.crossCoor =round(DegreesToRetinalMM(crossCoor,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix) ;
 scale             =  1;          % linear magnifier
