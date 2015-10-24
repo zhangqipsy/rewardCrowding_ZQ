@@ -202,8 +202,14 @@ end
     Screen('TextFont', w, 'Microsoft Simsun'); % or `Microsoft Simsun`?
     Screen('TextSize', w, 20); % ziti size
 
+
     render.cx = render.wsize(3)/2; %center x
     render.cy = render.wsize(4)/2; %center y
+    [render.screenWidthMm,render.screenHeightMm]=Screen('DisplaySize',o.screen);
+    render.screenRect=Screen('Rect',o.screen,1);
+    render.screenWidthPix=RectWidth(screenRect);
+    render.pixPerCm=render.screenWidthPix/(0.1*render.screenWidthMm);
+    render.resolution=Screen('Resolution',o.screen);
 
     % NOT used by now; could be convenient when none of the conf are needed
     render.backgroundColor = conf.color.backgroundColor;

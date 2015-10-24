@@ -43,8 +43,15 @@ function [draw] = genCrowdingData(thisTrial, render, conf)
 %
 %conf.metric = metric;
 
+% we calculate cm/pix automatically!
+% Any user input before is overridden
+
+
 scale             =  1;          % linear magnifier
-metric = structfun(@(x) scale*round(DegreesToRetinalMM(x, conf.viewDist)/conf.cmPerPix), conf.deg, 'UniformOutput', false);
+%eccentricityPix=round(pixPerCm*o.distanceCm*tand(o.eccentricityDeg));
+% use pixPerCm from getScreenGeom()
+metric = structfun(@(x) scale*round(tanh(x)*conf.viewDist*render.pixPerCm), conf.deg, 'UniformOutput', false);
+%metric = structfun(@(x) scale*round(DegreesToRetinalMM(x, conf.viewDist)/conf.cmPerPix), conf.deg, 'UniformOutput', false);
 metric.scale = scale;
 conf.metric = metric;
 
