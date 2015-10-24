@@ -170,6 +170,7 @@ deg.fix_r       = 0.5; % long arm radius of fixation cross (deg)
 deg.fix_r2    = 0.08; % short arm radius of fixation cross (deg)
 deg.crossCoor = 10;
 deg.targetDist = [2 4 8];
+deg.flankerDist = deg.range_r;
 
 
 
