@@ -109,7 +109,7 @@ function Trials = genCrowdingSequence(conf, mode)
 nColumns = 17;
 
 % let's only use this before BalanceTrials is ready
-[Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.metric.targetDist), numel(conf.metric.range_r), numel(conf.color.distractors), numel(conf.targetShapes), numel(conf.distractorShapes)]);
+[Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.deg.targetDist), numel(conf.deg.range_r), numel(conf.color.distractors), numel(conf.targetShapes), numel(conf.distractorShapes)]);
 
 
 %	Column 4

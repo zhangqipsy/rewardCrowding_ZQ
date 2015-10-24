@@ -135,7 +135,6 @@ data.Trials(flow.nresp, 13) = flow.isCorrect;
 
 disp(flow.Q)
 if isempty(flow.Q); isAdaptive = 0;end
-
 if isAdaptive
 flow.Q{4}(flow.Q{1}==data.Trials(flow.nresp,2)) = flow.isCorrect;
 end
