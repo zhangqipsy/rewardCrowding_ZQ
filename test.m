@@ -53,12 +53,13 @@ switch(testWhat)
     fromLab.red = [222  52  70];
     fromLab.green = [0   138  33];
     conf.color.distractors = {fromLab.red ,fromLab.green};
-    conf.metric.targetDist = [677];
-    conf.metric.range_r = [50 200];
-    conf.Constantparams     = [7 6]; % the column indicators for seperate QUEST sequences (5,6 are distance, color for target)
+    conf.deg.targetDist = [8 30];
+    conf.deg.range_r = [4 8];
+    conf.Constantparams     = [7 5]; % the column indicators for seperate QUEST sequences (5,6 are distance, color for target)
     conf.targetShapes = [Inf 8];
     conf.distractorShapes = [Inf]; % Inf is circle
     mode.procedureChannel = 'constant'; % experiment methods;
+    %mode.procedureChannel = 'QUEST'; % experiment methods;
     conf.QUESTparams        = {7 1 0 4 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
     conf.repetitions      = conf.QUESTparams{2};
     rewardedLearning(conf, mode)
