@@ -225,7 +225,7 @@ plot([0 trialsDesired], [1 1] .* tGuess, 'm-');
 plot([0 trialsDesired], [1 1]' * [[1 1] .* tGuess + [-1 1] .* tGuessSd], 'm--');
 plot([0 trialsDesired], [1 1] .* t, 'r-');
 plot([0 trialsDesired], [1 1]' * [[1 1] .* t + [-1 1] .* sd], 'r--');
-legend({'testedIntensity', 'tActual', 'tGuess', 'tGuessSd+', 'tGuessSd-','t', 'sd'}, 'location', 'southwest')
+legend({'testedIntensity', 'tActual', 'tGuess', 'tGuessSd+', 'tGuessSd-','t', 'sd+', 'sd-'}, 'location', 'southwest')
 hold off
 
 
