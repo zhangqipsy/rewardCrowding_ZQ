@@ -36,8 +36,10 @@ function [draw] = genCrowdingData(thisTrial, render, conf)
 draw = initializeDraw();
 % flankers should not overlap with target
 % one radius for the flanker, another for the target
-if thisTrial(7) < 2*conf.metric.cir_r
-    thisTrial(7) = 2*conf.metric.cir_r;
+if conf.metric.range_r(thisTrial(7)) < 2*conf.metric.cir_r
+    conf.metric.range_r(thisTrial(7)) = 2*conf.metric.cir_r;
+elseif conf.metric.range_r(thisTrial(7))>render.cy-conf.metric.cir_r
+    conf.metric.range_r(thisTrial(7)) = render.cy-conf.metric.cir_r;
 end
 % this is target
 if isinf(thisTrial(16))
@@ -66,7 +68,7 @@ end % circle or poly
 for iFlanker = 1:conf.nFlankers
     if isinf(thisTrial(17))
         % this is circle
-        circle.coor =  [render.cx-thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))];
+        circle.coor =  [render.cx-thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+conf.metric.range_r(thisTrial(7))*sin(conf.flankerOrientations(iFlanker))];
         circle.color =  conf.color.distractors{thisTrial(8)};
         circle.r =  conf.metric.cir_r;
         circle.width =  conf.metric.circle_width;
@@ -76,7 +78,7 @@ for iFlanker = 1:conf.nFlankers
     else 
         if isfinite(thisTrial(17))
         % poly
-        polygon.coor =  [render.cx-thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))];
+        polygon.coor =  [render.cx-thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+conf.metric.range_r(thisTrial(7))*sin(conf.flankerOrientations(iFlanker))];
         polygon.color =  conf.color.distractors{thisTrial(8)};
         polygon.points =  octalCoor(2*[0 0 polygon.coor], conf.metric.cir_r, thisTrial(17));
         polygon.width =  conf.metric.circle_width;
