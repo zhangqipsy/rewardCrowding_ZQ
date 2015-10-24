@@ -172,7 +172,9 @@ case {'QUEST' , 'quest'}
 %	Column 2
 %	    blockID
 Trials(:,2) = blockID;
+if codeProcedure ~= 0 % Constant procedure
 Trials(:, conf.QUESTparams{1}) = codeProcedure;
+end
 
 
 case {'nUp1Down' , 'nup1down'}
