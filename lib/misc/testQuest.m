@@ -1,4 +1,5 @@
 function testQuest(tActual, tGuess, tGuessSd, beta, delta, gamma, pThreshold, trialsDesired)
+  %testQuest(1.2, 0, 4, 3.5, 0.01, 2, 0.82, 80)
 %tGuess
 %tGuessSd
 %pThreshold=0.82;
@@ -219,12 +220,12 @@ sd=QuestSd(q);
 figure
 hold on
 plot(tTestSeq, 'ko');
-plot([0 trialsDesired], [1 1] .* tActual, 'b');
-plot([0 trialsDesired], [1 1] .* tGuess, 'm');
+plot([0 trialsDesired], [1 1] .* tActual, 'b-');
+plot([0 trialsDesired], [1 1] .* tGuess, 'm-');
 plot([0 trialsDesired], [1 1]' * [[1 1] .* tGuess + [-1 1] .* tGuessSd], 'm--');
-plot([0 trialsDesired], [1 1] .* t, 'r');
+plot([0 trialsDesired], [1 1] .* t, 'r-');
 plot([0 trialsDesired], [1 1]' * [[1 1] .* t + [-1 1] .* sd], 'r--');
-legend({'testedIntensity', 'tActual', 'tGuess', 'tGuessSd', 't', 'sd'}, 'location', 'southwest')
+legend({'testedIntensity', 'tActual', 'tGuess', 'tGuessSd+', 'tGuessSd-','t', 'sd'}, 'location', 'southwest')
 hold off
 
 
