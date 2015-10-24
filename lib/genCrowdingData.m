@@ -33,6 +33,24 @@ function [draw] = genCrowdingData(thisTrial, render, conf)
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+% Original example
+%metric.crossCoor =round(DegreesToRetinalMM(crossCoor,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix) ;
+%scale             =  1;          % linear magnifier
+%
+%metric = structfun(@(x) scale*x, metric, 'UniformOutput', false);
+%metric.scale = scale;
+%
+%conf.metric = metric;
+
+scale             =  1;          % linear magnifier
+metric = structfun(@(x) scale*round(DegreesToRetinalMM(x, conf.viewDist)/conf.cmPerPix), conf.deg, 'UniformOutput', false);
+metric.scale = scale;
+conf.metric = metric;
+keyboard
+
+
+
 draw = initializeDraw();
 % flankers should not overlap with target
 % one radius for the flanker, another for the target
@@ -73,7 +91,7 @@ for iFlanker = 1:conf.nFlankers
         circle.isFill =  0;
         draw = insertObject(draw, 'circle', circle);
 
-    else 
+    else
         if isfinite(thisTrial(17))
         % poly
         polygon.coor =  [render.cx-thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))];

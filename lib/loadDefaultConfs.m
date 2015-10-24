@@ -171,26 +171,27 @@ deg.fix_r2    = 0.08; % short arm radius of fixation cross (deg)
 deg.crossCoor = 10;
 deg.targetDist = [2 4 8];
 deg.flankerDist = deg.range_r;
+deg.circle_width = 0.12;
+conf.deg = deg;
 
 
 
-% Parameter in pix
-metric.range_r     = round(DegreesToRetinalMM(range_r,conf.viewDist)/conf.cmPerPix);   % radius of imaginary circle(pix)
-metric.bar_r       = round(DegreesToRetinalMM(bar_r,conf.viewDist)/conf.cmPerPix);  % longitude (diameter) of the bar(pix)
-metric.bar_r2       = round(DegreesToRetinalMM(bar_r2,conf.viewDist)/conf.cmPerPix);  % width (diameter) of the bar(pix)
-metric.cir_r       = round(DegreesToRetinalMM(cir_r,conf.viewDist)/conf.cmPerPix);  % deg of circle (pix)
-metric.fix_r       = round(DegreesToRetinalMM(fix_r,conf.viewDist)/conf.cmPerPix); % long arm radius of fixation cross (pix)
-metric.fix_r2    = round(DegreesToRetinalMM(fix_r2,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix)
-metric.circle_width = 4;
-metric.targetDist =round(DegreesToRetinalMM(targetDist,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix) ;
-metric.crossCoor =round(DegreesToRetinalMM(crossCoor,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix) ;
-scale             =  1;          % linear magnifier
-
-metric = structfun(@(x) scale*x, metric, 'UniformOutput', false);
-metric.scale = scale;
-
-conf.metric = metric;
-
+%% Parameter in pix
+%metric.range_r     = round(DegreesToRetinalMM(range_r,conf.viewDist)/conf.cmPerPix);   % radius of imaginary circle(pix)
+%metric.bar_r       = round(DegreesToRetinalMM(bar_r,conf.viewDist)/conf.cmPerPix);  % longitude (diameter) of the bar(pix)
+%metric.bar_r2       = round(DegreesToRetinalMM(bar_r2,conf.viewDist)/conf.cmPerPix);  % width (diameter) of the bar(pix)
+%metric.cir_r       = round(DegreesToRetinalMM(cir_r,conf.viewDist)/conf.cmPerPix);  % deg of circle (pix)
+%metric.fix_r       = round(DegreesToRetinalMM(fix_r,conf.viewDist)/conf.cmPerPix); % long arm radius of fixation cross (pix)
+%metric.fix_r2    = round(DegreesToRetinalMM(fix_r2,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix)
+%metric.circle_width = 4;
+%metric.targetDist =round(DegreesToRetinalMM(targetDist,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix) ;
+%metric.crossCoor =round(DegreesToRetinalMM(crossCoor,conf.viewDist)/conf.cmPerPix); % short arm radius of fixation cross (pix) ;
+%scale             =  1;          % linear magnifier
+%
+%metric = structfun(@(x) scale*x, metric, 'UniformOutput', false);
+%metric.scale = scale;
+%
+%conf.metric = metric;
 
 
 end
