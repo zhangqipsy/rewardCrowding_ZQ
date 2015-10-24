@@ -134,7 +134,11 @@ data.Trials(flow.nresp, 13) = flow.isCorrect;
 %	    not used for 2AFC
 
 disp(flow.Q)
+if isempty(flow.Q); isAdaptive = 0;end
+
+if isAdaptive
 flow.Q{4}(flow.Q{1}==data.Trials(flow.nresp,2)) = flow.isCorrect;
+end
 
 flow.nresp    = flow.nresp + 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
 Display([flow.nresp size(data.Trials, 1)])
@@ -142,12 +146,14 @@ Display([flow.nresp size(data.Trials, 1)])
 if flow.nresp > size(data.Trials, 1) || data.Trials(flow.nresp, 3) < 0
     % all the trials as well as scheduled trials finished collecting correct responses
 
+if isAdaptive
     data.t = zeros(numel(flow.Q{1}), 3);
     for iQ = 1:numel(flow.Q{1}) % each of the Quest procedure
         % compute
         % Recommended by Pelli (1989) and King-Smith et al. (1994). Still our favorite.
         data.t(iQ,:)=[flow.Q{1}(iQ) QuestMean(flow.Q{2}(iQ)) QuestSd(flow.Q{2}(iQ))]; % blockID, t, tSD
     end
+end
         % end the experiment
         flow.isquit = 1;
 end
