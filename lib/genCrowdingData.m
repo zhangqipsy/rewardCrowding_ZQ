@@ -51,6 +51,7 @@ scale             =  1;          % linear magnifier
 %eccentricityPix=round(pixPerCm*o.distanceCm*tand(o.eccentricityDeg));
 % use pixPerCm from getScreenGeom()
 if ~isfield(render, 'pixPerCm')
+    warning('genCrowdingData:pixPerCm', 'pixPerCm not found from render! Re-initializing screen...')
 % this gets loaded from the main function rewardedLearning when we open screen using getScreenGeom()
 % However, when doing debug test using test draw, then it fails because screen does not open until
 % we draw the real object, but we ONLY draw after we have generated the data to draw
