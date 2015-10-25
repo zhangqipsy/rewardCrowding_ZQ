@@ -173,6 +173,7 @@ switch whichProcedure
     else
         error('genCrowdingSequence:ConstantRequestedWithoutSayingIt', 'You requested a Constant procedure without specifying which columns of the Trials table to use for it. Are you nuts?')
     end
+        Trials(:,2) = blockID;
 
 case {'QUEST' , 'quest'}
     % we use the QUEST procedure here!
