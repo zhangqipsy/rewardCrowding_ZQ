@@ -56,10 +56,11 @@ switch(testWhat)
     conf.Constantparams     = [7 5]; % the column indicators for seperate QUEST sequences (5,6 are distance, color for target)
     conf.targetShapes = [Inf 8];
     conf.distractorShapes = [Inf]; % Inf is circle
-    mode.procedureChannel = 'constant'; % experiment methods;
-    %mode.procedureChannel = 'QUEST'; % experiment methods;
-    conf.QUESTparams        = {7 1 0 4 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
-    conf.repetitions      = conf.QUESTparams{2};
+    conf.adaptiveColumn = 7;
+    conf.repetition = 1;
+    %mode.procedureChannel = 'constant'; % experiment methods;
+    mode.procedureChannel = 'QUEST'; % experiment methods;
+    conf.QUESTparams        = {conf.adaptiveColumn conf.repititions 0 4 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
     rewardedLearning(conf, mode)
 
   otherwise
