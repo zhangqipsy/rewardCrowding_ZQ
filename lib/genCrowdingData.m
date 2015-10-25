@@ -50,7 +50,14 @@ function [draw] = genCrowdingData(thisTrial, render, conf)
 scale             =  1;          % linear magnifier
 %eccentricityPix=round(pixPerCm*o.distanceCm*tand(o.eccentricityDeg));
 % use pixPerCm from getScreenGeom()
-metric = structfun(@(x) scale*round(tanh(x)*conf.viewDist*render.pixPerCm), conf.deg, 'UniformOutput', false);
+if ~isfield(render, 'pixPerCm')
+% this gets loaded from the main function rewardedLearning when we open screen using getScreenGeom()
+% However, when doing debug test using test draw, then it fails because screen does not open until
+% we draw the real object, but we ONLY draw after we have generated the data to draw
+[w, render] = initScreen(render, 0); %debug_on=0 so we are always using full screen geometry
+end
+metric = structfun(@(x) scale*round(tand(x)*conf.viewDist*render.pixPerCm), conf.deg, 'UniformOutput', false);
+
 %metric = structfun(@(x) scale*round(DegreesToRetinalMM(x, conf.viewDist)/conf.cmPerPix), conf.deg, 'UniformOutput', false);
 metric.scale = scale;
 conf.metric = metric;
@@ -125,5 +132,5 @@ draw = insertObject(draw, 'fix', fix);
 
 % output data (add to data later since `data` is not in the input augument)
 % data.draw = draw;
-
+save a
 end

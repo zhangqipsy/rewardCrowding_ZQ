@@ -9,25 +9,20 @@ switch(testWhat)
   case {'draw', 'drawReward'}
     set_test_gamma;
     [conf, mode] = loadDefaultConfs();
+    render.backgroundColor = conf.color.backgroundColor;
     data.Trials = genRewardSequence(conf, mode);
     iTrial = 1;
-    render.wsize = [0 0 600 800];
-    render.cx = render.wsize(3)/2;
-    render.cy = render.wsize(4)/2;
     data.draw = genRewardData(data.Trials(iTrial, :), render, conf);
     data.draw1 = drawObjects([], [], data.draw);
     reset_gamma;
+
   case {'drawCrowding'}
     set_test_gamma;
-    Screen('Preference', 'Verbosity', 0);
-    if IsOctave;Screen('Preference','SkipSyncTests', 1);end
     [conf, mode] = loadDefaultConfs();
+    render.backgroundColor = conf.color.backgroundColor;
     mode.exclusiveTargetFlankerColor_on = 1;
     data.Trials = genCrowdingSequence(conf, mode);
     iTrial = 1;
-    render.wsize = [0 0 600 800];
-    render.cx = render.wsize(3)/2;
-    render.cy = render.wsize(4)/2;
     % we are going through the Constant tunnel here [default]
     [data.Trials(iTrial, :), Q] = tunnelUpdate(mode.procedureChannel, conf, data.Trials(iTrial, :), [], data.Trials(:,2));
     data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf);
@@ -35,6 +30,7 @@ switch(testWhat)
     %data.Trials(iTrial,:), data.draw.circle, data.draw.poly
     data.draw1 = drawObjects([], [], data.draw);
     reset_gamma;
+
   case {'reward'}
     mode.debug_on = 0;      % smaller screen
     mode.inspectDesign_on = 0;
@@ -44,6 +40,7 @@ switch(testWhat)
     mode.demo_on = 0;        % sets totalTrials to the lowest mimimum if repetitions is 0 (also no feedback)
     mode.once_on = 0; % overrises all trial numbers; number of total trials (0 to cancel this effect)
     rewardedLearning(conf, mode)
+
   case {'crowding'}
     mode.crowding_on = 1; % data saving and render.task (instructions etc.)
     conf.nStims = 1;
@@ -64,6 +61,7 @@ switch(testWhat)
     conf.QUESTparams        = {7 1 0 4 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
     conf.repetitions      = conf.QUESTparams{2};
     rewardedLearning(conf, mode)
+
   otherwise
     disp('No test specified!')
 end

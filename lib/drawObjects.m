@@ -2,7 +2,7 @@ function draw = drawObjects(w, render, draw)
 %drawObjects draws objects in a draw struct object.
 %
 % SYNOPSIS: data = drawObjects(w, render, draw)
-% 
+%
 % NOTE: this function should not have access to conf. struct. Everything should
 % be prepared by genData() into the data.Trial() then into data.draw();
 %
@@ -55,13 +55,7 @@ if isempty(w) && isempty(render)
 end
 
 if isDemo
-    % initialize within this function
-    AssertOpenGL;
-    screens=Screen('Screens');
-    screenNumber=max(screens);
-    %[w, rect] = Screen('OpenWindow', screenNumber, 0,[], 32, 2);
-    [w, rect] = Screen('OpenWindow', screenNumber, 0*[1 1 1]);
-    Screen('BlendFunction', w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    [w, render] = initScreen(render, 0); %debug_on=0 so we are always using full screen geometry
     Screen('FillRect', w, 67*[1 1 1]);
 end
 
@@ -209,8 +203,8 @@ function XY = drawLine(w, render, line, cmd)
     end
 
     % each line has two columns, first is the starting point of the lineColors
-    % the second is the ending point of the line 
-    % For each of the two points, we need to specify the color 
+    % the second is the ending point of the line
+    % For each of the two points, we need to specify the color
     lineColors = reshape(repmat(line.color, 1, 2)', 3, []);
 
     %disp('Drawing lines...');

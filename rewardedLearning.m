@@ -159,35 +159,15 @@ end
     try
     % only use try for the Psychtoolbox part
 
-    AssertOpenGL; % Check if PTB-3 is properly installed on the system
     HideCursor;
     ListenChar(2);
 
-    Screen('Preference', 'VisualDebugLevel', 1); % do NOT show the welcome screen
-    if mode.debug_on | IsOctave
-        Screen('Preference','SkipSyncTests', 1);
-    else
-        Screen('Preference','SkipSyncTests', 0);
-    end
-    if mode.debug_on; Screen('Preference', 'Verbosity', 0);end
-
-    Screen('Preference', 'ConserveVRAM', 8);
-    InitializeMatlabOpenGL;
-
-    render.screens=Screen('screens');
-    render.screenNumber=max(render.screens);
-
-    if mode.debug_on
-        [w,render.wsize]=Screen('OpenWindow',render.screenNumber,conf.color.backgroundColor,[1,1,801,601],[]);
-    else
-        [w,render.wsize]=Screen('OpenWindow',render.screenNumber,conf.color.backgroundColor,[],32);
-    end
+    % used now; used during OpenScreen
+    render.backgroundColor = conf.color.backgroundColor;
+    [w, render] = initScreen([], render, mode.debug_on);
     set_test_gamma;
-    Screen('BlendFunction', w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  Screen('FillRect', w, 67*[1 1 1]);
 
-
-
-    render.ifi=Screen('GetFlipInterval', w);
     if render.ifi > conf.flpi + 0.0005 % allow 0.5ms error
         error('HardwareError:MonitorFlushRate',...
             'Monitor Flip Interval is too large. Please adjust monitor flush rate \n from system preferences, or adjust conf.flpi fron test.m file.');
@@ -203,16 +183,7 @@ end
     Screen('TextSize', w, 20); % ziti size
 
 
-    render.cx = render.wsize(3)/2; %center x
-    render.cy = render.wsize(4)/2; %center y
-    [render.screenWidthMm,render.screenHeightMm]=Screen('DisplaySize',o.screen);
-    render.screenRect=Screen('Rect',o.screen,1);
-    render.screenWidthPix=RectWidth(screenRect);
-    render.pixPerCm=render.screenWidthPix/(0.1*render.screenWidthMm);
-    render.resolution=Screen('Resolution',o.screen);
 
-    % NOT used by now; could be convenient when none of the conf are needed
-    render.backgroundColor = conf.color.backgroundColor;
 
 
     %% Instructions
