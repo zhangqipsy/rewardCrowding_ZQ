@@ -77,10 +77,12 @@ end
             genSequence = @genRewardSequence;
             genData = @genRewardData;
             recordResponse = @recordRewardResponse;
+            analyzeData = @analyzeRewardData;
         case {'CrowdingTask'}
             genSequence = @genCrowdingSequence;
             genData = @genCrowdingData;
             recordResponse = @recordCrowdingResponse;
+            analyzeData = @analyzeCrowdingData;
         otherwise
             error('Unknown task!');
     end
@@ -348,6 +350,7 @@ end
     disp('');
     Display('data/latest.mat saved successfully, use for debugging!');
     disp('');
+    data.stat = analyzeData(data);
     render.matFileName = ['data/',render.dataPrefix, data.Subinfo{1} , render.dataSuffix, tunnelSelection(mode.procedureChannel), datestr(now, 'yyyymmddTHHMMSS'), '.mat'];
     save(render.matFileName,'conf','flow','mode','data','render');
     wrkspc = load(render.matFileName);
@@ -369,6 +372,7 @@ catch
     disp('');
     Display('data/buggy.mat saved successfully, use for debugging!');
     disp('');
+    data.stat = analyzeData(data);
     render.matFileName = ['data/',render.dataPrefix, data.Subinfo{1} , render.dataSuffix, tunnelSelection(mode.procedureChannel), datestr(now, 'yyyymmddTHHMMSS'), 'buggy.mat'];
     save(render.matFileName);
     wrkspc = load(render.matFileName);
