@@ -1,4 +1,4 @@
-function [draw] = genRewardData(thisTrial, render, conf)
+function [draw, render] = genRewardData(thisTrial, render, conf)
 % Generates data.draw for the reward experiment stimuli
 %
 % SYNOPSIS: [draw] = genRewardData(thisTrial, render, conf)

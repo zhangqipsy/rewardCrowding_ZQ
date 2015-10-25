@@ -211,7 +211,7 @@ end
         % initialization
         [data.Trials(flow.nresp, :) flow.Q]= tunnelUpdate(mode.procedureChannel, conf, data.Trials(flow.nresp, :), flow.Q, data.Trials(:,2));
 
-        data.draw = genData(data.Trials(flow.nresp, :), render, conf);
+        [data.draw, render] = genData(data.Trials(flow.nresp, :), render, conf);
 
         % per trial initialization
         flow.response = 0;  % the current current response, just after the last response
