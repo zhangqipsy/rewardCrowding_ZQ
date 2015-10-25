@@ -50,6 +50,8 @@ metric = structfun(@(x) scale*round(tand(x)*conf.viewDist*render.pixPerCm), conf
 metric.scale = scale;
 conf.metric = metric;
 
+render.tPresented = NaN;
+
 draw.circle.coor = octalCoor(render.wsize, conf.metric.range_r, conf.nStims);
 draw.circle.color = reshape(cell2mat(conf.color.distractors(thisTrial(:, 16:16+conf.nStims-1))), 3, [])';
 draw.circle.r = repmat(conf.metric.cir_r, conf.nStims, 1);
