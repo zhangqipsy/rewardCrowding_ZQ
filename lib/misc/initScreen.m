@@ -27,10 +27,6 @@ function [w, render] = initScreen(render, debug_on)
     render.screens=Screen('screens');
     render.screenNumber=max(render.screens);
     screens=Screen('Screens');
-    screenNumber=max(screens);
-    %[w, rect] = Screen('OpenWindow', screenNumber, 0,[], 32, 2);
-    [w, rect] = Screen('OpenWindow', screenNumber, 0*[1 1 1]);
-    Screen('BlendFunction', w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     if debug_on
       [w,render.wsize]=Screen('OpenWindow',render.screenNumber,render.backgroundColor,[1,1,801,601],[]);
@@ -39,5 +35,6 @@ function [w, render] = initScreen(render, debug_on)
     end
     Screen('BlendFunction', w, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     render = getScreenGeom(w,render);
+    render.ifi = Screen('GetFlipInterval', w);
   end
 end

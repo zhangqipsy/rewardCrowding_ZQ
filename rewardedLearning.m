@@ -164,9 +164,9 @@ end
 
     % used now; used during OpenScreen
     render.backgroundColor = conf.color.backgroundColor;
-    [w, render] = initScreen([], render, mode.debug_on);
+    [w, render] = initScreen(render, mode.debug_on);
     set_test_gamma;
-  Screen('FillRect', w, 67*[1 1 1]);
+    Screen('FillRect', w, 67*[1 1 1]);
 
     if render.ifi > conf.flpi + 0.0005 % allow 0.5ms error
         error('HardwareError:MonitorFlushRate',...
