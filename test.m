@@ -21,15 +21,16 @@ switch(testWhat)
     [conf, mode] = loadDefaultConfs();
     render.backgroundColor = conf.color.backgroundColor;
     mode.exclusiveTargetFlankerColor_on = 1;
+    conf.deg.targetDist = [12];
     data.Trials = genCrowdingSequence(conf, mode);
     iTrial = 1;
     % we are going through the Constant tunnel here [default]
     [data.Trials(iTrial, :), Q] = tunnelUpdate(mode.procedureChannel, conf, data.Trials(iTrial, :), [], data.Trials(:,2));
     data.draw = genCrowdingData(data.Trials(iTrial, :), render, conf);
-    %save /scratch/buggy
-    %data.Trials(iTrial,:), data.draw.circle, data.draw.poly
+    data.Trials(iTrial,:), data.draw.circle, data.draw.poly
     data.draw1 = drawObjects([], [], data.draw);
     reset_gamma;
+    save buggy;
 
   case {'reward'}
     mode.debug_on = 0;      % smaller screen
