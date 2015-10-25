@@ -187,11 +187,6 @@ end
 
 
     %% Instructions
-    % FIXME: something wrong is here below
-    DrawFormattedText(w, 'Hi', 'center', 'center', conf.color.textcolor2);
-    Screen('Flip', w);
-    Display('Hi');
-
     DrawFormattedText(w, instrDB(render.task, mode.english_on), 'center', 'center', conf.color.textcolor);
     % FIXME: something wrong is here above
     Screen('Flip', w);
