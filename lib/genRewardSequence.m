@@ -85,6 +85,7 @@ nColumns = 28;
 [Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.targetOrientations)]);
 if mode.demo_on
     [Trialsequence, Trials] = genTrial(1, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.targetOrientations)]);
+end
 %	Column 4
 %	    fixDuration
 %	Column 5
@@ -93,7 +94,6 @@ if mode.demo_on
 %	    idxTargetColor
 Trials(:, [4 5 6 7]) = Trialsequence;
 Trials(:, 4) = Replace(Trials(:,4), 1:numel(conf.fixLevels), conf.fixLevels);
-end
 
 
 %	Column 8
