@@ -1,26 +1,26 @@
 function [data flow]= recordRewardResponse(flow, data, conf)
 % recordResponse records responses
 %
-% After a response has been collected, decide whether 
+% After a response has been collected, decide whether
 % this resource is a correct response. If:
 %   response is correct:
-%       then record all the data for the first 
+%       then record all the data for the first
 %       occurance of the current trialID.
 %       then continue doing the next trial with
 %       the next trialID
 %   reponse is incorrect:
-%       move this trial to the end of all trials 
+%       move this trial to the end of all trials
 %       for later data collection, labeling with
 %       previous trialID
 %
 %   If a trialID is already present in a trial,
-%   it means that trial was a moved trial for 
-%   data recollection. In this case, do not change 
+%   it means that trial was a moved trial for
+%   data recollection. In this case, do not change
 %   trialID, and keep using the old trialID.
 %
-%   During data analysis, all rows of data.Trials 
+%   During data analysis, all rows of data.Trials
 %   whose counterTillCorrect is larger than 1 could
-%   be ignoreѕ, since those are re-collected in a 
+%   be ignoreѕ, since those are re-collected in a
 %   later trial.
 %
 %
@@ -118,10 +118,10 @@ if data.Trials(flow.nresp, 3) == 0 || isnan(data.Trials(flow.nresp, 3))
     flow.isRecollect = 0;
     data.Trials(flow.nresp, 3) = flow.trialID; % represents the trials (condition); the same for re-collected ones
     flow.trialID = flow.trialID + 1;
-elseif data.Trials(flow.nresp, 3) > 0 
+elseif data.Trials(flow.nresp, 3) > 0
     % recollecting data, do not change the trialID
     flow.isRecollect = 1;
-elseif data.Trials(flow.nresp, 3) < 0 
+elseif data.Trials(flow.nresp, 3) < 0
     % negative trialID -- end of experiment
     flow.isRecollect = 0;
     flow.isquit = 1;
@@ -166,7 +166,7 @@ if ~flow.isCorrect
 end
 
 flow.nresp    = flow.nresp + 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
-Display([flow.nresp size(data.Trials, 1)])
+%Display([flow.nresp size(data.Trials, 1)])
 if flow.nresp > size(data.Trials, 1)
     % all the trials as well as scheduled trials finished collecting correct responses
     % end the experiment

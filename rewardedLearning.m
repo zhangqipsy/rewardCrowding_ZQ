@@ -334,7 +334,7 @@ end
         %if ~mode.once_on; flow.isquit = 1;warning('Preparation Finished! (No worries. This is no bug, buddy.)'); end
 
 
-        Display(flow.isquit)
+        %Display(flow.isquit)
         if flow.isquit
             % End of experiment
             break

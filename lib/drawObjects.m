@@ -208,6 +208,6 @@ function XY = drawLine(w, render, line, cmd)
     lineColors = reshape(repmat(line.color, 1, 2)', 3, []);
 
     %disp('Drawing lines...');
-    Display(line.width);
+    %Display(line.width);
     Screen('DrawLines', w, XY, line.width', lineColors,[], 1);
 end

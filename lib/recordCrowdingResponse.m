@@ -142,7 +142,7 @@ flow.Q{4}(whichBlockID) = flow.isCorrect;
 end
 
 flow.nresp    = flow.nresp + 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
-Display([flow.nresp size(data.Trials, 1)])
+%Display([flow.nresp size(data.Trials, 1)])
 
 if flow.nresp > size(data.Trials, 1) || data.Trials(flow.nresp, 3) < 0
     % all the trials as well as scheduled trials finished collecting correct responses
