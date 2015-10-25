@@ -74,7 +74,7 @@ mode.once_on            = 0;  % end of experiment after these many trials
 conf.adaptiveColumn = 7; % adaptive procedure column indicator
 conf.repetitions        =  1;           % repetition time of a condition
 conf.nUp1DownParams     = {conf.adaptiveColumn 40 } ;
-conf.QUESTparams        = {conf.adaptiveColumn conf.repititions 0 4 0.82 3.5 0.01 0.5}; % columnN,totalTrials,tGuess(log intensity),tGuessSd,pThreshold,beta,delta,gamma
+conf.QUESTparams        = {conf.adaptiveColumn conf.repetitions 0 4 0.82 3.5 0.01 0.5}; % columnN,totalTrials,tGuess(log intensity),tGuessSd,pThreshold,beta,delta,gamma
 % delta: when log intensity is infinite, the false alarm rate is still not zero! "finger mistakes"
 % gamma: when log intensity is zero, the hit rate. For 2AFC: .5, nAFC:1/n, yes-no: false alarm rate.
 
@@ -169,7 +169,7 @@ deg.bar_r2     = 0.08;  % width (diameter) of the bar(deg)0.08
 deg.cir_r       = 2.3/2;  % deg of circle (deg)
 deg.fix_r       = 0.5; % long arm radius of fixation cross (deg)
 deg.fix_r2    = 0.08; % short arm radius of fixation cross (deg)
-deg.crossCoor = 10;
+deg.crossCoor = 9;
 deg.targetDist = [2 4 8];
 deg.flankerDist = deg.range_r;
 deg.circle_width = 0.12;

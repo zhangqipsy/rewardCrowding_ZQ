@@ -9,7 +9,7 @@ function [draw] = genCrowdingData(thisTrial, render, conf)
 %
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
-% on Microsoft Windows 8.1 企业�?Version 6.3 (Build 9600)
+% on Microsoft Windows 8.1 浼佷笟鐗?Version 6.3 (Build 9600)
 %
 % Author: Hormet, 2015-08-31
 % UPDATED: 2015-08-31 16:04:17
@@ -57,30 +57,58 @@ if ~isfield(render, 'pixPerCm')
 % we draw the real object, but we ONLY draw after we have generated the data to draw
 [w, render] = initScreen(render, 0); %debug_on=0 so we are always using full screen geometry
 end
+%save -7 check.mat
+%load check.mat
 metric = structfun(@(x) scale*round(tand(x)*conf.viewDist*render.pixPerCm), conf.deg, 'UniformOutput', false);
 
 %metric = structfun(@(x) scale*round(DegreesToRetinalMM(x, conf.viewDist)/conf.cmPerPix), conf.deg, 'UniformOutput', false);
 metric.scale = scale;
 conf.metric = metric;
 
-% also transform the deg from the Trials -> pixels
-thisTrial(9) = scale*round(DegreesToRetinalMM(thisTrial(9), conf.viewDist)/conf.cmPerPix);
-
-% flankers should not overlap with target
-% one radius for the flanker, another for the target
-if conf.metric.range_r(thisTrial(7)) < 2*conf.metric.cir_r
-    conf.metric.range_r(thisTrial(7)) = 2*conf.metric.cir_r;
-elseif conf.metric.range_r(thisTrial(7))>render.cy-conf.metric.cir_r
-    conf.metric.range_r(thisTrial(7)) = render.cy-conf.metric.cir_r;
+% convert idx values to deg values
+possibleAdaptive = [5 7];
+fromConf = possibleAdaptive(~ismember(possibleAdaptive, conf.adaptiveColumn));
+for lookupFromConf=fromConf
+    if lookupFromConf == possibleAdaptive(1) % 5
+        thisTrial(lookupFromConf) = conf.deg.targetDist(thisTrial(lookupFromConf));
+    elseif lookupFromConf == possibleAdaptive(2) % 7
+        thisTrial(lookupFromConf) = conf.deg.range_r(thisTrial(lookupFromConf));
+    end
 end
 
 
+% also transform the deg from the Trials -> pixels
+columnsDeg2Pix = [possibleAdaptive 9];
+thisTrial(columnsDeg2Pix) = scale*round(tand(thisTrial(columnsDeg2Pix))*conf.viewDist*render.pixPerCm);
+
+% flankers should not overlap with target
+% one radius for the flanker, another for the target
+if thisTrial(7) < 2*conf.metric.cir_r
+       thisTrial(7) = 2*conf.metric.cir_r;
+   elseif thisTrial(7) > render.cy - conf.metric.cir_r
+    % keep the flankers within screen (vertical)
+       thisTrial(7) = render.cy - conf.metric.cir_r;
+end
+
+if thisTrial(5) > render.cx + thisTrial(9) - conf.metric.cir_r
+    % keep the target (and therefore flankers) within screen (horizontal)
+       thisTrial(5) = render.cx + thisTrial(9) - conf.metric.cir_r;
+end
+
+
+
+% NOT used for now
+render.screenHeightDeg = 2*atand(0.1*render.screenHeightMm/conf.viewDist);
+render.screenWidthDeg = 2*atand(0.1*render.screenWidthMm/conf.viewDist);
+
+
+% start the plotting data generation
 draw = initializeDraw();
 
 % this is target
 if isinf(thisTrial(16))
     % this is circle
-    circle.coor =  [render.cx-thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy];
+    circle.coor =  [render.cx-thisTrial(9)+thisTrial(5) render.cy];
     circle.color =  conf.color.targets{thisTrial(6)};
     circle.r =  conf.metric.cir_r;
     circle.width =  conf.metric.circle_width;
@@ -90,7 +118,7 @@ if isinf(thisTrial(16))
 else
     if isfinite(thisTrial(16))
     % poly
-    polygon.coor =  [render.cx-thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy];
+    polygon.coor =  [render.cx-thisTrial(9)+thisTrial(5) render.cy];
     polygon.color =  conf.color.targets{thisTrial(6)};
     polygon.points =  octalCoor(2*[0 0 polygon.coor], conf.metric.cir_r, thisTrial(16));
     polygon.width =  conf.metric.circle_width;
@@ -104,7 +132,7 @@ end % circle or poly
 for iFlanker = 1:conf.nFlankers
     if isinf(thisTrial(17))
         % this is circle
-        circle.coor =  [render.cx-thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+conf.metric.range_r(thisTrial(7))*sin(conf.flankerOrientations(iFlanker))];
+        circle.coor =  [render.cx-thisTrial(9)+thisTrial(5) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))];
         circle.color =  conf.color.distractors{thisTrial(8)};
         circle.r =  conf.metric.cir_r;
         circle.width =  conf.metric.circle_width;
@@ -114,7 +142,7 @@ for iFlanker = 1:conf.nFlankers
     else
         if isfinite(thisTrial(17))
         % poly
-        polygon.coor =  [render.cx-thisTrial(9)+conf.metric.targetDist(thisTrial(5)) render.cy+conf.metric.range_r(thisTrial(7))*sin(conf.flankerOrientations(iFlanker))];
+        polygon.coor =  [render.cx-thisTrial(9)+thisTrial(5) render.cy+thisTrial(7)*sin(conf.flankerOrientations(iFlanker))];
         polygon.color =  conf.color.distractors{thisTrial(8)};
         polygon.points =  octalCoor(2*[0 0 polygon.coor], conf.metric.cir_r, thisTrial(17));
         polygon.width =  conf.metric.circle_width;

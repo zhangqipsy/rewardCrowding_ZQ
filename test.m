@@ -21,7 +21,8 @@ switch(testWhat)
     [conf, mode] = loadDefaultConfs();
     render.backgroundColor = conf.color.backgroundColor;
     mode.exclusiveTargetFlankerColor_on = 1;
-    conf.deg.targetDist = [12];
+    conf.deg.targetDist = [60];
+    conf.adaptiveColumn = 7; % 5: targetDist, 7: flankerDist
     data.Trials = genCrowdingSequence(conf, mode);
     iTrial = 1;
     % we are going through the Constant tunnel here [default]
@@ -56,11 +57,11 @@ switch(testWhat)
     conf.Constantparams     = [7 5]; % the column indicators for seperate QUEST sequences (5,6 are distance, color for target)
     conf.targetShapes = [Inf 8];
     conf.distractorShapes = [Inf]; % Inf is circle
-    conf.adaptiveColumn = 7;
-    conf.repetition = 1;
+    conf.adaptiveColumn = 7; % 5: targetDist, 7: flankerDist
+    conf.repetitions = 1;
     %mode.procedureChannel = 'constant'; % experiment methods;
     mode.procedureChannel = 'QUEST'; % experiment methods;
-    conf.QUESTparams        = {conf.adaptiveColumn conf.repititions 0 4 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
+    conf.QUESTparams        = {conf.adaptiveColumn conf.repetitions 0 4 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
     rewardedLearning(conf, mode)
 
   otherwise
