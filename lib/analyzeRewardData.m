@@ -18,14 +18,16 @@ stat.accLow =  mean(stat.Trials(stat.Trials(:,columnCond1) ==0,columnCond2));% a
 %                 10-high reward incorrec 11-high reward correct
 
 stat.Result = [stat.meansd(4,1),stat.meansd(2,1),stat.meansd(4,2),stat.meansd(2,2)];% only correct trials
-                 
-subplot(1,2,1);
+subplot(2,2,1);
+plot(stat.Trials(stat.Trials(:,columnCond1) ==0 & stat.Trials(:,columnCond2) ==1,columnTest));
+subplot(2,2,2);
+plot(stat.Trials(stat.Trials(:,columnCond1) ==1 & stat.Trials(:,columnCond2) ==1,columnTest));
+subplot(2,2,3);
 boxplot( stat.Trials(:, columnTest), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], 'labels',{'low-incorrect', 'low-correct', 'high-incorrect', 'high-correct'});
 hold on;
 plot(stat.meansd(:,1),'d');
 hold off;
-subplot(1,2,2)
+subplot(2,2,4)
 alpha = 0.05;
 [stat.M,stat.CI,stat.N,stat.G] = grpstats(stat.Trials(stat.Trials(:,columnCond2) ==1,11),stat.Trials(stat.Trials(:,columnCond2) ==1,9),alpha);
-
 end

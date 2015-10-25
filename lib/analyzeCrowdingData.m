@@ -1,3 +1,4 @@
-function data = analyzeCrowdingData(data)
+function stat = analyzeCrowdingData(data)
+
 
 end
