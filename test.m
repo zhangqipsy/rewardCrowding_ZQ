@@ -21,7 +21,8 @@ switch(testWhat)
     [conf, mode] = loadDefaultConfs();
     render.backgroundColor = conf.color.backgroundColor;
     mode.exclusiveTargetFlankerColor_on = 1;
-    conf.deg.targetDist = [60];
+    conf.deg.targetDist = [6];
+    conf.deg.range_r = [9];
     conf.adaptiveColumn = 7; % 5: targetDist, 7: flankerDist
     data.Trials = genCrowdingSequence(conf, mode);
     iTrial = 1;
@@ -52,11 +53,11 @@ switch(testWhat)
     fromLab.red = [222  52  70];
     fromLab.green = [0   138  33];
     conf.color.distractors = {fromLab.red ,fromLab.green};
-    conf.deg.targetDist = [8 30];
-    conf.deg.range_r = [4 8];
     conf.Constantparams     = [7 5]; % the column indicators for seperate QUEST sequences (5,6 are distance, color for target)
     conf.targetShapes = [Inf 8];
     conf.distractorShapes = [Inf]; % Inf is circle
+    conf.deg.targetDist = [8 16];
+    conf.deg.range_r = [4 8];
     conf.adaptiveColumn = 7; % 5: targetDist, 7: flankerDist
     conf.repetitions = 1;
     %mode.procedureChannel = 'constant'; % experiment methods;
