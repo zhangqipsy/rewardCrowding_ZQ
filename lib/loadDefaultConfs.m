@@ -165,10 +165,10 @@ conf.color = fromLab;
 % Parameter in degree
 deg.range_r     = 5;   % radius of imaginary circle(deg)
 deg.bar_r       = 1.2;  % length (diameter) of the bar(deg)0.76
-deg.bar_r2     = 0.08;  % width (diameter) of the bar(deg)0.08
+deg.bar_r2     = 0.06;  % width (diameter) of the bar(deg)0.08
 deg.cir_r       = 2.3/2;  % deg of circle (deg)
 deg.fix_r       = 0.5; % long arm radius of fixation cross (deg)
-deg.fix_r2    = 0.08; % short arm radius of fixation cross (deg)
+deg.fix_r2    = 0.06; % short arm radius of fixation cross (deg)
 deg.crossCoor = 9;
 deg.targetDist = [2 4 8];
 deg.flankerDist = deg.range_r;

@@ -1,11 +1,15 @@
 function stat = analyzeRewardData(data)
 
+
+
 stat.Trials = data.Trials(data.Trials(:,11)>0,:);
 
 stat.acc =max(stat.Trials(:,3))/size(stat.Trials,1);
 
 stat.meanAccHigh =  mean(stat.Trials(stat.Trials(:,9) ==1,13));
 stat.meanAccLow =  mean(stat.Trials(stat.Trials(:,9) ==0,13));
+
+[a b]=grpstats( stat.Trials(:, 11), [stat.Trials(:,9),  stat.Trials(:,13)], {'mean', 'std'})
 
 stat.highRewardC = stat.Trials(stat.Trials(:,9) ==1 & stat.Trials(:,13) ==1,:);
 stat.lowRewardC = stat.Trials(stat.Trials(:,9) ==0 & stat.Trials(:,13) ==1,:);
