@@ -133,5 +133,4 @@ draw = insertObject(draw, 'fix', fix);
 
 % output data (add to data later since `data` is not in the input augument)
 % data.draw = draw;
-save a
 end

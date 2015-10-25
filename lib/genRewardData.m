@@ -1,4 +1,4 @@
-function [draw] = genRewardData(thisTrial, render, conf)
+R>
 % Generates data.draw for the reward experiment stimuli
 %
 % SYNOPSIS: [draw] = genRewardData(thisTrial, render, conf)
@@ -72,7 +72,6 @@ draw.fix.color = conf.color.fix;
 
 
 % replace one distractor with target
-save a
 draw.circle.color(thisTrial(5),:) = conf.color.targets{thisTrial(6)};
 draw.line.orientation(thisTrial(5)) = conf.targetOrientations(thisTrial(7));
 
