@@ -82,19 +82,9 @@ function Trials = genRewardSequence(conf, mode)
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 nColumns = 28;
-if conf.repetitions == 0
-    Trials = NaN(conf.totalTrials, nColumns);
-    [Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(conf.totalTrials, 1, conf.fixLevels, conf.nStims, numel(conf.color.targets), conf.targetOrientations);
-if mode.demo_on
- minTrials = prod([numel(conf.fixLevels), conf.nStims, conf.nTargets, numel(conf.targetOrientations)]);
-    [Trials(:,4) Trials(:,5) Trials(:,6) Trials(:,7)] = BalanceTrials(minTrials, 1, conf.fixLevels, conf.nStims, numel(conf.color.targets), conf.targetOrientations);
-end
-
-else
 [Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.targetOrientations)]);
 if mode.demo_on
     [Trialsequence, Trials] = genTrial(1, nColumns, [numel(conf.fixLevels), conf.nStims, numel(conf.color.targets), numel(conf.targetOrientations)]);
-end
 %	Column 4
 %	    fixDuration
 %	Column 5
