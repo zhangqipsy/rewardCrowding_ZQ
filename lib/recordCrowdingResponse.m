@@ -137,7 +137,7 @@ disp(flow.Q)
 if isempty(flow.Q); isAdaptive = 0;else isAdaptive = 1;end
 if isAdaptive
 whichBlockID = flow.Q{1}==data.Trials(flow.nresp,2);
-flow.Q{3}(whichBlockID) = render.tPresented;
+flow.Q{3}(whichBlockID) = flow.tPresented;
 flow.Q{4}(whichBlockID) = flow.isCorrect;
 end
 
