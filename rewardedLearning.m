@@ -347,7 +347,7 @@ end
     disp('');
     Display('data/latest.mat saved successfully, use for debugging!');
     disp('');
-    render.matFileName = ['data/',render.dataPrefix, data.Subinfo{1} , render.dataSuffix, date, '.mat'];
+    render.matFileName = ['data/',render.dataPrefix, data.Subinfo{1} , render.dataSuffix, tunnelSelection(mode.procedureChannel), datestr(now, 'yyyymmddTHHMMSS'), '.mat'];
     save(render.matFileName,'conf','flow','mode','data','render');
     wrkspc = load(render.matFileName);
     Display(render.matFileName);
@@ -368,8 +368,9 @@ catch
     disp('');
     Display('data/buggy.mat saved successfully, use for debugging!');
     disp('');
-    save(['data/', render.dataPrefix, data.Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
-    wrkspc = load(['data/', render.dataPrefix, data.Subinfo{1}, render.dataSuffix, date, 'buggy.mat']);
+    render.matFileName = ['data/',render.dataPrefix, data.Subinfo{1} , render.dataSuffix, tunnelSelection(mode.procedureChannel), datestr(now, 'yyyymmddTHHMMSS'), 'buggy.mat'];
+    save(render.matFileName);
+    wrkspc = load(render.matFileName);
     %     disp(['';'';'data/buggy saved successfully, use for debugging!']);
     RestoreCluts;
     Screen('CloseAll');
