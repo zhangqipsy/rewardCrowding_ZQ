@@ -1,4 +1,4 @@
-function [draw] = genCrowdingData(thisTrial, render, conf)
+function [draw, render] = genCrowdingData(thisTrial, render, conf)
 % Generates data.draw for the crowding experiment stimuli
 %
 % SYNOPSIS: [draw] = genRewardData(thisTrial, render, conf)
@@ -95,6 +95,7 @@ if thisTrial(5) > render.cx + thisTrial(9) - conf.metric.cir_r
        thisTrial(5) = render.cx + thisTrial(9) - conf.metric.cir_r;
 end
 
+render.tPresented = log10(atand(thisTrial(conf.adaptiveColumn)/conf.viewDist));
 
 
 % NOT used for now

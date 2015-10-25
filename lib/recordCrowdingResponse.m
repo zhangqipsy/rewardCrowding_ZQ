@@ -136,7 +136,9 @@ data.Trials(flow.nresp, 13) = flow.isCorrect;
 disp(flow.Q)
 if isempty(flow.Q); isAdaptive = 0;else isAdaptive = 1;end
 if isAdaptive
-flow.Q{4}(flow.Q{1}==data.Trials(flow.nresp,2)) = flow.isCorrect;
+whichBlockID = flow.Q{1}==data.Trials(flow.nresp,2);
+flow.Q{3}(whichBlockID) = render.tPresented;
+flow.Q{4}(whichBlockID) = flow.isCorrect;
 end
 
 flow.nresp    = flow.nresp + 1;  % the total number of response recorded flow.restcount= 0;  % the number of trials from last rest
