@@ -16,18 +16,24 @@ stat.accLow =  mean(stat.Trials(stat.Trials(:,columnCond1) ==0,columnCond2));% a
 [stat.meansd(:,1) stat.meansd(:,2)] = grpstats( stat.Trials(:, columnTest), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], {'mean', 'std'});
 % the sequence is 00-low reward incorrect 01-low reward correct 
 %                 10-high reward incorrec 11-high reward correct
-
+f =figure('visible','off');
 stat.Result = [stat.meansd(4,1),stat.meansd(2,1),stat.meansd(4,2),stat.meansd(2,2)];% only correct trials
 subplot(2,2,1);
 plot(stat.Trials(stat.Trials(:,columnCond1) ==0 & stat.Trials(:,columnCond2) ==1,columnTest));
+title('low reward');
 subplot(2,2,2);
 plot(stat.Trials(stat.Trials(:,columnCond1) ==1 & stat.Trials(:,columnCond2) ==1,columnTest));
+title('high reward');
 subplot(2,2,3);
-boxplot( stat.Trials(:, columnTest), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], 'labels',{'low-incorrect', 'low-correct', 'high-incorrect', 'high-correct'});
+boxplot( stat.Trials(:, columnTest), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], 'labels',{'l-inco', 'l-co', 'h-inco', 'h-co'});
 hold on;
 plot(stat.meansd(:,1),'d');
 hold off;
 subplot(2,2,4)
 alpha = 0.05;
 [stat.M,stat.CI,stat.N,stat.G] = grpstats(stat.Trials(stat.Trials(:,columnCond2) ==1,11),stat.Trials(stat.Trials(:,columnCond2) ==1,9),alpha);
+title('means and confidence intervals')
+stat.plotname = ['myPlot',data.Subinfo{4},datestr(now, 'yyyymmddTHHMMSS'),'.png'];
+print('-dpng','-r300', stat.plotname)
+
 end
