@@ -1,12 +1,12 @@
-function wrkspc = expReward(isDemo, once_on)
+function wrkspc = expReward(isDemo, once_on, showLeft)
 
   % default values if no input is given
   if nargin < 1
     isDemo = 0;
     once_on = 0;
   end
-
-
+    conf.showLeftTrialsEvery = showLeft;
+    mode.feedback_on = 1-isDemo;
     mode.debug_on = 0;      % smaller screen
     mode.inspectDesign_on = 0;
     conf.repetitions = 14;    % repetition of each condition (if set to 0, uses totalTrials below instead)

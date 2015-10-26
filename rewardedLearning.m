@@ -372,7 +372,6 @@ catch
     disp('');
     Display('data/buggy.mat saved successfully, use for debugging!');
     disp('');
-    data.stat = analyzeData(data);
     render.matFileName = ['data/',render.dataPrefix, data.Subinfo{1} , render.dataSuffix, tunnelSelection(mode.procedureChannel), datestr(now, 'yyyymmddTHHMMSS'), 'buggy.mat'];
     save(render.matFileName);
     wrkspc = load(render.matFileName);
