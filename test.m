@@ -1,4 +1,4 @@
-function status = test(testWhat)
+function status = test(testWhat, mode, conf)
 startup;
 if nargin == 0
   testWhat = 'crowding';
