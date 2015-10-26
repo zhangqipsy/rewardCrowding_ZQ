@@ -16,13 +16,14 @@ function stat = analyzeCrowdingData(data)
     stat.plotname = ['myPlot',data.Subinfo{4},datestr(now, 'yyyymmddTHHMMSS'),'change','.png'];
     print('-dpng','-r300', stat.plotname)
     
+    
     figure('visible','off');
-    h=bar(data.stat.result(:,2),'c');
+    h=bar(stat.result(:,2),'c');
     hold on
-    h = errorbar(data.stat.result(:,2),data.stat.result(:,3), 'ko');
+    h = errorbar(stat.result(:,2),stat.result(:,3), 'ko');
     xlabel('t')
     ylabel('deg')
-    set(gca,'XtickLabel',data.stat.result(:,1))
+    set(gca,'XtickLabel',stat.result(:,1))
     hold off
     stat.plotname = ['myPlot',data.Subinfo{4},datestr(now, 'yyyymmddTHHMMSS'),'_t','.png'];
     print('-dpng','-r300', stat.plotname)
