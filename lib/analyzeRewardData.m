@@ -16,8 +16,9 @@ stat.accLow =  mean(stat.Trials(stat.Trials(:,columnCond1) ==0,columnCond2));% a
 [stat.meansd(:,1) stat.meansd(:,2)] = grpstats( stat.Trials(:, columnTest), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], {'mean', 'std'});
 % the sequence is 00-low reward incorrect 01-low reward correct 
 %                 10-high reward incorrec 11-high reward correct
-f =figure('visible','off');
 stat.Result = [stat.meansd(4,1),stat.meansd(2,1),stat.meansd(4,2),stat.meansd(2,2)];% only correct trials
+
+f =figure('visible','off');
 subplot(2,2,1);
 plot(stat.Trials(stat.Trials(:,columnCond1) ==0 & stat.Trials(:,columnCond2) ==1,columnTest));
 title('low reward');
