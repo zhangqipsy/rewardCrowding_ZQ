@@ -33,6 +33,7 @@ subplot(2,2,4)
 alpha = 0.05;
 [stat.M,stat.CI,stat.N,stat.G] = grpstats(stat.Trials(stat.Trials(:,columnCond2) ==1,11),stat.Trials(stat.Trials(:,columnCond2) ==1,9),alpha);
 title('means and confidence intervals')
+set(gcf,'Position',get(0,'Screensize'))% enlarge image to full screen
 stat.plotname = ['myPlot',data.Subinfo{4},datestr(now, 'yyyymmddTHHMMSS'),'.png'];
 print('-dpng','-r300', stat.plotname)
 
