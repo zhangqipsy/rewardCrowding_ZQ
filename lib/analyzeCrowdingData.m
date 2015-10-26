@@ -47,13 +47,13 @@ function stat = analyzeCrowdingData(data)
     [stat.meansdRt(:,1) stat.meansdRt(:,2)] = grpstats( stat.Trials(:, columnTest2), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], {'mean', 'std'});
     figure('visible','off');
     subplot(1,2,1)
-    boxplot( stat.Trials(:, columnTest1), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], 'labels',{'6-c1', '6-c2', '8-c1', '8-c2','10-c1', '10-c2','12-c1', '12-c2'});
+    boxplot( stat.Trials(:, columnTest1), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], 'labels',{'11c1', '21c1', '12c1', '22c1','11c2', '21c2','12c2', '22c2'});
     title('acc');
     hold on;
     plot(stat.meansdAcc(:,1),'d');
     hold off;
     subplot(1,2,2)
-    boxplot( stat.Trials(:, columnTest2), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], 'labels',{'6-c1', '6-c2', '8-c1', '8-c2','10-c1', '10-c2','12-c1', '12-c2'});
+    boxplot( stat.Trials(:, columnTest2), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], 'labels',{'11c1', '21c1', '12c1', '22c1','11c2', '21c2','12c2', '22c2'});
     title('RT');
     hold on;
     plot(stat.meansdRt(:,1),'d');
