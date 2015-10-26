@@ -19,8 +19,6 @@ function stat = analyzeCrowdingData(data)
     columnTest2 = 11; % reaction time
     columnCond1 = 2; % conditions
     columnCond2 = 6; % color
-    stat.label1 = 'distants';
-    stat.label2 = 'color';
 
     stat.allTrialNum = size(data.Trials,1);
     stat.Trials = data.Trials(data.Trials(:,columnTest2)>0,:);% no NaN
@@ -36,11 +34,13 @@ function stat = analyzeCrowdingData(data)
     figure('visible','off');
     subplot(1,2,1)
     boxplot( stat.Trials(:, columnTest1), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], 'labels',{'6-c1', '6-c2', '8-c1', '8-c2','10-c1', '10-c2','12-c1', '12-c2'});
+    title('acc');
     hold on;
     plot(stat.meansdAcc(:,1),'d');
     hold off;
     subplot(1,2,2)
     boxplot( stat.Trials(:, columnTest2), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], 'labels',{'6-c1', '6-c2', '8-c1', '8-c2','10-c1', '10-c2','12-c1', '12-c2'});
+    title('RT');
     hold on;
     plot(stat.meansdRt(:,1),'d');
     hold off;
