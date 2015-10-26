@@ -1,8 +1,21 @@
 function stat = analyzeCrowdingData(data)
 
-  if isfield(data, 't') && ~isempty(data.t)
-  %if data.exist % Quest
+  if isfield(data, 't') && ~isempty(data.t)% Quest
     stat.result = data.t;
+    stat.Trials = data.Trials;
+    columnTest = 7;
+    columnCond1 = 2; % conditions
+    stat.condiNum1 = numel(unique(stat.Trials(:,columnCond1)));
+    stat.condilabel = unique(stat.Trials(:,columnCond1));
+    figure('visible','off');
+    for i = 1:stat.condiNum1
+        subplot(2,stat.condiNum1/2,i)
+        plot(stat.Trials(stat.Trials(:,columnCond1) ==stat.condilabel(i),columnTest));
+        title(stat.condilabel(i))
+    end
+    stat.plotname = ['myPlot',data.Subinfo{4},datestr(now, 'yyyymmddTHHMMSS'),'change','.png'];
+    print('-dpng','-r300', stat.plotname)
+    
     figure('visible','off');
     h=bar(data.stat.result(:,2),'c');
     hold on
@@ -11,7 +24,7 @@ function stat = analyzeCrowdingData(data)
     ylabel('deg')
     set(gca,'XtickLabel',data.stat.result(:,1))
     hold off
-    stat.plotname = ['myPlot',data.Subinfo{4},datestr(now, 'yyyymmddTHHMMSS'),'.png'];
+    stat.plotname = ['myPlot',data.Subinfo{4},datestr(now, 'yyyymmddTHHMMSS'),'_t','.png'];
     print('-dpng','-r300', stat.plotname)
 
   else % constant
