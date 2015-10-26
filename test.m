@@ -1,4 +1,4 @@
-function status = test(testWhat, mode, conf)
+function status = test(testWhat, isDemo, whichProcedure)
 startup;
 if nargin == 0
   testWhat = 'crowding';
