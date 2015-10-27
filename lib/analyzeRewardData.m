@@ -1,7 +1,7 @@
 function stat = analyzeRewardData(data)
 
 columnTest = 11; % reaction time
-columnCond1 = 9; % 1 for high reward 0 for low reward
+columnCond1 = 9; % recation 1 for high reward 0 for low reward
 columnCond2 = 13; % 1 for correct 0 for incorrect
 
 stat.allTrialNum = size(data.Trials,1);
@@ -20,20 +20,25 @@ stat.Result = [stat.meansd(4,1),stat.meansd(2,1),stat.meansd(4,2),stat.meansd(2,
 
 f =figure('visible','off');
 subplot(2,2,1);
-plot(stat.Trials(stat.Trials(:,columnCond1) ==0 & stat.Trials(:,columnCond2) ==1,columnTest));
-title('low reward');
+plot(stat.Trials(stat.Trials(:,columnCond1) ==0 & stat.Trials(:,columnCond2) ==1,columnTest),'g');
+hold on;
+plot(stat.Trials(stat.Trials(:,columnCond1) ==1 & stat.Trials(:,columnCond2) ==1,columnTest),'r');
+title('RT for low reward & high reward');
+legend('low', 'high');
+hold off;
 subplot(2,2,2);
-plot(stat.Trials(stat.Trials(:,columnCond1) ==1 & stat.Trials(:,columnCond2) ==1,columnTest));
-title('high reward');
+bar([stat.accLow stat.accHigh],'c');
+title('ACC for low reward & high reward');
 subplot(2,2,3);
 boxplot( stat.Trials(:, columnTest), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], 'labels',{'l-inco', 'l-co', 'h-inco', 'h-co'});
 hold on;
 plot(stat.meansd(:,1),'d');
+title('RT for L&H Incorrect/correct')
 hold off;
 subplot(2,2,4)
 alpha = 0.05;
 [stat.M,stat.CI,stat.N,stat.G] = grpstats(stat.Trials(stat.Trials(:,columnCond2) ==1,11),stat.Trials(stat.Trials(:,columnCond2) ==1,9),alpha);
-title('means and confidence intervals')
+title('RT means and confidence intervals L/H')
 set(gcf,'Position',get(0,'Screensize'))% enlarge image to full screen
 stat.plotname = ['myPlot',data.Subinfo{4},datestr(now, 'yyyymmddTHHMMSS'),'.png'];
 print('-dpng','-r300', stat.plotname)
