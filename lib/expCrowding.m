@@ -8,6 +8,7 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
   if nargin < 3
     procedureChannel = 'QUEST';
   end
+    conf.showLeftTrialsEvery = 10000;
     mode.demo_on = isDemo;        % sets totalTrials to the lowest mimimum if repetitions is 0 (also no feedback)
     mode.once_on = once_on; % overrises all trial numbers; number of total trials (0 to cancel this effect)    
     mode.procedureChannel = procedureChannel; % experiment methods;
@@ -18,7 +19,7 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
     conf.fixLevels = [.3];
     %conf.color.targets = [conf.color.red, conf.color.green]; % this is default
     mode.exclusiveTargetFlankerColor_on = 1;
-    conf.deg.cir_r       = 0.55/2;
+    conf.deg.cir_r       = 1/2;
     fromLab.red = [222  52  70];
     fromLab.green = [0   138  33];
     conf.color.distractors = {fromLab.red ,fromLab.green};
