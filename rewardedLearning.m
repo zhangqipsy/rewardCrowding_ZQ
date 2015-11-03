@@ -203,6 +203,52 @@ end
     flow.trialID = 1;
     flow.Q = {}; % blockID type, Quest Q, tTestLast, measureLast
     %% Here begins our trial
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%眼动相关
+%commandwindow;
+mainfilename = [data.Subinfo{1} , render.dataSuffix, tunnelSelection(mode.procedureChannel), datestr(now, 'yyyymmddTHHMMSS')];
+dummymode=0;
+showboxes=1;
+el=EyelinkInitDefaults(wnd);
+if ~EyelinkInit(dummymode, 1)
+    fprintf('Eyelink Init aborted.\n');
+    cd(CurrDir);
+    abort(CurrDir);
+end
+Eyelink('Command', 'set_idle_mode');
+Eyelink('Command', 'clear_screen 0')
+ Eyelink('command','draw_box %d %d %d %d %d',rect(3)/2-34, rect(4)/2-34, rect(3)/2+34, rect(4)/2+34,15);
+ Eyelink('command','draw_cross %d %d %d',rect(3)/2,rect(4)/2,8);
+[v vs]=Eyelink('GetTrackerVersion');
+fprintf('Running experiment on a ''%s'' tracker.\n', vs );
+% make sure that we get event data from the Eyelink
+% Eyelink('Command', 'link_sample_data = LEFT,RIGHT,GAZE,AREA');
+Eyelink('command', 'link_event_data = GAZE,GAZERES,HREF,AREA,VELOCITY');
+Eyelink('command', 'link_event_filter = LEFT,RIGHT,FIXATION,BLINK,SACCADE,BUTTON');
+ 
+% open file to record data to
+edfFile=[mainfilename '.edf'];
+Eyelink('Openfile', edfFile);       
+% STEP 4
+% Calibrate the eye tracker
+EyelinkDoTrackerSetup(el);
+ 
+% STEP 6
+% do a final check of calibration using driftcorrection
+success=EyelinkDoDriftCorrection(el);
+if success~=1
+    cd(CurrDir);
+    abort(CurrDir);
+end
+Screen('Flip',  wnd, [], 1); % don't erase buffer
+eye_used = Eyelink('EyeAvailable'); % get eye that's tracked
+if eye_used == el.BINOCULAR; % if both eyes are tracked
+    eye_used = el.LEFT_EYE; % use left eye
+end
+%开始记录
+Eyelink('startrecording'); 
+Eyelink('Message','Trial %d Begin', trl_num);
+  
+    
     while true
         % only ends when ALL trials have collected correct response
         % see recordResponse()
@@ -348,6 +394,26 @@ end
         end;
 
     end % while true
+%眼动结束
+% End of Experiment; close the file first, close graphics window, close data file and shut down tracker
+    Eyelink('Command', 'set_idle_mode');
+    WaitSecs(0.5);
+    Eyelink('CloseFile');
+    
+    % download data file
+    try
+        fprintf('Receiving data file ''%s''\n', edfFile );
+        status=Eyelink('ReceiveFile');
+        if status > 0
+            fprintf('ReceiveFile status %d\n', status);%status 为文件大小，这句将返回文件大小，0表示传输过程被取消，负值表示错误代码
+       end
+        if 2==exist(edfFile, 'file')
+            fprintf('Data file ''%s'' can be found in ''%s''\n', edfFile, pwd );
+        end
+    catch 
+        fprintf('Problem receiving data file ''%s''\n', edfFile );
+    end
+ end
 
 
 
