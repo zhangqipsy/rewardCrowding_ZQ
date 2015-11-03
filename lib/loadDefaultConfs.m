@@ -66,7 +66,7 @@ mode.debug_on           = 0;  % default is 0; 1 is not to use full screen, and s
 mode.recordImage        = 0;  % make screen capture and save as images; used for post-hoc demo
 mode.serialInput_on     = 0;  % serial input devices
 mode.once_on            = 0;  % end of experiment after these many trials
-
+mode.persistentFix      = 0;
 
 
 

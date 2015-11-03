@@ -9,6 +9,7 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
     procedureChannel = 'QUEST';
   end
     conf.showLeftTrialsEvery = 10000;
+    mode.persistentFix  = 1;
     mode.demo_on = isDemo;        % sets totalTrials to the lowest mimimum if repetitions is 0 (also no feedback)
     mode.once_on = once_on; % overrises all trial numbers; number of total trials (0 to cancel this effect)    
     mode.procedureChannel = procedureChannel; % experiment methods;
@@ -27,7 +28,8 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
     conf.distractorShapes = [Inf]; % Inf is circle
     conf.deg.targetDist = [9 12];
     conf.deg.range_r = [4 8]; %column7 targetflankerDist
-    conf.adaptiveColumn = 7; % 5: targetDist, 7: flankerDist
+    %conf.adaptiveColumn = 7; % 5: targetDist, 7: flankerDist
+    conf.adaptiveColumn = NaN;
     conf.repetitions = 10;
     conf.QUESTparams  = {conf.adaptiveColumn conf.repetitions 0 4 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
     conf.totalTrials = 1008; % respects this if repititions is zero

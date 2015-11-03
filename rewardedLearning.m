@@ -263,7 +263,6 @@ end
         % old = render.vlb;
         if mode.recordImage; recordImage(1,1,render.task ,w,render.wsize);end
 
-
         % get the response
         flow.onset = GetSecs();
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration', mode.debug_on), flow.onset); % first one is space
@@ -273,6 +272,9 @@ end
         if strcmpi(flow.response, 'DEADLINE')
             Display('Please respond! We are still collecting data!');
         Screen('FillRect',w, conf.color.backgroundColor);
+        if mode.persistentFix == 1
+            data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
+        end
         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('BlankAfterResp', mode.debug_on), flow.onset); % first one is space
         %WaitSecs(getTime('BlankAfterResp', mode.debug_on));
@@ -326,6 +328,9 @@ end
 
         % end of per trial
         Screen('FillRect',w, conf.color.backgroundColor);
+        if mode.persistentFix == 1
+            data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
+        end
         WaitSecs(getTime('BlankAfterTrial', mode.debug_on));
         Screen('Flip', w);
 
