@@ -94,9 +94,11 @@ if thisTrial(5) > render.cx + thisTrial(9) - conf.metric.cir_r
     % keep the target (and therefore flankers) within screen (horizontal)
        thisTrial(5) = render.cx + thisTrial(9) - conf.metric.cir_r;
 end
-
+if isnan(conf.adaptiveColumn)
+    render.tPresented = NaN;
+else
 render.tPresented = log10(atand(thisTrial(conf.adaptiveColumn)/conf.viewDist));
-
+end
 
 % NOT used for now
 render.screenHeightDeg = 2*atand(0.1*render.screenHeightMm/conf.viewDist);
