@@ -261,9 +261,6 @@ end
 
         % present stimuli
         data.drawed = drawObjects(w, render, data.draw);
-        if mode.persistentFix == 1
-        data.drawedConstantCircle(flow.nresp) = drawObjects(w, render, data.constantCircle);
-        end
         Screen('Flip', w);
         %render.vlb = Screen('Flip', w, render.vlb + (1-0.5)*conf.flpi);%use the center of the interval
         % Flip the visual stimuli on the screen, along with timing
@@ -281,7 +278,6 @@ end
         Screen('FillRect',w, conf.color.backgroundColor);
         if mode.persistentFix == 1
             data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
-            data.drawedConstantCircle(flow.nresp) = drawObjects(w, render, data.constantCircle);
         end
         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('BlankAfterResp', mode.debug_on), flow.onset); % first one is space
@@ -338,7 +334,6 @@ end
         Screen('FillRect',w, conf.color.backgroundColor);
         if mode.persistentFix == 1
             data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
-            data.drawedConstantCircle(flow.nresp) = drawObjects(w, render, data.constantCircle);
         end
         WaitSecs(getTime('BlankAfterTrial', mode.debug_on));
         Screen('Flip', w);
