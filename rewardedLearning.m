@@ -251,14 +251,19 @@ end
         %% now prsent Stim that you can see on the screen
         % show fixation
         data.drawFix.fix = data.draw.fix; % copy out the fixation in the stimuli
-        data.constantCircle.circle = data.constant.circle;
         data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
+        if mode.persistentFix == 1
+        data.constantCircle.circle = data.draw.constant.circle;
         data.drawedConstantCircle(flow.nresp) = drawObjects(w, render, data.constantCircle); % only the circle part
+        end
         Screen('Flip', w);
         WaitSecs(data.Trials(flow.nresp, 4));
 
         % present stimuli
         data.drawed = drawObjects(w, render, data.draw);
+        if mode.persistentFix == 1
+        data.drawedConstantCircle(flow.nresp) = drawObjects(w, render, data.constantCircle);
+        end
         Screen('Flip', w);
         %render.vlb = Screen('Flip', w, render.vlb + (1-0.5)*conf.flpi);%use the center of the interval
         % Flip the visual stimuli on the screen, along with timing
@@ -276,6 +281,7 @@ end
         Screen('FillRect',w, conf.color.backgroundColor);
         if mode.persistentFix == 1
             data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
+            data.drawedConstantCircle(flow.nresp) = drawObjects(w, render, data.constantCircle);
         end
         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('BlankAfterResp', mode.debug_on), flow.onset); % first one is space
@@ -332,6 +338,7 @@ end
         Screen('FillRect',w, conf.color.backgroundColor);
         if mode.persistentFix == 1
             data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
+            data.drawedConstantCircle(flow.nresp) = drawObjects(w, render, data.constantCircle);
         end
         WaitSecs(getTime('BlankAfterTrial', mode.debug_on));
         Screen('Flip', w);
