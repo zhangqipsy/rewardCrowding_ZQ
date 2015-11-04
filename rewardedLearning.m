@@ -216,7 +216,7 @@ if ~EyelinkInit(dummymode, 1)
 end
 Eyelink('Command', 'set_idle_mode');
 Eyelink('Command', 'clear_screen 0')
- Eyelink('command','draw_box %d %d %d %d %d',rect(3)/2-34, rect(4)/2-34, rect(3)/2+34, rect(4)/2+34,15);
+ Eyelink('command','draw_box %d %d %d %d %d',rect(3)/2-17, rect(4)/2-17, rect(3)/2+17, rect(4)/2+17,15);
  Eyelink('command','draw_cross %d %d %d',rect(3)/2,rect(4)/2,8);
 [v vs]=Eyelink('GetTrackerVersion');
 fprintf('Running experiment on a ''%s'' tracker.\n', vs );
@@ -246,7 +246,6 @@ if eye_used == el.BINOCULAR; % if both eyes are tracked
 end
 %¿ªÊ¼¼ÇÂ¼
 Eyelink('startrecording'); 
-Eyelink('Message','Trial %d Begin', trl_num);
   
     
     while true
