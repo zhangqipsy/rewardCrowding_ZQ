@@ -1,10 +1,10 @@
-function restcount = restBetweenTrial(restcount, resttime, pertrial, w, wsize, debug_mode, english_on, kb, skipFile, tactile_on, eyetracking_mode, edfFile, render, data)
+function [restcount numOfBlock] = restBetweenTrial(restcount, resttime, pertrial, w, wsize, debug_mode, english_on, kb, skipFile, tactile_on, eyetracking_mode, numOfBlock, render, data)
   % take a rest after some trials
 if nargin < 11
   eyetracking_mode = 0;
-  edfFile = NaN;
   render = NaN;
   data = NaN;
+  numOfBlock = 1;
 end  
   isSkip = 1;
   if ~isSkip
@@ -32,7 +32,7 @@ end
     Eyelink('Command', 'set_idle_mode');
     WaitSecs(0.5);
     Eyelink('CloseFile');
-    
+    edfFile = [data.Subinfo{2} num2str(numOfBlock) '.edf'];
     % download data file
     try
         fprintf('Receiving data file ''%s''\n', edfFile );
@@ -52,7 +52,7 @@ end
       Instruction(['Please rest for ' num2str(resttime) ' seconds.\n\nIf you want to proceed, press any button.'], w, wsize, debug_mode, english_on, kb, resttime, skipFile, tactile_on);
       if eyetracking_mode == 1
       %commandwindow;
-mainfilename = [data.Subinfo{1}];
+
 dummymode=0;
 showboxes=1;
 el=EyelinkInitDefaults(w);
@@ -73,7 +73,8 @@ Eyelink('command', 'link_event_data = GAZE,GAZERES,HREF,AREA,VELOCITY');
 Eyelink('command', 'link_event_filter = LEFT,RIGHT,FIXATION,BLINK,SACCADE,BUTTON');
  
 % open file to record data to
-edfFile=[mainfilename '.edf'];
+numOfBlock = numOfBlock+1;
+edfFile=[data.Subinfo{2} num2str(numOfBlock) '.edf'];
 Eyelink('Openfile', edfFile);       
 % STEP 4
 % Calibrate the eye tracker

@@ -206,7 +206,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ÑÛ¶¯Ïà¹Ø
 %commandwindow;
 if strcmp(render.task, 'CrowdingTask')
-mainfilename = [data.Subinfo{2}];
+numOfBlock = 1;
 dummymode=0;
 showboxes=1;
 el=EyelinkInitDefaults(w);
@@ -227,7 +227,7 @@ Eyelink('command', 'link_event_data = GAZE,GAZERES,HREF,AREA,VELOCITY');
 Eyelink('command', 'link_event_filter = LEFT,RIGHT,FIXATION,BLINK,SACCADE,BUTTON');
  
 % open file to record data to
-edfFile=[mainfilename '.edf'];
+edfFile=[data.Subinfo{2} num2str(numOfBlock) '.edf'];
 Eyelink('Openfile', edfFile);       
 % STEP 4
 % Calibrate the eye tracker
@@ -281,9 +281,9 @@ end
             if mode.recordImage; recordImage(1,1,[render.task '_remaining'],w,render.wsize);end
         end
         if strcmp(render.task, 'CrowdingTask')
-        flow.restcount = restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks', mode.debug_on), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on, mode.eyetracking_mode, edfFile, render, data);
+        [flow.restcount numOfBlock]= restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks', mode.debug_on), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on, mode.eyetracking_mode, numOfBlock, render, data);
         else
-        flow.restcount = restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks', mode.debug_on), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on);
+        [flow.restcount numOfBlock]= restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks', mode.debug_on), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on);
         end
         % NOTE: do we need wait black screen between Trials, random?
         WaitSecs(getTime('WaitBetweenTrials', mode.debug_on));  % wait black screen between Trials, random
@@ -414,6 +414,9 @@ if strcmp(render.task, 'CrowdingTask')
     
     % download data file
     try
+        if numOfBlock ~=1
+            edfFile = [data.Subinfo{2} num2str(numOfBlock) '.edf'];
+        end
         fprintf('Receiving data file ''%s''\n', edfFile );
         status=Eyelink('ReceiveFile');
         if status > 0
