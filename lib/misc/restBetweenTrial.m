@@ -1,7 +1,11 @@
-function restcount = restBetweenTrial(restcount, resttime, pertrial, w, wsize, debug_mode, english_on, kb, skipFile, tactile_on, edfFile, render, data)
+function restcount = restBetweenTrial(restcount, resttime, pertrial, w, wsize, debug_mode, english_on, kb, skipFile, tactile_on, eyetracking_mode, edfFile, render, data)
   % take a rest after some trials
-  
-  eyetracking_mode = 1;
+if nargin < 11
+  eyetracking_mode = 0;
+  edfFile = NaN;
+  render = NaN;
+  data = NaN;
+end  
   isSkip = 1;
   if ~isSkip
     debug_mode = 1;
@@ -42,7 +46,7 @@ function restcount = restBetweenTrial(restcount, resttime, pertrial, w, wsize, d
     catch 
         fprintf('Problem receiving data file ''%s''\n', edfFile );
     end    
-      end
+      end 
     if english_on
       %Display(resttime);
       Instruction(['Please rest for ' num2str(resttime) ' seconds.\n\nIf you want to proceed, press any button.'], w, wsize, debug_mode, english_on, kb, resttime, skipFile, tactile_on);

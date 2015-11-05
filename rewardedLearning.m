@@ -205,6 +205,7 @@ end
     %% Here begins our trial
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%眼动相关
 %commandwindow;
+if strcmp(render.task, 'CrowdingTask')
 mainfilename = [data.Subinfo{2}];
 dummymode=0;
 showboxes=1;
@@ -246,7 +247,7 @@ if eye_used == el.BINOCULAR; % if both eyes are tracked
 end
 %开始记录
 Eyelink('startrecording'); 
-  
+end 
     
     while true
         % only ends when ALL trials have collected correct response
@@ -279,9 +280,11 @@ Eyelink('startrecording');
             end
             if mode.recordImage; recordImage(1,1,[render.task '_remaining'],w,render.wsize);end
         end
-
-        flow.restcount = restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks', mode.debug_on), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on, edfFile, render, data);
-
+        if strcmp(render.task, 'CrowdingTask')
+        flow.restcount = restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks', mode.debug_on), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on, mode.eyetracking_mode, edfFile, render, data);
+        else
+        flow.restcount = restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks', mode.debug_on), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on);
+        end
         % NOTE: do we need wait black screen between Trials, random?
         WaitSecs(getTime('WaitBetweenTrials', mode.debug_on));  % wait black screen between Trials, random
 
@@ -402,6 +405,7 @@ Eyelink('startrecording');
         end;
 
     end % while true
+if strcmp(render.task, 'CrowdingTask')
 %眼动结束
 % End of Experiment; close the file first, close graphics window, close data file and shut down tracker
     Eyelink('Command', 'set_idle_mode');
@@ -421,7 +425,7 @@ Eyelink('startrecording');
     catch 
         fprintf('Problem receiving data file ''%s''\n', edfFile );
     end
-
+end
 
 
 
