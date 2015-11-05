@@ -325,7 +325,12 @@ Eyelink('startrecording');
             data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
         end
         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
-        [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('BlankAfterResp', mode.debug_on), flow.onset); % first one is space
+        if strcmp(render.task, 'CrowdingTask')
+            getTimeStr = 'CrowdingBlankAfterResp';
+        else
+            getTimeStr = 'BlankAfterResp';
+        end
+        [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime(getTimeStr, mode.debug_on), flow.onset); % first one is space
         %WaitSecs(getTime('BlankAfterResp', mode.debug_on));
     end
 

@@ -26,6 +26,8 @@ MyTime               =  .02;         % each frame is set to 20ms (the monitor's 
         MyTime = 10;
     case {'BlankAfterResp'}
         MyTime = 1;
+    case {'CrowdingBlankAfterResp'}
+        MyTime = 10;
     case {'BlankAfterTrial'} % NOTE: do we need this? blank background of 1 sec at end of per trial
         MyTime = 1;
     case {'audioTone'}
