@@ -4,9 +4,9 @@ function Subinfo= getSubInfo(isSkip)
         isSkip = false;
     end
 
-  promptParameters = {'Subject Name', 'Subject ID','His','Date','Age', 'Gender (F or M?)','Handedness (L or R)', 'Left eyesight/degree', 'Right eyesight/degree', 'Phone'};
+  promptParameters = {'Subject Name', 'Eyename','Subject ID','His','Date','Age', 'Gender (F or M?)','Handedness (L or R)', 'Left eyesight/degree', 'Right eyesight/degree', 'Phone'};
 
-  defaultParameters = {'zhangqi', '01','','2015/10/1','20','F', 'R', '1.0/250', '1.0/250', '13244445555'};
+  defaultParameters = {'zhangqi', 'zq','01','','2015/10/1','20','F', 'R', '1.0/250', '1.0/250', '13244445555'};
 
   if isSkip
       Subinfo = defaultParameters;
