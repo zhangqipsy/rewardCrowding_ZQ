@@ -205,10 +205,10 @@ end
     %% Here begins our trial
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ÑÛ¶¯Ïà¹Ø
 %commandwindow;
-mainfilename = [data.Subinfo{1} , render.dataSuffix, tunnelSelection(mode.procedureChannel), datestr(now, 'yyyymmddTHHMMSS')];
+mainfilename = [data.Subinfo{1}];
 dummymode=0;
 showboxes=1;
-el=EyelinkInitDefaults(wnd);
+el=EyelinkInitDefaults(w);
 if ~EyelinkInit(dummymode, 1)
     fprintf('Eyelink Init aborted.\n');
     cd(CurrDir);
@@ -216,8 +216,8 @@ if ~EyelinkInit(dummymode, 1)
 end
 Eyelink('Command', 'set_idle_mode');
 Eyelink('Command', 'clear_screen 0')
- Eyelink('command','draw_box %d %d %d %d %d',rect(3)/2-17, rect(4)/2-17, rect(3)/2+17, rect(4)/2+17,15);
- Eyelink('command','draw_cross %d %d %d',rect(3)/2,rect(4)/2,8);
+Eyelink('command','draw_box %d %d %d %d %d',render.cx/2-17, render.cy/2-17, render.cx/2+17, render.cy/2+17,15);
+Eyelink('command','draw_cross %d %d %d',render.cx/2,render.cy/2,8);
 [v vs]=Eyelink('GetTrackerVersion');
 fprintf('Running experiment on a ''%s'' tracker.\n', vs );
 % make sure that we get event data from the Eyelink
@@ -239,7 +239,7 @@ if success~=1
     cd(CurrDir);
     abort(CurrDir);
 end
-Screen('Flip',  wnd, [], 1); % don't erase buffer
+Screen('Flip',  w, [], 1); % don't erase buffer
 eye_used = Eyelink('EyeAvailable'); % get eye that's tracked
 if eye_used == el.BINOCULAR; % if both eyes are tracked
     eye_used = el.LEFT_EYE; % use left eye
@@ -416,7 +416,6 @@ Eyelink('startrecording');
     catch 
         fprintf('Problem receiving data file ''%s''\n', edfFile );
     end
- end
 
 
 

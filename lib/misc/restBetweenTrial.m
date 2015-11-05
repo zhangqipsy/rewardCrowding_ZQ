@@ -1,9 +1,9 @@
 function restcount = restBetweenTrial(restcount, resttime, pertrial, w, wsize, debug_mode, english_on, kb, skipFile, tactile_on)
   % take a rest after some trials
-
+  
+  eyetracking_mode = 1;
   isSkip = 1;
   if ~isSkip
-    eyetracking_mode = 1;
     debug_mode = 1;
     screens=Screen('Screens');
     screenNumber=max(screens);
@@ -48,10 +48,10 @@ function restcount = restBetweenTrial(restcount, resttime, pertrial, w, wsize, d
       Instruction(['Please rest for ' num2str(resttime) ' seconds.\n\nIf you want to proceed, press any button.'], w, wsize, debug_mode, english_on, kb, resttime, skipFile, tactile_on);
       if eyetracking_mode == 1
       %commandwindow;
-mainfilename = [data.Subinfo{1} , render.dataSuffix, tunnelSelection(mode.procedureChannel), datestr(now, 'yyyymmddTHHMMSS')];
+mainfilename = [data.Subinfo{1}];
 dummymode=0;
 showboxes=1;
-el=EyelinkInitDefaults(wnd);
+el=EyelinkInitDefaults(w);
 if ~EyelinkInit(dummymode, 1)
     fprintf('Eyelink Init aborted.\n');
     cd(CurrDir);
@@ -59,8 +59,8 @@ if ~EyelinkInit(dummymode, 1)
 end
 Eyelink('Command', 'set_idle_mode');
 Eyelink('Command', 'clear_screen 0')
- Eyelink('command','draw_box %d %d %d %d %d',rect(3)/2-17, rect(4)/2-17, rect(3)/2+17, rect(4)/2+17,15);
- Eyelink('command','draw_cross %d %d %d',rect(3)/2,rect(4)/2,8);
+ Eyelink('command','draw_box %d %d %d %d %d',render.cx/2-17, render.cy/2-17, render.cx/2+17, render.cy/2+17,15);
+ Eyelink('command','draw_cross %d %d %d',render.cx/2,render.cy/2,8);
 [v vs]=Eyelink('GetTrackerVersion');
 fprintf('Running experiment on a ''%s'' tracker.\n', vs );
 % make sure that we get event data from the Eyelink
@@ -82,7 +82,7 @@ if success~=1
     cd(CurrDir);
     abort(CurrDir);
 end
-Screen('Flip',  wnd, [], 1); % don't erase buffer
+Screen('Flip',  w, [], 1); % don't erase buffer
 eye_used = Eyelink('EyeAvailable'); % get eye that's tracked
 if eye_used == el.BINOCULAR; % if both eyes are tracked
     eye_used = el.LEFT_EYE; % use left eye
