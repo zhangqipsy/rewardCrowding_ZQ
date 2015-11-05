@@ -205,7 +205,7 @@ end
     %% Here begins our trial
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%眼动相关
 %commandwindow;
-if strcmp(render.task, 'CrowdingTask')
+if mode.eyetracking_mode == 1
 numOfBlock = 1;
 dummymode=0;
 showboxes=1;
@@ -280,7 +280,7 @@ end
             end
             if mode.recordImage; recordImage(1,1,[render.task '_remaining'],w,render.wsize);end
         end
-        if strcmp(render.task, 'CrowdingTask')
+        if mode.eyetracking_mode == 1
         [flow.restcount numOfBlock]= restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks', mode.debug_on), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on, mode.eyetracking_mode, numOfBlock, render, data);
         else
         [flow.restcount numOfBlock]= restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks', mode.debug_on), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on);
@@ -328,7 +328,7 @@ end
             data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
         end
         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
-        if strcmp(render.task, 'CrowdingTask')
+        if mode.eyetracking_mode == 1
             getTimeStr = 'CrowdingBlankAfterResp';
         else
             getTimeStr = 'BlankAfterResp';
@@ -405,7 +405,7 @@ end
         end;
 
     end % while true
-if strcmp(render.task, 'CrowdingTask')
+if mode.eyetracking_mode == 1
 %眼动结束
 % End of Experiment; close the file first, close graphics window, close data file and shut down tracker
     Eyelink('Command', 'set_idle_mode');
