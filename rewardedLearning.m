@@ -280,7 +280,7 @@ Eyelink('startrecording');
             if mode.recordImage; recordImage(1,1,[render.task '_remaining'],w,render.wsize);end
         end
 
-        flow.restcount = restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks', mode.debug_on), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on);
+        flow.restcount = restBetweenTrial(flow.restcount, getTime('RestBetweenBlocks', mode.debug_on), conf.restpertrial, w, render.wsize, mode.debug_on, mode.english_on, render.kb, 1, mode.serialInput_on, edfFile, render, data);
 
         % NOTE: do we need wait black screen between Trials, random?
         WaitSecs(getTime('WaitBetweenTrials', mode.debug_on));  % wait black screen between Trials, random

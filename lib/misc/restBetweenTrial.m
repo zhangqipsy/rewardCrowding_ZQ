@@ -1,4 +1,4 @@
-function restcount = restBetweenTrial(restcount, resttime, pertrial, w, wsize, debug_mode, english_on, kb, skipFile, tactile_on, edfFile, render)
+function restcount = restBetweenTrial(restcount, resttime, pertrial, w, wsize, debug_mode, english_on, kb, skipFile, tactile_on, edfFile, render, data)
   % take a rest after some trials
   
   eyetracking_mode = 1;
