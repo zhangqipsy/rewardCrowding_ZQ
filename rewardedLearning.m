@@ -328,7 +328,7 @@ end
             data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
         end
         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
-        if mode.eyetracking_mode == 1
+        if strcmp(render.task, 'CrowdingTask')
             getTimeStr = 'CrowdingBlankAfterResp';
         else
             getTimeStr = 'BlankAfterResp';
