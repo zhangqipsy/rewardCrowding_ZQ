@@ -205,7 +205,7 @@ end
     %% Here begins our trial
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ÑÛ¶¯Ïà¹Ø
 %commandwindow;
-mainfilename = [data.Subinfo{1}];
+mainfilename = [data.Subinfo{2}];
 dummymode=0;
 showboxes=1;
 el=EyelinkInitDefaults(w);
