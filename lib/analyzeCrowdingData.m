@@ -13,7 +13,7 @@ function stat = analyzeCrowdingData(data)
         plot(stat.Trials(stat.Trials(:,columnCond1) ==stat.condilabel(i),columnTest));
         title(stat.condilabel(i))
     end
-    stat.plotname = ['myPlot',data.Subinfo{4},datestr(now, 'yyyymmddTHHMMSS'),'change','.png'];
+    stat.plotname = ['myPlot',data.Subinfo{1},datestr(now, 'yyyymmddTHHMMSS'),'change','.png'];
     print('-dpng','-r300', stat.plotname)
     
     
@@ -25,7 +25,7 @@ function stat = analyzeCrowdingData(data)
     ylabel('deg')
     set(gca,'XtickLabel',stat.result(:,1))
     hold off
-    stat.plotname = ['myPlot',data.Subinfo{4},datestr(now, 'yyyymmddTHHMMSS'),'_t','.png'];
+    stat.plotname = ['myPlot',data.Subinfo{1},datestr(now, 'yyyymmddTHHMMSS'),'_t','.png'];
     print('-dpng','-r300', stat.plotname)
 
   else % constant
@@ -59,7 +59,7 @@ function stat = analyzeCrowdingData(data)
     plot(stat.meansdRt(:,1),'d');
     hold off;
     set(gcf,'Position',get(0,'Screensize'))% enlarge image to full screen
-    stat.plotname = ['myPlot',data.Subinfo{4},datestr(now, 'yyyymmddTHHMMSS'),'.png'];
+    stat.plotname = ['myPlot',data.Subinfo{1},datestr(now, 'yyyymmddTHHMMSS'),'.png'];
     print('-dpng','-r300', stat.plotname)
   end
 end
