@@ -297,6 +297,10 @@ Eyelink('startrecording');
         % show fixation
         data.drawFix.fix = data.draw.fix; % copy out the fixation in the stimuli
         data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
+        if mode.persistentFix == 1
+        data.constantCircle.circle = data.draw.constant.circle;
+        data.drawedConstantCircle(flow.nresp) = drawObjects(w, render, data.constantCircle); % only the circle part
+        end
         Screen('Flip', w);
         WaitSecs(data.Trials(flow.nresp, 4));
 

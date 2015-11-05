@@ -162,6 +162,14 @@ fix.width = conf.metric.fix_r2;
 fix.color = conf.color.fix;
 draw = insertObject(draw, 'fix', fix);
 
+
+constant.circle.coor =  [render.cx-thisTrial(9)+thisTrial(5) render.cy];
+constant.circle.color = [0 0 0];
+constant.circle.r =  1.2*conf.metric.cir_r; % bigger than target
+constant.circle.width =  0.5*conf.metric.circle_width; %thinner than target
+constant.circle.isFill =  0;
+draw.constant.circle = constant.circle;
+
 % output data (add to data later since `data` is not in the input augument)
 % data.draw = draw;
 end

@@ -170,13 +170,11 @@ switch whichProcedure
     if ~isempty(conf.Constantparams)
         numTen = NaN(numel(conf.Constantparams),1);
         blockID = NaN(size(Trials(:,1),1),1);
-        %sequencesControlMatrix = Trials(:, conf.Constantparams);
         for trialNum = 1:size(Trials(:,1),1)
         for tenNum =1: numel(conf.Constantparams)
             numTen(tenNum,1) = 10^(numel(conf.Constantparams)-tenNum);
         end
         blockID(trialNum,1) = Trials(trialNum,conf.Constantparams) * numTen;
-        %blockID = sequencesControlMatrix * [max(sequencesControlMatrix(:)) .^ [1:numel(conf.Constantparams)]]';
         end
     else
         error('genCrowdingSequence:ConstantRequestedWithoutSayingIt', 'You requested a Constant procedure without specifying which columns of the Trials table to use for it. Are you nuts?')
@@ -189,13 +187,11 @@ case {'QUEST' , 'quest'}
         warning('genCrowdingSequence:QUEST', '%d sequences are generated based on combinations of columns %s in Trials, for the QUEST procedure to measure data for the %dth column of Trials', prod(conf.Constantparams), num2str(conf.Constantparams), conf.QUESTparams{1});
         numTen = NaN(numel(conf.Constantparams),1);
         blockID = NaN(size(Trials(:,1),1),1);
-        %sequencesControlMatrix = Trials(:, conf.Constantparams);
         for trialNum = 1:size(Trials(:,1),1)
         for tenNum =1: numel(conf.Constantparams)
             numTen(tenNum,1) = 10^(numel(conf.Constantparams)-tenNum);
         end
         blockID(trialNum,1) = Trials(trialNum,conf.Constantparams) * numTen;
-        %blockID = sequencesControlMatrix * [max(sequencesControlMatrix(:)) .^ [1:numel(conf.Constantparams)]]';
         end
     else
         warning('genCrowdingSequence:QUEST', 'A single sequence is generated for the QUEST procedure to measure data for the %dth column of Trials', conf.QUESTparams{1});
