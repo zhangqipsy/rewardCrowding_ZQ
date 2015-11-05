@@ -21,7 +21,7 @@ MyTime               =  .02;         % each frame is set to 20ms (the monitor's 
     case {'WaitBetweenTrials'}
         MyTime = 0.8+rand*0.2;
     case {'RestBetweenBlocks'}
-        MyTime = 20; % wait black screen between Trials, random
+        MyTime = 2000; % wait black screen between Trials, random
     case {'CountdownAfterRest'}
         MyTime = 10;
     case {'BlankAfterResp'}
