@@ -107,7 +107,7 @@ conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace an
 conf.audioTone1Hz   = 1000;
 conf.audioTone2Hz   = 500;
 conf.flpi               = .02;          % NOTE:  NOT used
-
+conf.showTime   =   0.6;
 % NOTE: check this values out!
 conf.monWidth   = 40;
 conf.viewDist       = 75;

@@ -24,6 +24,7 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
     conf.deg.cir_r       = 1/2;
     fromLab.red = [222  52  70];
     fromLab.green = [0   138  33];
+    conf.showTime = [0.05 0.1 0.15 0.2 0.3 0.5 1];
     conf.color.distractors = {fromLab.red ,fromLab.green};
     conf.targetShapes = [Inf 6];
     conf.distractorShapes = [Inf]; % Inf is circle

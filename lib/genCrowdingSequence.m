@@ -106,7 +106,7 @@ function Trials = genCrowdingSequence(conf, mode)
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-nColumns = 17;
+nColumns = 18;
 
 % let's only use this before BalanceTrials is ready
 [Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [ ...
@@ -118,6 +118,7 @@ nColumns = 17;
     numel(conf.color.distractors), ...
     numel(conf.targetShapes), ...
     numel(conf.distractorShapes) ...
+    numel(conf.showTime) ...
     ]);
 
 
@@ -147,7 +148,7 @@ end
 % replace the values since drawObjects() has no access to conf.
 Trials(:,16) = Replace(Trials(:, 16), unique(Trials(:,16)), conf.targetShapes);
 Trials(:,17) = Replace(Trials(:, 17), unique(Trials(:,17)),conf.distractorShapes);
-
+Trials(:,18) = Replace(Trials(:, 18), unique(Trials(:,18)),conf.showTime);
 
 
 %	Column 9
