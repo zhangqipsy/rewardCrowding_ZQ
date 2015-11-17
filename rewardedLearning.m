@@ -217,8 +217,8 @@ if ~EyelinkInit(dummymode, 1)
 end
 Eyelink('Command', 'set_idle_mode');
 Eyelink('Command', 'clear_screen 0')
-Eyelink('command','draw_box %d %d %d %d %d',render.cx/2-17, render.cy/2-17, render.cx/2+17, render.cy/2+17,15);
-Eyelink('command','draw_cross %d %d %d',render.cx/2,render.cy/2,8);
+Eyelink('command','draw_box %d %d %d %d %d',1024/2-17, 768/2-17, 1024/2+17, 768/2+17,15);
+Eyelink('command','draw_cross %d %d %d',1024/2,768/2,8);
 [v vs]=Eyelink('GetTrackerVersion');
 fprintf('Running experiment on a ''%s'' tracker.\n', vs );
 % make sure that we get event data from the Eyelink
