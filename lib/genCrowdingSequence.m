@@ -137,7 +137,7 @@ nColumns = 18;
 %	Column 17
 %	    idxDistractorShape  (balance)
 tmp=15; % second term is nStims: which is one for crowding since we only have one target
-Trials(:, [4 tmp 6 5 7 8 16 17]) = Trialsequence;
+Trials(:, [4 tmp 6 5 7 8 16 17 18]) = Trialsequence;
 Trials(:,4) = Replace(Trials(:,4), 1:numel(conf.fixLevels), conf.fixLevels);
 Trials(:, tmp) = NaN(size(Trials,1), 1);
 
