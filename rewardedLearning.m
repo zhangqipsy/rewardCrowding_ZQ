@@ -304,11 +304,19 @@ end
         data.constantCircle.circle = data.draw.constant.circle;
         data.drawedConstantCircle(flow.nresp) = drawObjects(w, render, data.constantCircle); % only the circle part
         end
+        if mode.eyetracking_mode == 1
+        Eyelink('Message','Trial %d Begin', flow.nresp);
+        Eyelink('Message','cross on');
+        end
         Screen('Flip', w);
         WaitSecs(data.Trials(flow.nresp, 4));
 
         % present stimuli
         data.drawed = drawObjects(w, render, data.draw);
+        if mode.eyetracking_mode == 1
+        Eyelink('Message','cross off');
+        Eyelink('Message','crowding on');
+        end
         Screen('Flip', w);
         %render.vlb = Screen('Flip', w, render.vlb + (1-0.5)*conf.flpi);%use the center of the interval
         % Flip the visual stimuli on the screen, along with timing
@@ -319,6 +327,9 @@ end
         flow.onset = GetSecs();
         if strcmp(render.task, 'CrowdingTask')
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), data.Trials(flow.nresp,18), flow.onset);
+        if mode.eyetracking_mode == 1
+        Eyelink('Message','crowding off');
+        end
         else
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration', mode.debug_on), flow.onset); % first one is space
         end
