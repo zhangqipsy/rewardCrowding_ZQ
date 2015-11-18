@@ -29,10 +29,15 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
     conf.targetShapes = [Inf 6];
     conf.distractorShapes = [Inf]; % Inf is circle
     conf.deg.targetDist = [9];
-    conf.deg.range_r = [4 8]; %column7 targetflankerDist
+    %TRY
+    conf.deg.range_r = [0 5];%column7 targetflankerDist
+    conf.repetitions = 20;
+    %TEST
+    %conf.deg.range_r = [0.9 1.3 1.8 2.5 3.5 5];%test there is crowding %column7 targetflankerDist
+    %conf.repetitions = 50;
+    
     %conf.adaptiveColumn = 7; % 5: targetDist, 7: flankerDist
     conf.adaptiveColumn = NaN;
-    conf.repetitions = 10;
     conf.QUESTparams  = {conf.adaptiveColumn conf.repetitions 0 4 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
     conf.totalTrials = 1008; % respects this if repititions is zero
     wrkspc = rewardedLearning(conf, mode);
