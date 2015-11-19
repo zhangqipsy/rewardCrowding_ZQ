@@ -22,9 +22,10 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
     %conf.color.targets = [conf.color.red, conf.color.green]; % this is default
     mode.exclusiveTargetFlankerColor_on = 1;
     conf.deg.cir_r       = 1/2;
-    fromLab.red = [222  52  70];
-    fromLab.green = [0   138  33];
     conf.showTime = [0.05 0.1 0.15 0.2 0.3 0.5 1];
+    fromLab.cyan = [4 157 196]; % L=60 c=36 h=-124
+    fromLab.orange = [193 130 93]; % L=60 c=36 h=56
+    fromLab.purple = [180 127 180];
     conf.color.distractors = {fromLab.cyan ,fromLab.orange};
     conf.targetShapes = [Inf 6];
     conf.distractorShapes = [Inf]; % Inf is circle
