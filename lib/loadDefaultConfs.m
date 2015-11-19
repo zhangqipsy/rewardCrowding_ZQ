@@ -136,6 +136,8 @@ fromLab = structfun(@(x) scaleRGB*x, fromLab, 'UniformOutput', false);
 
 
 fromLab.backgroundColor = fromLab.gray50;
+%fromLab.backgroundColor = [145 145 145]; % Lch L=60 c=0 h=158
+
 fromLab.barcolor = fromLab.gray85;
 fromLab.textcolor = fromLab.white; % used for instruction
 fromLab.textcolor2 = fromLab.gray25; % used for feedback
@@ -143,20 +145,19 @@ fromLab.bar = fromLab.black;
 fromLab.fix = fromLab.white;
 
 % targets
-fromLab.red = [222  52  70];
-fromLab.green = [0   138  33];
+fromLab.cyan = [4 157 196]; % L=60 c=36 h=-124
+fromLab.orange = [193 130 93]; % L=60 c=36 h=56
 
 % distractors
-fromLab.blue = [55  121  197];
-fromLab.yellow = [156  111  27];
-fromLab.purple = [162 63  255];
-fromLab.cyan = [43  131  135];
-fromLab.pink = [208  52  160];
-fromLab.orange = [191  88  66];
+fromLab.green = [15  161  156]; %L=60 c=36 h=-169
+fromLab.blue = [117 144 207]; %L=60 c=36 h=-79
+fromLab.purple = [180 127 180]; %L=60 c=36 h=-34
+fromLab.pink = [206 119 134]; %L=60 c=36 h=11
+fromLab.yellow = [154 146 81]; %L=60 c=36 h=101
+fromLab.lightgreen = [99 158 108]; %L=60 c=36 h=-146
 
-
-fromLab.targets = {fromLab.red, fromLab.green};
-fromLab.distractors = {fromLab.blue ,fromLab.yellow ,fromLab.purple ,fromLab.cyan, fromLab.pink, fromLab.orange};
+fromLab.targets = {fromLab.cyan, fromLab.orange};
+fromLab.distractors = {fromLab.green ,fromLab.blue ,fromLab.purple ,fromLab.pink, fromLab.yellow, fromLab.lightgreen};
 
 conf.color = fromLab;
 
