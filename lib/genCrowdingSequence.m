@@ -142,6 +142,8 @@ Trials(:, tmp) = NaN(size(Trials,1), 1);
 
 if mode.exclusiveTargetFlankerColor_on
   Trials = Trials(Trials(:,6) ~= Trials(:,8),:);
+  Trials((Trials(:,6) ==1 & Trials(:,8) ==2),:) = [];
+  Trials((Trials(:,6) ==2 & Trials(:,8) ==1),:) = [];
 end
 
 % replace the values since drawObjects() has no access to conf.
