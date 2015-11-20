@@ -27,8 +27,11 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
     fromLab.cyan = [4 157 196]; % L=60 c=36 h=-124
     fromLab.orange = [193 130 93]; % L=60 c=36 h=56
     fromLab.purple = [180 127 180];
-    conf.color.targets = {fromLab.cyan ,fromLab.orange ,fromLab.purple};
-    conf.color.distractors = {fromLab.cyan ,fromLab.orange ,fromLab.purple};
+% use these when reward color can both be target and flankers
+%     conf.color.targets = {fromLab.cyan ,fromLab.orange ,fromLab.purple};
+%     conf.color.distractors = {fromLab.cyan ,fromLab.orange ,fromLab.purple};
+    conf.color.targets = {fromLab.purple};
+    conf.color.distractors = {fromLab.cyan ,fromLab.orange};
     conf.targetShapes = [Inf 6];
     conf.distractorShapes = [Inf]; % Inf is circle
     conf.deg.targetDist = [9];
