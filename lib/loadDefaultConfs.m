@@ -68,6 +68,8 @@ mode.serialInput_on     = 0;  % serial input devices
 mode.once_on            = 0;  % end of experiment after these many trials
 mode.persistentFix      = 0;
 mode.eyetracking_mode   = 0;
+mode.drawBlackCircle    = 0;
+
 
 
 % experiment configuration vatiables
@@ -135,7 +137,7 @@ scaleRGB             = 255;          % linear magnifier
 fromLab = structfun(@(x) scaleRGB*x, fromLab, 'UniformOutput', false);
 
 
-fromLab.backgroundColor = fromLab.gray50;
+fromLab.backgroundColor = fromLab.gray30;
 %fromLab.backgroundColor = [145 145 145]; % Lch L=60 c=0 h=158
 
 fromLab.barcolor = fromLab.gray85;

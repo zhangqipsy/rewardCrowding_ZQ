@@ -302,6 +302,7 @@ end
         data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
         if mode.persistentFix == 1
         data.constantCircle.circle = data.draw.constant.circle;
+        if mode.drawBlackCircle == 1
         data.drawedConstantCircle(flow.nresp) = drawObjects(w, render, data.constantCircle); % only the circle part
         end
         if mode.eyetracking_mode == 1
