@@ -67,7 +67,7 @@ mode.recordImage        = 0;  % make screen capture and save as images; used for
 mode.serialInput_on     = 0;  % serial input devices
 mode.once_on            = 0;  % end of experiment after these many trials
 mode.persistentFix      = 0;
-
+mode.drawBlackCircle    = 0;
 
 
 % experiment configuration vatiables

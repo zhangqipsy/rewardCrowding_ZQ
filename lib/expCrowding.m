@@ -10,6 +10,7 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
   end
     conf.showLeftTrialsEvery = 10000;
     mode.persistentFix  = 1;
+    mode.drawBlackCircle = 1;
     mode.demo_on = isDemo;        % sets totalTrials to the lowest mimimum if repetitions is 0 (also no feedback)
     mode.once_on = once_on; % overrises all trial numbers; number of total trials (0 to cancel this effect)    
     mode.procedureChannel = procedureChannel; % experiment methods;
