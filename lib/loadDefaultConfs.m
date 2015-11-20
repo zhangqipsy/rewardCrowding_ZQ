@@ -142,7 +142,7 @@ fromLab.backgroundColor = fromLab.gray30;
 
 fromLab.barcolor = fromLab.gray85;
 fromLab.textcolor = fromLab.white; % used for instruction
-fromLab.textcolor2 = fromLab.gray25; % used for feedback
+fromLab.textcolor2 = fromLab.black; % used for feedback
 fromLab.bar = fromLab.black;
 fromLab.fix = fromLab.white;
 
