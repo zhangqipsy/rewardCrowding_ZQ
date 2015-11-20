@@ -305,6 +305,7 @@ end
         if mode.drawBlackCircle == 1
         data.drawedConstantCircle(flow.nresp) = drawObjects(w, render, data.constantCircle); % only the circle part
         end
+        end
         if mode.eyetracking_mode == 1
         Eyelink('Message','Trial %d Begin', flow.nresp);
         Eyelink('Message','cross on');
