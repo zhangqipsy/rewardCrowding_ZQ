@@ -135,7 +135,7 @@ scaleRGB             = 255;          % linear magnifier
 fromLab = structfun(@(x) scaleRGB*x, fromLab, 'UniformOutput', false);
 
 
-fromLab.backgroundColor = fromLab.gray50;
+fromLab.backgroundColor = fromLab.gray30;
 %fromLab.backgroundColor = [145 145 145]; % Lch L=60 c=0 h=158
 
 fromLab.barcolor = fromLab.gray85;
