@@ -245,8 +245,6 @@ eye_used = Eyelink('EyeAvailable'); % get eye that's tracked
 if eye_used == el.BINOCULAR; % if both eyes are tracked
     eye_used = el.LEFT_EYE; % use left eye
 end
-%开始记录
-Eyelink('startrecording'); 
 end 
     
     while true
@@ -308,7 +306,6 @@ end
         end
         if mode.eyetracking_mode == 1
         Eyelink('Message','Trial %d Begin', flow.nresp);
-        Eyelink('Message','cross on');
         end
         Screen('Flip', w);
         WaitSecs(data.Trials(flow.nresp, 4));
@@ -316,8 +313,8 @@ end
         % present stimuli
         data.drawed = drawObjects(w, render, data.draw);
         if mode.eyetracking_mode == 1
-        Eyelink('Message','cross off');
-        Eyelink('Message','crowding on');
+        %开始记录
+        Eyelink('startrecording'); 
         end
         Screen('Flip', w);
         %render.vlb = Screen('Flip', w, render.vlb + (1-0.5)*conf.flpi);%use the center of the interval
@@ -328,10 +325,10 @@ end
         % get the response
         flow.onset = GetSecs();
         if strcmp(render.task, 'CrowdingTask')
-        [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), data.Trials(flow.nresp,18), flow.onset);
         if mode.eyetracking_mode == 1
-        Eyelink('Message','crowding off');
+        Eyelink('stoprecording');
         end
+        [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), data.Trials(flow.nresp,18), flow.onset); 
         else
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration', mode.debug_on), flow.onset); % first one is space
         end
