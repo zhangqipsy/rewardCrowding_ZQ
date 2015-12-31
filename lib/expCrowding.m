@@ -41,6 +41,7 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
 %     conf.color.distractors = {fromLab.cyan ,fromLab.orange ,fromLab.purple};
     conf.color.targets = {fromLab.purple};
     conf.color.distractors = {fromLab.cyan ,fromLab.orange};
+    conf.color.distractors = {fromLab.cyan ,fromLab.orange,fromLab.cyan1,fromLab.cyan2,fromLab.orange1,fromLab.orange2,fromLab.orange3,fromLab.orange4,fromLab.orange5,fromLab.orange6};
     conf.targetShapes = [Inf 6];
     conf.distractorShapes = [Inf]; % Inf is circle
     conf.deg.targetDist = [9];
@@ -50,12 +51,10 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
     conf.showTime = [1];
     mode.drawBlackCircle = 1;
     %TEST
-    %conf.deg.range_r = [0.9 1.3 1.8 2.5 3.5 5];%test there is crowding %column7 targetflankerDist
-    %conf.repetitions = 50;
-    %mode.drawBlackCircle = 0;
-    %conf.showTime = [0.2];
-    
-    %conf.showTime = [0.05 0.1 0.15 0.2 0.3 0.5 1];
+    conf.deg.range_r = [1.5];
+    conf.repetitions = 40;
+    mode.drawBlackCircle = 0;
+    conf.showTime = [0.05 0.1 0.15 0.6];
     %conf.adaptiveColumn = 7; % 5: targetDist, 7: flankerDist
     conf.adaptiveColumn = NaN;
     conf.QUESTparams  = {conf.adaptiveColumn conf.repetitions 0 4 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
