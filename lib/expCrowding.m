@@ -24,6 +24,16 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
     mode.exclusiveTargetFlankerColor_on = 1;
     conf.deg.cir_r       = 1/2;
     fromLab.cyan = [4 157 196]; % L=60 c=36 h=-124
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    fromLab.cyan1 = [64 184 224];
+    fromLab.cyan2 = [99 212 253];
+    fromLab.orange1 = [85 37 2];
+    fromLab.orange2 = [112 59 26];
+    fromLab.orange3 = [139 83 48];
+    fromLab.orange4 = [167 107 71];
+    fromLab.orange5 = [225 159 121];
+    fromLab.orange6 = [255 186 146];
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     fromLab.orange = [193 130 93]; % L=60 c=36 h=56
     fromLab.purple = [180 127 180];
 % use these when reward color can both be target and flankers
