@@ -80,6 +80,11 @@ function Trials = genCrowdingSequence(conf, mode)
 %	    idxTargetShape  (balance)
 %	Column 17
 %	    idxDistractorShape  (balance)
+%	Column 18
+%	    showTime
+%	Column 19
+%	    attention attraction 
+%       flanker show before target
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
 % on Microsoft Windows 8.1 企业�?Version 6.3 (Build 9600)
@@ -106,7 +111,7 @@ function Trials = genCrowdingSequence(conf, mode)
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-nColumns = 18;
+nColumns = 19;
 
 % let's only use this before BalanceTrials is ready
 [Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [ ...
@@ -119,6 +124,7 @@ nColumns = 18;
     numel(conf.targetShapes), ...
     numel(conf.distractorShapes) ...
     numel(conf.showTime) ...
+    numel(conf.beforeShowTime)
     ]);
 
 
@@ -137,7 +143,7 @@ nColumns = 18;
 %	Column 17
 %	    idxDistractorShape  (balance)
 tmp=15; % second term is nStims: which is one for crowding since we only have one target
-Trials(:, [4 tmp 6 5 7 8 16 17 18]) = Trialsequence;
+Trials(:, [4 tmp 6 5 7 8 16 17 18 19]) = Trialsequence;
 Trials(:,4) = Replace(Trials(:,4), 1:numel(conf.fixLevels), conf.fixLevels);
 Trials(:, tmp) = NaN(size(Trials,1), 1);
 
@@ -152,6 +158,8 @@ end
 Trials(:,16) = Replace(Trials(:, 16), unique(Trials(:,16)), conf.targetShapes);
 Trials(:,17) = Replace(Trials(:, 17), unique(Trials(:,17)),conf.distractorShapes);
 Trials(:,18) = Replace(Trials(:, 18), unique(Trials(:,18)),conf.showTime);
+Trials(:,19) = Replace(Trials(:, 19), unique(Trials(:,19)),conf.beforeShowTime);
+
 
 
 %	Column 9

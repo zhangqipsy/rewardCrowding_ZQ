@@ -320,7 +320,7 @@ end
         end
         data.drawed = drawObjects(w, render, data.draw);
         Screen('Flip', w);
-        WaitSecs(1);
+        WaitSecs(data.Trials(flow.nresp, 19));
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         % present stimuli
