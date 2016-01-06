@@ -9,7 +9,7 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
     procedureChannel = 'QUEST';
   end
     conf.showLeftTrialsEvery = 10000;
-    mode.eyetracking_mode = 1;
+    mode.eyetracking_mode = 0;
     mode.persistentFix  = 1;
     mode.drawBlackCircle = 1;
     mode.demo_on = isDemo;        % sets totalTrials to the lowest mimimum if repetitions is 0 (also no feedback)

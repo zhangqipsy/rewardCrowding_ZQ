@@ -309,8 +309,26 @@ end
         end
         Screen('Flip', w);
         WaitSecs(data.Trials(flow.nresp, 4));
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        
+        if isempty(data.draw.poly.color)
+        bbb = data.draw.circle.color(1,1:3);
+         data.draw.circle.color(1,1:3) = [70.6350 70.6350 70.6350];
+        else
+        aaa = data.draw.poly.color;
+        data.draw.poly.color = [70.6350 70.6350 70.6350];
+        end
+        data.drawed = drawObjects(w, render, data.draw);
+        Screen('Flip', w);
+        WaitSecs(1);
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         % present stimuli
+        if isempty(data.draw.poly.color)
+            data.draw.circle.color(1,1:3) = bbb;
+        else
+            data.draw.poly.color=aaa;
+        end
         data.drawed = drawObjects(w, render, data.draw);
         if mode.eyetracking_mode == 1
         %¿ªÊ¼¼ÇÂ¼
