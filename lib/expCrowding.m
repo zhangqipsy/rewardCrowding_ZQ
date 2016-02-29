@@ -30,18 +30,19 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
 %     conf.color.targets = {fromLab.cyan ,fromLab.orange ,fromLab.purple};
 %     conf.color.distractors = {fromLab.cyan ,fromLab.orange ,fromLab.purple};
     conf.color.targets = {fromLab.purple};
-    conf.color.distractors = {fromLab.cyan ,fromLab.orange};
+    conf.color.distractors = {fromLab.orange};
     conf.targetShapes = [Inf 6];
     conf.distractorShapes = [Inf]; % Inf is circle
     conf.deg.targetDist = [9];
 
     %TEST
-    conf.beforeShowTime = [0.5 2];
-    conf.repetitions = 50;
+    conf.showTime = [0.05 0.1 0.15 0.2];
+    conf.beforeShowTime = [0.5 0.1 0.15 0.2];
+    conf.repetitions = 40;
     mode.drawBlackCircle = 0;
-    conf.showTime = [0.2];
     
-    %conf.showTime = [0.05 0.1 0.15 0.2 0.3 0.5 1];
+    
+    
     %conf.adaptiveColumn = 7; % 5: targetDist, 7: flankerDist
     conf.adaptiveColumn = NaN;
     conf.QUESTparams  = {conf.adaptiveColumn conf.repetitions 0 4 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma
