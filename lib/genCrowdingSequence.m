@@ -80,6 +80,10 @@ function Trials = genCrowdingSequence(conf, mode)
 %	    idxTargetShape  (balance)
 %	Column 17
 %	    idxDistractorShape  (balance)
+%   Column 18
+%    showTime
+%   Column 19
+%    eyedegree
 
 % created with MATLAB ver.: 8.5.0.197613 (R2015a)
 % on Microsoft Windows 8.1 企业�?Version 6.3 (Build 9600)
@@ -106,7 +110,7 @@ function Trials = genCrowdingSequence(conf, mode)
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-nColumns = 18;
+nColumns = 19;
 
 % let's only use this before BalanceTrials is ready
 [Trialsequence, Trials] = genTrial(conf.repetitions, nColumns, [ ...
@@ -163,6 +167,7 @@ Trials(:, 9) = repmat(conf.deg.crossCoor, size(Trials,1),1);
 %	    initialize here
 Trials(:, 14) = zeros(size(Trials,1), 1);
 Trials(:, 15) = zeros(size(Trials,1), 1);
+Trials(:, 19) = zeros(size(Trials,1), 1);
 
 
 

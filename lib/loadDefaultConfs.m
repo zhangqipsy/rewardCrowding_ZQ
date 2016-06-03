@@ -161,7 +161,7 @@ fromLab.pink = [206 119 134]; %L=60 c=36 h=11
 fromLab.yellow = [154 146 81]; %L=60 c=36 h=101
 fromLab.lightgreen = [99 158 108]; %L=60 c=36 h=-146
 
-fromLab.targets = {fromLab.cyan, fromLab.orange};%first one is high reward, second is low reward
+fromLab.targets = {fromLab.cyan, fromLab.orange};
 fromLab.distractors = {fromLab.green ,fromLab.blue ,fromLab.purple ,fromLab.pink, fromLab.yellow, fromLab.lightgreen};
 
 conf.color = fromLab;
