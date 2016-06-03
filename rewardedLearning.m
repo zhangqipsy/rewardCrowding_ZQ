@@ -363,11 +363,13 @@ end
                 % record response
                 [data, flow] = recordResponse(flow, data, conf);
 
-                if mode.feedback_on
+                %if mode.feedback_on
+                if 1
                     % demo_on calcels feedback
                 % give feedback
                 if flow.isCorrect
-                    DrawFormattedText(w, sprintf(instrDB('rewardFeedback', mode.english_on), data.Trials(flow.nresp-1, 15), sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
+                    %DrawFormattedText(w, sprintf(instrDB('rewardFeedback', mode.english_on), data.Trials(flow.nresp-1, 15), sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
+                    DrawFormattedText(w, sprintf(instrDB('crowdingFeedback', mode.english_on), [1], sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
                     render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
                     WaitSecs(getTime('ShowFeedback', mode.debug_on));
                 end

@@ -130,8 +130,10 @@ data.Trials(flow.nresp, 13) = flow.isCorrect;
 %	    counterTillCorrect
 %	    not used for 2AFC
 %	Column 15
-%	    rewardAmount
-%	    not used for 2AFC
+%       rewardAmount
+%       not used for 2AFC
+
+
 
 disp(flow.Q)
 if isempty(flow.Q); isAdaptive = 0;else isAdaptive = 1;end

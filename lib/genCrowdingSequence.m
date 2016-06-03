@@ -141,6 +141,7 @@ Trials(:, [4 tmp 6 5 7 8 16 17 18]) = Trialsequence;
 Trials(:,4) = Replace(Trials(:,4), 1:numel(conf.fixLevels), conf.fixLevels);
 Trials(:, tmp) = NaN(size(Trials,1), 1);
 
+
 if mode.exclusiveTargetFlankerColor_on
 % these only use when reward can both be target and flankers    
 % Trials = Trials(Trials(:,6) ~= Trials(:,8),:);
