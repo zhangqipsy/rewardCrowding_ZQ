@@ -47,15 +47,15 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
     conf.distractorShapes = [Inf]; % Inf is circle
     conf.deg.targetDist = [9];
     %TRY
-    conf.deg.range_r = [0 5];%column7 targetflankerDist
-    conf.repetitions = 20;
-    conf.showTime = [1];
-    mode.drawBlackCircle = 1;
+%     conf.deg.range_r = [1.5];%column7 targetflankerDist
+%     conf.repetitions = 20;
+%     conf.showTime = [1];
+    %mode.drawBlackCircle = 1;
     %TEST
     conf.deg.range_r = [1.5];
-    conf.repetitions = 40;
+    conf.repetitions = 30;% 600 trial
     mode.drawBlackCircle = 0;
-    conf.showTime = [0.05 0.1 0.15 0.6];
+    conf.showTime = [0.1 0.15 0.2 0.25 0.5];
     %conf.adaptiveColumn = 7; % 5: targetDist, 7: flankerDist
     conf.adaptiveColumn = NaN;
     conf.QUESTparams  = {conf.adaptiveColumn conf.repetitions 0 4 0.82 3.5 0.01 0.5}; % columnN,totalTrials,guess,guessSD,pThreshold,beta,delta,gamma

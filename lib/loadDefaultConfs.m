@@ -86,7 +86,7 @@ conf.Constantparams     = [4 7]; % the column indicators
 % NOTE: usign totalTrials require knowledge of the code; therefore it is NOT RECOMMENDED
 % simply use repetition
 conf.totalTrials        = 1008;     % respects this if repititions is zero
-conf.restpertrial       =  100;           % every x trial a rest
+conf.restpertrial       =  60;           % every x trial a rest
 conf.showLeftTrialsEvery     = 5;
 conf.nStims              =  6;          % number of stimuli (target+distractors) present in each trial/throughout the experiment (target is always one of these)
 conf.nFlankers           = 2;           % pure flankers, target can never be one here (used only for Crowding)
