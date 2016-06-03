@@ -479,6 +479,7 @@ catch
     %if mode.audio_on; PsychPortAudio('Close'); end
     Priority(0);
     ShowCursor;
+    reset_gamma;
     ListenChar(0);
     psychrethrow(psychlasterror);
     Screen('Preference', 'Verbosity', 3);
@@ -491,6 +492,7 @@ Screen('CloseAll');
 %if mode.audio_on; PsychPortAudio('Close'); end
 Priority(0);
 ShowCursor;
+reset_gamma;
 ListenChar(0);
 Screen('Preference', 'Verbosity', 3);
 
