@@ -321,7 +321,39 @@ end
         % Flip the visual stimuli on the screen, along with timing
         % old = render.vlb;
         if mode.recordImage; recordImage(1,1,render.task ,w,render.wsize);end
-
+%%%%%
+if mode.eyetracking_mode == 1
+    
+      eyeresult = zeros(max(flow.nresp,18)/(1/60),5);
+      numeye = 1;
+      meaneyedeg = 1000;
+for e = 1: data.Trials(flow.nresp,18)/(1/60)
+               titi = GetSecs;
+               titi = WaitSecs('UntilTime',titi+1/theFrameRate);
+               evt = Eyelink('NewestFloatSample'); % 获取最新的眼动数据
+                if eye_used ~= -1 % do we know which eye to use yet?
+                % get current gaze position from sample
+                x = evt.gx(eye_used+1); % +1 as we're accessing MATLAB array
+                y = evt.gy(eye_used+1); 
+                end
+                if x~=el.MISSING_DATA && ~y~=el.MISSING_DATA && evt.pa(eye_used+1)>0
+               eyeresult(numeye,1) = x;
+               eyeresult(numeye,2) = y;
+               numeye = numeye+1;
+                end
+end
+            eyeresult = eyeresult(1:numeye,2);
+            [t1 t2] = size(eyeresult);
+            for xx = 1:t1
+            eyeresult(xx,3) =  (abs(eyeresult(xx,1)-512))^2 + (abs(eyeresult(xx,2)-384))^2;
+            eyeresult(xx,4) = sqrt( eyeresult(xx,3));
+            eyeresult(xx,5) = (180/pi)*atan((40* eyeresult(xx,4))/(1024*75));
+            end
+         data.Trials(flow.nresp, 19) = meaneyedeg;  
+        
+end        
+        
+%%%%%        
         % get the response
         flow.onset = GetSecs();
         if strcmp(render.task, 'CrowdingTask')
@@ -368,6 +400,13 @@ end
                     % demo_on calcels feedback
                 % give feedback
                 if flow.isCorrect
+                    
+                    if mode.eyetracking_mode == 1
+                        if data.Trials(flow.nresp, 19)>1.5
+                         DrawFormattedText(w, sprintf(instrDB('crowdingEye', mode.english_on), 'center', 'center', conf.color.textcolor2);    
+                        end
+                    end
+                    
                     if data.Trials(flow.nresp-1, 8)==1
                     conf.moneydil = conf.highReward;
                     elseif data.Trials(flow.nresp-1, 8)==2
