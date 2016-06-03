@@ -368,8 +368,12 @@ end
                     % demo_on calcels feedback
                 % give feedback
                 if flow.isCorrect
-                    %DrawFormattedText(w, sprintf(instrDB('rewardFeedback', mode.english_on), data.Trials(flow.nresp-1, 15), sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
-                    DrawFormattedText(w, sprintf(instrDB('crowdingFeedback', mode.english_on), [1], sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
+                    if data.Trials(flow.nresp-1, 8)==1
+                    conf.moneydil = 1;
+                    elseif data.Trials(flow.nresp-1, 8)==2
+                    conf.moneydil = 0.2;
+                    end
+                    DrawFormattedText(w, sprintf(instrDB('crowdingFeedback', mode.english_on), conf.moneydil, sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
                     render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
                     WaitSecs(getTime('ShowFeedback', mode.debug_on));
                 end

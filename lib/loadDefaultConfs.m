@@ -99,6 +99,7 @@ conf.audioFreq = 44100;
 conf.fixLevels          = [.4 .5 .6];
 conf.idxHighRewardColor = 1;
 conf.highRewardLevel    = .2;
+conf.moneydil = 1;
 conf.rewardAmounts      = [0.1 0.5];
 conf.targetOrientations = [0 pi/2];
 conf.targetShapes   = [Inf 6 8 12];
