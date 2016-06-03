@@ -369,9 +369,9 @@ end
                 % give feedback
                 if flow.isCorrect
                     if data.Trials(flow.nresp-1, 8)==1
-                    conf.moneydil = 1;
+                    conf.moneydil = conf.highReward;
                     elseif data.Trials(flow.nresp-1, 8)==2
-                    conf.moneydil = 0.2;
+                    conf.moneydil = conf.lowReward;
                     end
                     data.Trials(flow.nresp, 15) =  conf.moneydil;
                     DrawFormattedText(w, sprintf(instrDB('crowdingFeedback', mode.english_on), conf.moneydil, sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
