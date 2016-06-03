@@ -159,7 +159,7 @@ fromLab.pink = [206 119 134]; %L=60 c=36 h=11
 fromLab.yellow = [154 146 81]; %L=60 c=36 h=101
 fromLab.lightgreen = [99 158 108]; %L=60 c=36 h=-146
 
-fromLab.targets = {fromLab.cyan, fromLab.orange};
+fromLab.targets = {fromLab.cyan, fromLab.orange};%first one is high reward, second is low reward
 fromLab.distractors = {fromLab.green ,fromLab.blue ,fromLab.purple ,fromLab.pink, fromLab.yellow, fromLab.lightgreen};
 
 conf.color = fromLab;
@@ -167,7 +167,7 @@ conf.color = fromLab;
 
 
 % Parameter in degree
-deg.range_r     = 5;   % radius of imaginary circle(deg)
+deg.range_r     = 1.5;   % radius of imaginary circle(deg)
 deg.bar_r       = 1.2;  % length (diameter) of the bar(deg)0.76
 deg.bar_r2     = 0.06;  % width (diameter) of the bar(deg)0.08
 deg.cir_r       = 2.3/2;  % deg of circle (deg)
