@@ -167,7 +167,7 @@ conf.color = fromLab;
 
 
 % Parameter in degree
-deg.range_r     = 5;   % radius of imaginary circle(deg)
+deg.range_r     = 1.5;   % radius of imaginary circle(deg)
 deg.bar_r       = 1.2;  % length (diameter) of the bar(deg)0.76
 deg.bar_r2     = 0.06;  % width (diameter) of the bar(deg)0.08
 deg.cir_r       = 2.3/2;  % deg of circle (deg)
