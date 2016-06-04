@@ -403,7 +403,7 @@ end
                     
                     if mode.eyetracking_mode == 1
                         if data.Trials(flow.nresp, 19)>1.5
-                         DrawFormattedText(w, sprintf(instrDB('crowdingEye', mode.english_on), 'center', 'center', conf.color.textcolor2);    
+                         DrawFormattedText(w, sprintf(instrDB('crowdingEye', mode.english_on), 'center', 'center', conf.color.textcolor2));    
                         end
                     end
                     
