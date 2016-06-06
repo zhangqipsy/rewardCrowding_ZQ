@@ -317,6 +317,7 @@ end
         Eyelink('startrecording'); 
         end
         Screen('Flip', w);
+        aaaa = GetSecs;
         %render.vlb = Screen('Flip', w, render.vlb + (1-0.5)*conf.flpi);%use the center of the interval
         % Flip the visual stimuli on the screen, along with timing
         % old = render.vlb;
@@ -324,12 +325,13 @@ end
 %%%%%
 if mode.eyetracking_mode == 1
     
-      eyeresult = zeros(max(flow.nresp,18)/(1/60),5);
+      eyeresult = zeros(max(data.Trials(flow.nresp,18))/(1/60),5);
       numeye = 1;
       meaneyedeg = 1000;
+      conf.theFrameRate = 60;
 for e = 1: data.Trials(flow.nresp,18)/(1/60)
                titi = GetSecs;
-               titi = WaitSecs('UntilTime',titi+1/theFrameRate);
+               titi = WaitSecs('UntilTime',titi+1/conf.theFrameRate);
                evt = Eyelink('NewestFloatSample'); % 获取最新的眼动数据
                 if eye_used ~= -1 % do we know which eye to use yet?
                 % get current gaze position from sample
@@ -342,14 +344,15 @@ for e = 1: data.Trials(flow.nresp,18)/(1/60)
                numeye = numeye+1;
                 end
 end
-            eyeresult = eyeresult(1:numeye,2);
+            %eyeresult = eyeresult(1:numeye,:);
             [t1 t2] = size(eyeresult);
             for xx = 1:t1
             eyeresult(xx,3) =  (abs(eyeresult(xx,1)-512))^2 + (abs(eyeresult(xx,2)-384))^2;
             eyeresult(xx,4) = sqrt( eyeresult(xx,3));
             eyeresult(xx,5) = (180/pi)*atan((40* eyeresult(xx,4))/(1024*75));
             end
-         data.Trials(flow.nresp, 19) = meaneyedeg;  
+            meaneyedeg = mean(eyeresult(:,5));
+            data.Trials(flow.nresp, 19) = meaneyedeg;  
         
 end        
         
@@ -357,7 +360,9 @@ end
         % get the response
         flow.onset = GetSecs();
         if strcmp(render.task, 'CrowdingTask')
-        [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), data.Trials(flow.nresp,18), flow.onset); 
+        [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), 0, flow.onset); 
+        %[flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), data.Trials(flow.nresp,18), flow.onset); 
+
         if mode.eyetracking_mode == 1
         Eyelink('stoprecording');
         end
@@ -365,7 +370,8 @@ end
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration', mode.debug_on), flow.onset); % first one is space
         end
         % also record here if the subject have not responded yet
-
+        bbbb = GetSecs;
+        cccc = bbbb-aaaa
         if strcmpi(flow.response, 'DEADLINE')
             Display('Please respond! We are still collecting data!');
         Screen('FillRect',w, conf.color.backgroundColor);
@@ -399,14 +405,28 @@ end
                 if 1
                     % demo_on calcels feedback
                 % give feedback
-                if flow.isCorrect
+                
                     
                     if mode.eyetracking_mode == 1
-                        if data.Trials(flow.nresp, 19)>1.5
-                         DrawFormattedText(w, sprintf(instrDB('crowdingEye', mode.english_on), 'center', 'center', conf.color.textcolor2));    
+                        if data.Trials(flow.nresp-1, 19)>1.5
+                         DrawFormattedText(w, sprintf(instrDB('crowdingEye', mode.english_on)), 'center', 'center', conf.color.textcolor');    
+                        render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
+                        WaitSecs(getTime('ShowFeedback', mode.debug_on));
+                        else
+                         if flow.isCorrect   
+                           if data.Trials(flow.nresp-1, 8)==1
+                           conf.moneydil = conf.highReward;
+                           elseif data.Trials(flow.nresp-1, 8)==2
+                           conf.moneydil = conf.lowReward;
+                           end
+                        data.Trials(flow.nresp, 15) =  conf.moneydil;
+                        DrawFormattedText(w, sprintf(instrDB('crowdingFeedback', mode.english_on), conf.moneydil, sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
+                        render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
+                        WaitSecs(getTime('ShowFeedback', mode.debug_on));
+                        end    
                         end
-                    end
-                    
+                    else
+                    if flow.isCorrect   
                     if data.Trials(flow.nresp-1, 8)==1
                     conf.moneydil = conf.highReward;
                     elseif data.Trials(flow.nresp-1, 8)==2
@@ -416,7 +436,10 @@ end
                     DrawFormattedText(w, sprintf(instrDB('crowdingFeedback', mode.english_on), conf.moneydil, sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
                     render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
                     WaitSecs(getTime('ShowFeedback', mode.debug_on));
-                end
+                    end 
+                    end
+                    
+                 
             end
 
             case {'DEADLINE'}
