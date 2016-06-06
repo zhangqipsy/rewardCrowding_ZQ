@@ -516,6 +516,8 @@ end
     disp('');
     Display('data/latest.mat saved successfully, use for debugging!');
     disp('');
+    showEyeMean = mean(data.Trials(:,19));
+    disp(['The mean eye movement is  ' num2str(showEyeMean) '¡ã£¡'])
     data.stat = analyzeData(data);
     render.matFileName = ['data/',render.dataPrefix, data.Subinfo{1} , render.dataSuffix, tunnelSelection(mode.procedureChannel), datestr(now, 'yyyymmddTHHMMSS'), '.mat'];
     save(render.matFileName,'conf','flow','mode','data','render');
@@ -572,4 +574,5 @@ Display(char('','','data/latest.mat saved successfully, use for testing!',''));
 %title([data.Subinfo{1} ':' render.task]);
 %format short;
 Display('Experiment was successful!');
+
 end
