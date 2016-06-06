@@ -90,6 +90,7 @@ conf.restpertrial       =  60;           % every x trial a rest
 conf.showLeftTrialsEvery     = 5;
 conf.nStims              =  6;          % number of stimuli (target+distractors) present in each trial/throughout the experiment (target is always one of these)
 conf.nFlankers           = 2;           % pure flankers, target can never be one here (used only for Crowding)
+conf.eyeRestrict = 1.5;
 
 
 
@@ -112,11 +113,14 @@ conf.validKeys          = {'space', 'escape', 'z', 'm'}; % always keep espace an
 conf.audioTone1Hz   = 1000;
 conf.audioTone2Hz   = 500;
 conf.flpi               = .02;          % NOTE:  NOT used
+conf.theFrameRate = 60;
 conf.showTime   =   0.6;
 % NOTE: check this values out!
 conf.monWidth   = 40;
 conf.viewDist       = 75;
-conf.cmPerPix = conf.monWidth/1024;
+conf.Pix = [1024 768];
+conf.cmPerPix = conf.monWidth/conf.Pix(1);
+
 
 
 % at L:50, interactively hunt for a,b

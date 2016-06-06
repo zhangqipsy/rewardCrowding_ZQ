@@ -325,11 +325,10 @@ end
 %%%%%
 if mode.eyetracking_mode == 1
     
-      eyeresult = zeros(max(data.Trials(flow.nresp,18))/(1/60),5);
+      eyeresult = zeros(max(data.Trials(flow.nresp,18))/(1/conf.theFrameRate),5);
       numeye = 1;
-      meaneyedeg = 1000;
-      conf.theFrameRate = 60;
-for e = 1: data.Trials(flow.nresp,18)/(1/60)
+      meaneyedeg = 1000;     
+for e = 1: data.Trials(flow.nresp,18)/(1/conf.theFrameRate)
                titi = GetSecs;
                titi = WaitSecs('UntilTime',titi+1/conf.theFrameRate);
                evt = Eyelink('NewestFloatSample'); % 获取最新的眼动数据
@@ -347,9 +346,9 @@ end
             %eyeresult = eyeresult(1:numeye,:);
             [t1 t2] = size(eyeresult);
             for xx = 1:t1
-            eyeresult(xx,3) =  (abs(eyeresult(xx,1)-512))^2 + (abs(eyeresult(xx,2)-384))^2;
+            eyeresult(xx,3) =  (abs(eyeresult(xx,1)-(conf.Pix(1)/2)))^2 + (abs(eyeresult(xx,2)-(conf.Pix(2)/2)))^2;
             eyeresult(xx,4) = sqrt( eyeresult(xx,3));
-            eyeresult(xx,5) = (180/pi)*atan((40* eyeresult(xx,4))/(1024*75));
+            eyeresult(xx,5) =  (180/pi)*atan((conf.cmPerPix*eyeresult(xx,4))/conf.viewDist);
             end
             meaneyedeg = mean(eyeresult(:,5));
             data.Trials(flow.nresp, 19) = meaneyedeg;  
@@ -408,7 +407,7 @@ end
                 
                     
                     if mode.eyetracking_mode == 1
-                        if data.Trials(flow.nresp-1, 19)>1.5
+                        if data.Trials(flow.nresp-1, 19)>conf.eyeRestrict
                          DrawFormattedText(w, sprintf(instrDB('crowdingEye', mode.english_on)), 'center', 'center', conf.color.textcolor');    
                         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
                         WaitSecs(getTime('ShowFeedback', mode.debug_on));
