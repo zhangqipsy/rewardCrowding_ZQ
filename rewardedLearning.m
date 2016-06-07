@@ -359,8 +359,11 @@ end
         % get the response
         flow.onset = GetSecs();
         if strcmp(render.task, 'CrowdingTask')
-        [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), 0, flow.onset); 
-        %[flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), data.Trials(flow.nresp,18), flow.onset); 
+            if mode.eyetracking_mode == 1
+               [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), 0, flow.onset); 
+            else
+               [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), data.Trials(flow.nresp,18), flow.onset); 
+            end
 
         if mode.eyetracking_mode == 1
         Eyelink('stoprecording');
