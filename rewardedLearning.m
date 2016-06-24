@@ -330,7 +330,7 @@ if mode.eyetracking_mode == 1
       meaneyedeg = 1000;     
 for e = 1: data.Trials(flow.nresp,18)/(1/conf.theFrameRate)
                titi = GetSecs;
-               titi = WaitSecs('UntilTime',titi+1/conf.theFrameRate);
+               titi = WaitSecs('UntilTime',titi+1/conf.theFrameRate-(1/conf.theFrameRate)/2);
                evt = Eyelink('NewestFloatSample'); % 获取最新的眼动数据
                 if eye_used ~= -1 % do we know which eye to use yet?
                 % get current gaze position from sample
