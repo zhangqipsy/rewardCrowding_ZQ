@@ -90,7 +90,7 @@ conf.restpertrial       =  30;           % every x trial a rest
 conf.showLeftTrialsEvery     = 5;
 conf.nStims              =  6;          % number of stimuli (target+distractors) present in each trial/throughout the experiment (target is always one of these)
 conf.nFlankers           = 2;           % pure flankers, target can never be one here (used only for Crowding)
-conf.eyeRestrict = 1.5;
+conf.eyeRestrict = 2;
 
 
 
