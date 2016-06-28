@@ -34,7 +34,7 @@ function stat = analyzeCrowdingData(data)
     columnCond1 = 2; % conditions
     columnCond2 = 6; % color
 
-    stat.allTrialNum = size(data.Trials,1);
+    stat.allTrialNum = size(data.Trials,1)-1;
     stat.Trials = data.Trials(data.Trials(:,columnTest2)>0,:);% no NaN
 
     stat.condiNum1 = numel(unique(stat.Trials(:,columnCond1)));

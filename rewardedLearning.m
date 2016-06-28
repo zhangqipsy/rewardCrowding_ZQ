@@ -416,7 +416,7 @@ end
                            elseif data.Trials(flow.nresp-1, 8)==2
                            conf.moneydil =  (1-data.Trials(flow.nresp-1, 11))*0.2;
                            end
-                        data.Trials(flow.nresp, 15) =  conf.moneydil;
+                        data.Trials(flow.nresp-1, 15) =  conf.moneydil;
                         DrawFormattedText(w, sprintf(instrDB('crowdingFeedback', mode.english_on), conf.moneydil, sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
                         render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
                         WaitSecs(getTime('ShowFeedback', mode.debug_on));
@@ -431,7 +431,7 @@ end
                     %conf.moneydil = conf.lowReward;
                     conf.moneydil = (1-data.Trials(flow.nresp-1, 11))*0.2;
                     end
-                    data.Trials(flow.nresp, 15) =  conf.moneydil;
+                    data.Trials(flow.nresp-1, 15) =  conf.moneydil;
                     DrawFormattedText(w, sprintf(instrDB('crowdingFeedback', mode.english_on), conf.moneydil, sum(data.Trials(:, 15))), 'center', 'center', conf.color.textcolor2);
                     render.vlb = Screen('Flip', w);  % record render.vlb, used for TIMING control
                     WaitSecs(getTime('ShowFeedback', mode.debug_on));
