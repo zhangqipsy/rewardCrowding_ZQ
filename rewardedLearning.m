@@ -317,10 +317,10 @@ end
         Eyelink('startrecording'); 
         end
         Screen('Flip', w);
+         % get the response
+        flow.onset = GetSecs();
         aaaa = GetSecs;
-        %render.vlb = Screen('Flip', w, render.vlb + (1-0.5)*conf.flpi);%use the center of the interval
-        % Flip the visual stimuli on the screen, along with timing
-        % old = render.vlb;
+
         if mode.recordImage; recordImage(1,1,render.task ,w,render.wsize);end
 %%%%%
 if mode.eyetracking_mode == 1
@@ -329,6 +329,7 @@ if mode.eyetracking_mode == 1
       numeye = 1;
       meaneyedeg = 1000;     
 for e = 1: data.Trials(flow.nresp,18)/(1/conf.theFrameRate)
+              [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), 0, flow.onset); 
                titi = GetSecs;
                titi = WaitSecs('UntilTime',titi+1/conf.theFrameRate-(1/conf.theFrameRate)/2);
                evt = Eyelink('NewestFloatSample'); % 获取最新的眼动数据
@@ -356,18 +357,12 @@ end
 end        
         
 %%%%%        
-        % get the response
-        flow.onset = GetSecs();
-        if strcmp(render.task, 'CrowdingTask')
-            if mode.eyetracking_mode == 1
-               [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), 0, flow.onset); 
-            else
-               [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), data.Trials(flow.nresp,18), flow.onset); 
-            end
-
         if mode.eyetracking_mode == 1
         Eyelink('stoprecording');
         end
+        
+        if strcmp(render.task, 'CrowdingTask')   
+         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), data.Trials(flow.nresp,18), flow.onset); 
         else
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration', mode.debug_on), flow.onset); % first one is space
         end
