@@ -319,7 +319,7 @@ end
         Screen('Flip', w);
          % get the response
         flow.onset = GetSecs();
-        aaaa = GetSecs;
+
 
         if mode.recordImage; recordImage(1,1,render.task ,w,render.wsize);end
 %%%%%
@@ -329,9 +329,23 @@ if mode.eyetracking_mode == 1
       numeye = 1;
       meaneyedeg = 1000;     
 for e = 1: data.Trials(flow.nresp,18)/(1/conf.theFrameRate)
-              [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), 0, flow.onset); 
-               titi = GetSecs;
-               titi = WaitSecs('UntilTime',titi+1/conf.theFrameRate-(1/conf.theFrameRate)/2);
+              keyIsDown_1 = 0;
+                [keyIsDown_1,keyTime,keyCode] = KbCheck;  
+                if keyIsDown_1
+                    if keyCode(conf.validKeys(3:end))  
+                       flow.rt = keyTime-flow.onset;
+                       flow.response = KbName(keyCode);
+                       flow.respTime = GetSecs();
+                       flow.idxResponse = find(strcmpi(conf.validKeys, flow.response))-2;
+                       [data, flow] = recordResponse(flow, data, conf);
+                       break;
+                    elseif keyCode(escPress) 
+                        break;
+                       flow.isquit = 1;
+                        manualAbort();      
+                    end
+                end  
+               Screen('Flip', w);   
                evt = Eyelink('NewestFloatSample'); % 获取最新的眼动数据
                 if eye_used ~= -1 % do we know which eye to use yet?
                 % get current gaze position from sample
@@ -353,22 +367,20 @@ end
             end
             meaneyedeg = mean(eyeresult(:,5));
             data.Trials(flow.nresp, 19) = meaneyedeg;  
-        
+            Eyelink('stoprecording');
 end        
         
 %%%%%        
-        if mode.eyetracking_mode == 1
-        Eyelink('stoprecording');
-        end
-        
+if  isnan(data.Trials(flow.nresp, 13))
+        aaaa = 1;
         if strcmp(render.task, 'CrowdingTask')   
          [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), data.Trials(flow.nresp,18), flow.onset); 
         else
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration', mode.debug_on), flow.onset); % first one is space
         end
         % also record here if the subject have not responded yet
-        bbbb = GetSecs;
-        cccc = bbbb-aaaa
+
+        
         if strcmpi(flow.response, 'DEADLINE')
             Display('Please respond! We are still collecting data!');
         Screen('FillRect',w, conf.color.backgroundColor);
@@ -384,7 +396,7 @@ end
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime(getTimeStr, mode.debug_on), flow.onset); % first one is space
         %WaitSecs(getTime('BlankAfterResp', mode.debug_on));
     end
-
+end
         % Display(flow.response);
         switch flow.response
             case {'Escape', 'escape'}
@@ -393,15 +405,13 @@ end
 
             case conf.validKeys(3:end) % all stimuli (first two are space and escape)
                 % NOTE: here assuming that conf.validKeys have space, escape as the first two
+              if aaaa == 1
                 flow.idxResponse = find(strcmpi(conf.validKeys, flow.response))-2;
 
                 % record response
                 [data, flow] = recordResponse(flow, data, conf);
-
-                %if mode.feedback_on
-                if 1
-                    % demo_on calcels feedback
-                % give feedback
+                aaaa = 0;
+              end
                 
                     
                     if mode.eyetracking_mode == 1
@@ -438,8 +448,7 @@ end
                     end 
                     end
                     
-                 
-            end
+                
 
             case {'DEADLINE'}
                 % deadline is reached!
