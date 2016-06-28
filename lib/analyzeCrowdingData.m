@@ -34,7 +34,7 @@ function stat = analyzeCrowdingData(data)
     columnCond1 = 2; % conditions
     columnCond2 = 6; % color
 
-    stat.allTrialNum = size(data.Trials,1)-1;
+    stat.allTrialNum = size(data.Trials,1);
     stat.Trials = data.Trials(data.Trials(:,columnTest2)>0,:);% no NaN
 
     stat.condiNum1 = numel(unique(stat.Trials(:,columnCond1)));
@@ -44,7 +44,25 @@ function stat = analyzeCrowdingData(data)
     stat.accAll =mean(stat.Trials(:,13));% acc for all trial with keypress
 
     [stat.meansdAcc(:,1)] = grpstats( stat.Trials(:, columnTest1), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], {'mean'});
-    [stat.meansdRt(:,1) stat.meansdRt(:,2)] = grpstats( stat.Trials(:, columnTest2), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)], {'mean', 'std'});
+    stat.Trials_all = stat.Trials(stat.Trials(:,11)>0,:);
+    [stat.meansdRt_all(:,1) stat.meansdRt_all(:,2)] = grpstats( stat.Trials_all(:, columnTest2), [stat.Trials_all(:,columnCond1),  stat.Trials_all(:,columnCond2)], {'mean', 'std'});
+   
+    stat.Trials_R = stat.Trials(stat.Trials(:,11)>0 & stat.Trials(:,13)==1,:);
+    [stat.meansdRt_R(:,1) stat.meansdRt_R(:,2)] = grpstats( stat.Trials_R(:, columnTest2), [stat.Trials_R(:,columnCond1),  stat.Trials_R(:,columnCond2)], {'mean', 'std'});
+   
+    stat.Trials_W = stat.Trials(stat.Trials(:,11)>0 & stat.Trials(:,13)==0,:);
+    [stat.meansdRt_W(:,1) stat.meansdRt_W(:,2)] = grpstats( stat.Trials_W(:, columnTest2), [stat.Trials_W(:,columnCond1),  stat.Trials_W(:,columnCond2)], {'mean', 'std'});
+   
+     stat.Trials_miss = data.Trials(data.Trials(:,11)<0,:);
+     tt = unique(stat.Trials(:,columnCond1));
+     stat.mean_miss = zeros(1,numel(unique(stat.Trials(:,columnCond1))));
+     for ii = 1:numel(unique(stat.Trials(:,columnCond1)))
+         temp_data = stat.Trials_miss(stat.Trials_miss(:,2) == tt(ii,1),:);
+         if ~isempty(temp_data)
+        stat.mean_miss(1,ii) = sum(temp_data(:,6))/60;
+         end
+     end
+     
     figure('visible','off');
     subplot(1,2,1)
     boxplot( stat.Trials(:, columnTest1), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)],'labels',cellstr(num2str([1:numel(unique(stat.Trials(:,2)))]'))');
@@ -56,7 +74,7 @@ function stat = analyzeCrowdingData(data)
     boxplot( stat.Trials(:, columnTest2), [stat.Trials(:,columnCond1),  stat.Trials(:,columnCond2)],'labels',cellstr(num2str([1:numel(unique(stat.Trials(:,2)))]'))');
     title('RT');
     hold on;
-    plot(stat.meansdRt(:,1),'d');
+    plot(stat.meansdRt_all(:,1),'d');
     hold off;
     set(gcf,'Position',get(0,'Screensize'))% enlarge image to full screen
     stat.plotname = ['myPlot',data.Subinfo{1},datestr(now, 'yyyymmddTHHMMSS'),'.png'];
