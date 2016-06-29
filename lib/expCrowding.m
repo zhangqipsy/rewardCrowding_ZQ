@@ -49,9 +49,9 @@ function wrkspc = expCrowding(isDemo, once_on, procedureChannel, Constantparams)
     
     %TRY
     conf.deg.range_r = [1.5];
-    conf.repetitions = 9;% 600 trial
+    conf.repetitions = 9;% 72 trial
     conf.showTime = [0.5 1];
-    
+    mode.drawBlackCircle = 0;
 %     %TEST
 %     conf.deg.range_r = [1.5];
 %     conf.repetitions = 30;% 600 trial

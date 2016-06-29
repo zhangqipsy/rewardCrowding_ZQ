@@ -69,19 +69,20 @@ function stat = analyzeCrowdingData(data, conf)
         stat.mean_Look(1,ii) = sum(temp_data2(:,6))/(stat.allTrialNum/stat.condiNum1);
          end
      end
-     data.All_result(1,:) = stat.meansdAcc(:,1)';
+     stat.All_result = zeros(9,stat.condiNum1);
+     stat.All_result(1,:) = stat.meansdAcc(:,1)';
      
-     data.All_result(2,1:stat.condiNum1) = stat.meansdRt_all(:,1)';
-     data.All_result(3,1:stat.condiNum1) = stat.meansdRt_all(:,2)';
+     stat.All_result(2,1:stat.condiNum1) = stat.meansdRt_all(:,1)';
+     stat.All_result(3,1:stat.condiNum1) = stat.meansdRt_all(:,2)';
      
-     data.All_result(4,1:stat.condiNum1) = stat.meansdRt_R(:,1)';
-     data.All_result(5,1:stat.condiNum1) = stat.meansdRt_R(:,2)';
+     stat.All_result(4,1:stat.condiNum1) = stat.meansdRt_R(:,1)';
+     stat.All_result(5,1:stat.condiNum1) = stat.meansdRt_R(:,2)';
      
-     data.All_result(6,1:stat.condiNum1) = stat.meansdRt_W(:,1)';
-     data.All_result(7,1:stat.condiNum1) = stat.meansdRt_W(:,2)';
+     stat.All_result(6,1:stat.condiNum1) = stat.meansdRt_W(:,1)';
+     stat.All_result(7,1:stat.condiNum1) = stat.meansdRt_W(:,2)';
      
-      data.All_result(8,1:stat.condiNum1) = stat.mean_Look(1,:);
-      data.All_result(9,1:stat.condiNum1) = stat.mean_miss(1,:);
+      stat.All_result(8,1:stat.condiNum1) = stat.mean_Look(1,:);
+      stat.All_result(9,1:stat.condiNum1) = stat.mean_miss(1,:);
      
      
      
