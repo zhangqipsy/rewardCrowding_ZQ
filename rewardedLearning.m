@@ -332,19 +332,29 @@ for e = 1: data.Trials(flow.nresp,18)/(1/conf.theFrameRate)
               keyIsDown_1 = 0;
                 [keyIsDown_1,keyTime,keyCode] = KbCheck;  
                 if keyIsDown_1
-                    if keyCode(conf.validKeys(3:end))  
+                    if keyCode(kbName(conf.validKeys(3))) || keyCode(kbName(conf.validKeys(4)))
                        flow.rt = keyTime-flow.onset;
                        flow.response = KbName(keyCode);
                        flow.respTime = GetSecs();
                        flow.idxResponse = find(strcmpi(conf.validKeys, flow.response))-2;
-                       [data, flow] = recordResponse(flow, data, conf);
+                       data.Trials(flow.nresp, 11) = flow.rt;
+                       if mode.persistentFix == 1
+                       data.drawedFix(flow.nresp) = drawObjects(w, render, data.drawFix); % only the fix part
+                       end
+                       Screen('Flip', w);  % record render.vlb, used for TIMING control
                        break;
-                    elseif keyCode(escPress) 
+                    elseif keyCode(kbName(conf.validKeys(2))) 
                         break;
-                       flow.isquit = 1;
-                        manualAbort();      
+                        flow.isquit = 1;
+                        manualAbort();
+                    else
+                    DrawFormattedText(w, 'wrong key!!', 'center', 'center', conf.color.textcolor2);
+                    Screen('Flip', w); 
+                    WaitSecs(1);
+                    break;
                     end
-                end  
+                end               
+               data.drawed = drawObjects(w, render, data.draw);
                Screen('Flip', w);   
                evt = Eyelink('NewestFloatSample'); % 获取最新的眼动数据
                 if eye_used ~= -1 % do we know which eye to use yet?
@@ -358,7 +368,9 @@ for e = 1: data.Trials(flow.nresp,18)/(1/conf.theFrameRate)
                numeye = numeye+1;
                 end
 end
-            %eyeresult = eyeresult(1:numeye,:);
+
+
+            eyeresult = eyeresult(1:numeye-1,:);
             [t1 t2] = size(eyeresult);
             for xx = 1:t1
             eyeresult(xx,3) =  (abs(eyeresult(xx,1)-(conf.Pix(1)/2)))^2 + (abs(eyeresult(xx,2)-(conf.Pix(2)/2)))^2;
@@ -370,8 +382,9 @@ end
             Eyelink('stoprecording');
 end        
         
-%%%%%        
-if  isnan(data.Trials(flow.nresp, 13))
+%%%%% 
+        aaaa = 0;
+   if  isnan(data.Trials(flow.nresp, 11))
         aaaa = 1;
         if strcmp(render.task, 'CrowdingTask')   
          [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), data.Trials(flow.nresp,18), flow.onset); 
@@ -379,7 +392,7 @@ if  isnan(data.Trials(flow.nresp, 13))
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime('TrialDuration', mode.debug_on), flow.onset); % first one is space
         end
         % also record here if the subject have not responded yet
-
+   end
         
         if strcmpi(flow.response, 'DEADLINE')
             Display('Please respond! We are still collecting data!');
@@ -395,8 +408,8 @@ if  isnan(data.Trials(flow.nresp, 13))
         end
         [flow.rt flow.response flow.respTime] = collectResponse(conf.validKeys(2:end), getTime(getTimeStr, mode.debug_on), flow.onset); % first one is space
         %WaitSecs(getTime('BlankAfterResp', mode.debug_on));
-    end
-end
+        end
+
         % Display(flow.response);
         switch flow.response
             case {'Escape', 'escape'}
@@ -409,10 +422,9 @@ end
                 flow.idxResponse = find(strcmpi(conf.validKeys, flow.response))-2;
 
                 % record response
-                [data, flow] = recordResponse(flow, data, conf);
-                aaaa = 0;
+
               end
-                
+               [data, flow] = recordResponse(flow, data, conf);
                     
                     if mode.eyetracking_mode == 1
                         if data.Trials(flow.nresp-1, 19)>conf.eyeRestrict
@@ -472,7 +484,7 @@ end
             otherwise
                 error('rewardedLearning:collectResponse', 'keys other than validKeys are collected');
         end
-
+   
         % end of per trial
         Screen('FillRect',w, conf.color.backgroundColor);
         if mode.persistentFix == 1
