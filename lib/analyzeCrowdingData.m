@@ -1,4 +1,4 @@
-function stat = analyzeCrowdingData(data)
+function stat = analyzeCrowdingData(data, conf)
 
   if isfield(data, 't') && ~isempty(data.t)% Quest
     stat.result = data.t;
